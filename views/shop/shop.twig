@@ -1,0 +1,12 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <link rel="stylesheet" href="/css/shop.css" type="text/css"/>
+    <div class="content-wrap">
+        {% include '/shop/header.twig' %}
+        <div class="shop-content">
+            {% include './sidebar.twig' %}<!--
+            -->{% include './main.twig' %}
+
+    </div>
+{% endblock %}

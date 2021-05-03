@@ -1,0 +1,12 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <div class="content_wrap">
+        <div class="content">
+            <form method="get" action="/search/query">
+                <input type="text" name="query" placeholder="Запрос:">
+                <input type="submit" value="Найти">
+            </form>
+        </div>
+    </div>
+{% endblock %}

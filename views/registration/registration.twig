@@ -1,0 +1,31 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+<div class="page_content_wrap page_paddings_no">
+    <link rel="stylesheet" type="text/css" href="/css/login.css"/>
+    <div class="content_wrap">
+        <div class="login-content">
+            <div class="form-wrap">
+                <form action="/registration"
+                      method="post" name="login_form" id="registration_form" class="popup_form login-form">
+                    <div class="popup_form_field login_field iconed_field icon-user">
+                        <input for="registration_form" type="email" name="email" value=""
+                               placeholder="Email"></div>
+                    <div class="popup_form_field password_field iconed_field icon-lock">
+                        <input for="registration_form" type="password" name="password" value=""
+                               placeholder="Password"></div>
+                    <div class="popup_form_field username_field">
+                        <input for="registration_form" type="text" name="username" value=""
+                               placeholder="Nikname">
+                    </div>
+
+                    <div class="popup_form_field submit-field"><button for="registration_form" type="submit"
+                                                                       class="submit-button">Registration</button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}

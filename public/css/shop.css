@@ -1,0 +1,79 @@
+.shop-sidebar  {
+    flex: 340px;
+    padding: 20px;
+    flex-shrink: 0;
+}
+
+.shop-header-ref-wrap{
+    text-align: center;
+}
+
+.shop-header{
+    background-size: cover;
+    background: url("/images/bg1.jpg") center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    margin:20px 0;
+    min-height: calc(100vw /4);
+}
+
+.shop-header > .content-wrap{
+    width:100%;
+}
+
+.shop-header-text, .shop-header-title, .shop-header-ref{
+    color:white;
+    text-align: center;
+}
+
+.shop-header-ref{
+    display: inline-block;
+    padding: 0.5em 1.2em;
+    border:2px solid;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 1em;
+}
+
+.shop-header-title{
+    margin:1em;
+    font-size: 1.5em;
+}
+
+.shop-header-text{
+    margin: 1em;
+    font-size: 1.1em;
+}
+
+.shop-content {
+    display: flex;
+}
+
+.shop-mainbar {
+    margin-top: 0;
+    flex: 1 auto;
+    padding: 10px;
+}
+
+.list-icon{
+    font-size: 2em;
+    margin:5px;
+}
+
+.woocommerce-loop-product__title{
+    font-size: 1.5em;
+}
+
+.item-list{
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-auto-rows: 1fr;
+    grid-gap: 8px;
+}
+
+.list-item{
+    display: block;
+    max-width: none;
+}

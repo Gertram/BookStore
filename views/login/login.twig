@@ -1,0 +1,36 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+<div class="page_content_wrap page_paddings_no">
+    <link rel="stylesheet" type="text/css" href="/css/login.css"/>
+    <div class="content_wrap">
+        <div class="login-content">
+            <div class="form-wrap">
+                <form action="/login"
+                      method="post" name="login_form" id="login_form" class="popup_form login-form">
+                    <div class="popup_form_field login_field iconed_field icon-user">
+                        <input for="login_form" type="text" name="login" value=""
+                               placeholder="Login or Email"></div>
+                    <div class="popup_form_field password_field iconed_field icon-lock">
+                        <input for="login_form" type="password" name="password" value=""
+                               placeholder="Password"></div>
+                    <div class="popup_form_field remember_field">
+
+                        <label class="remember_label"> Remember me<input for="login_form" type="checkbox" value="forever" id="rememberme"
+                                                                  name="rememberme"></label>
+                        <a href="http://booklovers.ancorathemes.com/account/lost-password/"
+                           class="forgot_password">Forgot password?</a>
+                    </div>
+                    <div class="popup_form_field submit-field"><button for="login_form" type="submit"
+                                                                      class="submit-button">Login</button>
+                    </div>
+                    <div class="popup_form_field submit-field">
+                        <button class="registration_button"><a href="/registration" >Registration</a></button>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+    {% endblock %}

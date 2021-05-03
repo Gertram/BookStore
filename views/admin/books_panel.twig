@@ -1,0 +1,29 @@
+<h2>Books panel</h2>
+<div>
+    <link rel="stylesheet" href="/css/admin.css"/>
+    <h3>Добавление новой книги</h3>
+    <form method="post" action="/admin/books/add">
+        <label>Название<input type="text" name="title" required></label>
+        <label>Жанры<select name="genres" multiple required>
+                {% for genre in genres %}
+                    <option value="{{ genre.genre_id}}">{{ genre.title }}</option>
+                {% endfor %}
+            </select></label>
+        <label>Автор<select name="author" required>
+                {% for author in authors %}
+                    <option value="{{ author.author_id }}">{{ author.firstname }} {{ author.lastname }}</option>
+                {% endfor %}
+            </select></label>
+        <label>Описание<textarea name="description"></textarea></label>
+        <input type="submit">
+    </form>
+    <h3>Список книг</h3>
+    <form method="post" action="/books/remove">
+        <label>Удаление<select name="book">
+                {% for book in books %}
+                    <option value="{{ book.id }}">{{ book.title }}</option>
+                {% endfor %}
+            </select></label>
+        <input type="submit" value="Удалить">
+    </form>
+</div>

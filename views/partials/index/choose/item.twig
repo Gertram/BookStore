@@ -1,0 +1,12 @@
+<div class="column-1_4 sc_column_item {% if number==1 %}first{% endif %} {% if number is even %}even{{else}}odd{% endif %} }">
+    <figure class="sc_image  sc_image_shape_square"
+            style="height:153px;"><img
+            src="/img/{{img}}"
+            alt=""></figure>
+    <h4 class="sc_title sc_title_regular sc_align_center"
+        style="margin-top: 0.75em;text-align:center;font-size:1.294em;">
+        <a href="/books?genre={{ genre_id }}"><em>{{title}}
+            (13500+{#{{count}}#})</em
+        ></a>
+    </h4>
+</div>

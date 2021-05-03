@@ -1,0 +1,54 @@
+.form-wrap{
+    margin:5em auto;
+    display: inline-block;
+    text-align: left;
+}
+
+.popup_form_field{
+    position: relative;
+    margin:0.5em;
+    width: 300px;
+}
+
+.popup_form_field input{
+    width:300px;
+}
+
+.remember_field{
+    display: flex;
+}
+
+.remember_label{
+    flex:120px;
+    flex-shrink: 0;
+}
+
+.forgot_password{
+    flex-grow: 1;
+}
+
+#rememberme{
+    width:16px;
+}
+
+.submit-button, .registration_button{
+    width: 100%;
+    display: block;
+    color:white;
+    background: #de3241;
+}
+
+.registration_button > a{
+    color:white;
+}
+
+.popup_form_field:before{
+    width:15px;
+    position: absolute;
+    bottom:25%;
+    right: 10px;
+}
+
+.login-content{
+    text-align: center;
+}

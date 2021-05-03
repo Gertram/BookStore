@@ -1,0 +1,13 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    {% if basket is null %}
+        <b>Корзина пуста</b>
+    {% else %}
+    <ul>
+    {% for product in basket %}
+        <li>{{ product.title }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+{% endblock %}

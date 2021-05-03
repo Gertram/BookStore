@@ -1,0 +1,209 @@
+/* Tribe Events
+------------------------------------------------------------------------------------ */
+
+/* Hide Tribe breadcrumbs - our more comfortable */
+p.tribe-events-back { display:none; }
+
+
+#tribe-events-content .tribe-events-single-event-title{
+	font-size: 2.647em;
+	margin-top: -0.15em;
+}
+
+.tribe-events-schedule h2{
+	font-size: 1.059em;
+	margin: 0;
+}
+
+
+/* Main template */
+#tribe-events-pg-template,
+.events-list .tribe-events-loop, .tribe-events-day .tribe-events-loop, .single-tribe_venue .tribe-events-loop, .single-tribe_organizer .tribe-events-loop { max-width:none; }
+.tribe-events-day .tribe-events-day-time-slot .vevent { margin-left:0; }
+
+/* Titles */
+.tribe-events-meta-group .tribe-events-single-section-title { padding-bottom:0; }
+h2.tribe-events-page-title, #tribe-geo-results h2.tribe-events-page-title { font-weight:400; padding-bottom:0; }
+.tribe-events-list-separator-month { font-weight:400; }
+#tribe-events-header { display:none; }
+.tribe-events-list .type-tribe_events h2 {font-size: 2.647em;}
+
+/* Buttons and fields */
+#tribe-bar-form input[type="text"],
+.tribe-events-button, #tribe-events .tribe-events-button { font-weight:400; }
+ul.tribe-events-sub-nav a, .tribe-events-back a, .tribe-events-list-widget .tribe-events-widget-link a, .tribe-events-adv-list-widget .tribe-events-widget-link a {
+	font-weight:400;
+	font-size:inherit;
+}
+.single-tribe_events #tribe-events-header li, .single-tribe_events #tribe-events-footer li { width:auto; }
+
+/* Featured image */
+.single-tribe_events .tribe-events-event-image {
+    float: right;
+    margin: 0 0 2em 2em;
+    max-width: 50%;
+}
+
+/* Event details */
+.tribe-events-event-meta .author { margin-bottom:0; }
+.tribe-events-venue-details .author:after { display:none; }
+a.tribe-events-ical, a.tribe-events-gcal { margin-top:0; }
+.tribe-events-loop .tribe-events-event-meta,
+.tribe-events-tooltip .duration { font-weight:400; }
+
+/* Event footer */
+#tribe-events-footer h3 { display:none; margin-top:0; font-size:1.5em; }
+
+/* Buttons */
+a.tribe-events-read-more,
+.tribe-events-button,
+.tribe-events-nav-previous a,
+.tribe-events-nav-next a,
+.tribe-events-widget-link a,
+.tribe-events-viewmore a {
+	display:inline-block;
+	text-align:center;
+	padding:0.85em 1.15em;
+	font-size:0.875em;
+	line-height: 1.2857em;
+	font-weight:700;
+	margin:0 0 4px 4px;
+
+}
+
+/* Widgets */
+.tribe-events-list-widget ol { margin:0; padding: 0; }
+.tribe-events-list-widget ol li { margin-bottom:1.5em; }
+.tribe-events-list-widget .entry-title { font-size: 1.15em; font-weight:400; margin:0; }
+.tribe-events-list-widget .duration { font-weight:400; }
+
+
+#tribe-events-content .tribe-events-tooltip h3 {
+	margin: 0;
+	background-color: transparent;
+	font-size: 18px;
+	padding: 0;
+	letter-spacing: 0;
+	font-weight: 700;
+}
+
+#tribe-events-content .tribe-events-tooltip h3 {
+	color: #21759b!important;
+}
+
+#tribe-bar-views-toggle:after{
+	display: none!important;
+}
+
+.tribe-events-calendar .tribe-events-tooltip{
+	padding: .75em 1em!important;
+}
+
+/*---------------------*/
+
+.tribe-events .tribe-events-c-events-bar,
+.tribe-events .tribe-events-header,
+.tribe-common nav button:disabled,
+.tribe-common  .tribe-events-c-top-bar button.tribe-common-h3{
+	background: transparent!important;
+}
+.tribe-common nav.tribe-events-calendar-list-nav li > a{
+	text-transform: uppercase;
+}
+
+body .tribe-events .tribe-events-c-top-bar__datepicker-button {
+	font-size: 16px !important;
+}
+
+.tribe-events .datepicker .datepicker-months .datepicker-switch,
+.tribe-events .datepicker .datepicker-months .next,
+.tribe-events .datepicker .datepicker-months .prev,
+.tribe-events .datepicker .datepicker-years .datepicker-switch,
+.tribe-events .datepicker .datepicker-years .next,
+.tribe-events .datepicker .datepicker-years .prev {
+	padding: 15px 0;
+}
+.tribe-events .tribe-events-c-events-bar__search-button,
+.tribe-events .tribe-events-c-view-selector__button,
+.tribe-events .datepicker .datepicker-months .datepicker-switch,
+.tribe-events .datepicker .datepicker-months .next,
+.tribe-events .datepicker .datepicker-months .prev,
+.tribe-events .datepicker .datepicker-years .datepicker-switch,
+.tribe-events .datepicker .datepicker-years .next,
+.tribe-events .datepicker .datepicker-years .prev,
+body .tribe-events .tribe-events-c-top-bar__datepicker-button,
+.tribe-events-calendar-month__day-cell, body button[disabled].tribe-common-c-btn-icon,
+.tribe-events .tribe-events-c-nav__next:disabled, .tribe-events .tribe-events-c-nav__prev:disabled,
+.tribe-events .datepicker th {
+	background: transparent !important;
+}
+
+.tribe-events-calendar-month__calendar-event-tooltip-description > p{
+	text-transform: none;
+	line-height: 1.5em;
+}
+.tribe-common button{
+	box-shadow: unset!important;
+}
+
+.tribe-common .tribe-common-c-loader__dot {
+	-webkit-animation-name: tribe-common-c-loader-bounce-1;
+	animation-name: tribe-common-c-loader-bounce-1;
+	-webkit-animation-duration: 2.24s;
+	animation-duration: 2.24s;
+	-webkit-animation-iteration-count: infinite;
+	animation-iteration-count: infinite;
+	-webkit-animation-direction: normal;
+	animation-direction: normal;
+}
+
+@-webkit-keyframes tribe-common-c-loader-bounce-1 {
+	0% {}
+
+	50% { opacity: 50%; }
+
+	100% {}
+}
+
+@keyframes tribe-common-c-loader-bounce-1 {
+	0% {}
+
+	50% { opacity: 50%; }
+
+	100% {}
+}
+.tribe-common .tribe-events-header__events-bar input.tribe-events-c-search__input:focus,
+.tribe-common .tribe-events-header__events-bar input.tribe-events-c-search__input{
+	background-image: none;
+}
+.single-tribe_events a.tribe-events-gcal,
+.single-tribe_events a.tribe-events-gcal:hover,
+.single-tribe_events a.tribe-events-ical,
+.single-tribe_events a.tribe-events-ical:hover{
+	padding: 0 6px;
+}
+
+.tribe-events .tribe-events-c-ical__link:before{
+	background-image: none!important;
+	content: '\e8ad';
+	font-family: 'fontello';
+	height: 16px;
+	margin-right: 0.5em;
+}
+
+.tribe-events .tribe-events-c-messages__message--notice::before{
+	display: none;
+}
+
+.tribe-common.tribe-events .tribe-events-c-messages__message-list-item-link{
+	border: none;
+}
+
+.tribe-events .tribe-events-c-ical svg,
+.tribe-common--breakpoint-medium.tribe-events .tribe-events-c-messages__message svg{
+	display: none;
+}
+
+.tribe-common--breakpoint-medium.tribe-events .tribe-events-c-messages__message-list {
+	word-break: break-all;
+}

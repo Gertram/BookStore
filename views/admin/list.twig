@@ -1,0 +1,23 @@
+<h3>{{ title }}</h3>
+<div class="list-wrap">
+    {% for book in books %}
+        <form method="post" action="/admin/lists" id="remove_{{ book.book_id }}">
+            <input type="text" name="list "value="{{ id }}" hidden/>
+            <input type="text" name="action" value="remove" hidden/>
+            <input type="text" name="book_id" value="{{ book.book_id }}" hidden/>
+        </form>
+        <div class="list-item-wrap">
+            <div class="item-wrap">
+                <button class="item-remove-icon" form="remove_{{ book.book_id }}"></button>
+                {% include 'partials/index/discover/content_item.twig' with book %}
+            </div>
+        </div>
+    {% endfor %}
+    {% if books|length < 5 %}
+    <div class="list-item-wrap">
+        <div class="item-wrap">
+            <a href="/admin/lists/{{ id }}/add" class="list-item add-item"></a>
+        </div>
+    </div>
+    {% endif %}
+</div>

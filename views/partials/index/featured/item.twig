@@ -1,0 +1,17 @@
+<li>
+    <a href="{{href}}">
+        <img
+             src="{{img}}"
+             class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail">
+        <span class="product-title">{{title}}</span>
+    </a>
+    {% if rating %}
+    <div class="star-rating" role="img"
+         aria-label="Rated 5.00 out of 5"><span
+            style="width:100%">Rated <strong
+            class="rating">{{rating}}</strong> out of 5</span>
+    </div>
+    {% endif %}
+    <span class="woocommerce-Price-amount amount"><bdi><span
+            class="woocommerce-Price-currencySymbol">$</span>{{price}}</bdi></span>
+</li>

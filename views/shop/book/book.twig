@@ -1,0 +1,225 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="/css/book.css">
+    <div class="content-wrap">
+        <div class="content">
+            <article class="post_item post_item_single post_item_product">
+                <nav class="book-nav">
+                    <a href="http://booklovers.ancorathemes.com/">Home</a>&nbsp;/&nbsp;<a
+                            href="http://booklovers.ancorathemes.com/shop/">Shop</a>&nbsp;/&nbsp;<a
+                            href="http://booklovers.ancorathemes.com/product-category/cookbooks/">Cookbooks</a>&nbsp;/&nbsp;It’s
+                    a really strange story
+                </nav>
+                <div class="main-wrap">
+                    <div class="top-wrap">
+                        <div class="image-wrap">
+                            <a href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#"
+                               class="icon-wrap"><img src="/images/search.svg">
+                            </a>
+                            <a href="" class="book-image">
+                                <img src="/img/book12.jpg">
+                            </a>
+                        </div>
+                        <div class="info">
+                            <h1 class="product-title entry-title">It’s a really strange story</h1>
+                            <p class="price">$20.55</p>
+                            <p>This delightful book is the latest in the series, this is the story of how a tall, shy
+                                youth from Weston-super-Mare went on to become a self-confessed legend.</p>
+                            <form class="cart"
+                                  action="/basket/add"
+                                  method="post" enctype="multipart/form-data">
+                                <label class="screen-reader-text" for="quantity_606dcd6830d18">It’s a really
+                                    strange story quantity</label>
+                                <input type="text" name="product" value="{{ book_id }}" hidden>
+                                <input type="text" name="price" value="{{ price[0] }}{{ price[1] }}" hidden>
+                                <input type="number" class="input-text qty text"
+                                       step="1" min="1" max="" name="quantity" value="1" title="Qty" size="4"
+                                       placeholder="" inputmode="numeric">
+                                <button type="submit" name="add-to-cart" value="251"
+                                        class="single_add_to_cart_button button alt">Add to cart
+                                </button>
+                            </form>
+                            <div class="product_meta">
+                                <p class="posted_in">Categories:
+                                    <a class="tag"
+                                       href="http://booklovers.ancorathemes.com/product-category/best-sellers/">Best
+                                        sellers</a>,
+                                    <a class="tag"
+                                       href="http://booklovers.ancorathemes.com/product-category/cookbooks/">Cookbooks</a>,
+                                    <a class="tag"
+                                       href="http://booklovers.ancorathemes.com/product-category/new-releases/"
+                                       rel="tag">New releases</a></p>
+                                <p class="tagged_as">Tag:
+                                    <a class="tag"
+                                       href="http://booklovers.ancorathemes.com/product-tag/childrens-books/"
+                                       rel="tag">Children's Books</a></p>
+                                <p class="product_id">Product ID: <span>251</span></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <ul class="tab-wrap">
+                            <li class="description_tab alt-tab active" id="tab-title-description" role="tab"
+                                aria-controls="tab-description">
+                                <a href="#tab-description">
+                                    Description </a>
+                            </li>
+                            <li class="reviews_tab alt-tab" id="tab-title-reviews" role="tab"
+                                aria-controls="tab-reviews">
+                                <a href="#tab-reviews">
+                                    Reviews (0) </a>
+                            </li>
+                        </ul>
+                        <div class="description-panel"
+                             id="tab-description" role="tabpanel" aria-labelledby="tab-title-description"
+                             style="display: block;">
+                            <h2>Description</h2>
+                            <p>Lorem ipsum dolor sit amet, qui sumo copiosae ea, vim dolorum volumus ei. Mei ei
+                                dolor tamquam deleniti. Habemus copiosae his cu, quo ne reque augue. Nonumy
+                                contentiones his eu, vel falli copiosae inimicus te. Liber commune et vix.
+                                Putant quaeque inimicus cu usu, eum civibus delicatissimi an.&nbsp;Tota
+                                suavitate mnesarchum ad nec, at vim propriae voluptua. In vim laudem cetero
+                                interpretaris. Civibus vivendum conclusionemque mel eu. Homero dolorum phaedrum
+                                sed no, eos oratio forensibus te. Mea possim accusamus theophrastus ex, ea dicit
+                                patrioque sit. Vix possim volutpat suscipiantur cu, ex nam purto invidunt, ut
+                                qui nominati pertinacia.</p>
+                        </div>
+                        <div class="review-panel"
+                             id="tab-reviews" role="tabpanel" aria-labelledby="tab-title-reviews"
+                             style="display: none;">
+                            <div id="reviews" class="woocommerce-Reviews">
+                                <div id="comments">
+                                    <h2 class="woocommerce-Reviews-title">
+                                        Reviews </h2>
+                                    <p class="woocommerce-noreviews">There are no reviews yet.</p>
+                                </div>
+                                <div id="review_form_wrapper">
+                                    <div id="review_form">
+                                        <div id="respond" class="comment-respond">
+                                                    <span id="reply-title" class="comment-reply-title">Be the first to review “It’s a really strange story” <small><a
+                                                                    rel="nofollow" id="cancel-comment-reply-link"
+                                                                    href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#respond"
+                                                                    style="display:none;">Cancel reply</a></small></span>
+                                            <form action="http://booklovers.ancorathemes.com/wp-comments-post.php"
+                                                  method="post" id="commentform" class="comment-form">
+
+                                                <style type="text/css">
+                                                    .wp-social-login-connect-with {
+                                                    }
+
+                                                    .wp-social-login-provider-list {
+                                                    }
+
+                                                    .wp-social-login-provider-list a {
+                                                    }
+
+                                                    .wp-social-login-provider-list img {
+                                                    }
+
+                                                    .wsl_connect_with_provider {
+                                                    }</style>
+                                                <div class="wp-social-login-widget">
+                                                    <div class="wp-social-login-connect-with">Connect with:
+                                                    </div>
+                                                    <div class="wp-social-login-provider-list">
+                                                        <a rel="nofollow"
+                                                           href="http://booklovers.ancorathemes.com/wp-login.php?action=wordpress_social_authenticate&amp;mode=login&amp;provider=Facebook&amp;redirect_to=http%3A%2F%2Fbooklovers.ancorathemes.com%2Fshop%2Fits-a-really-strange-story%2F"
+                                                           title="Connect with Facebook"
+                                                           class="wp-social-login-provider wp-social-login-provider-facebook"
+                                                           data-provider="Facebook" role="button">
+                                                            <img alt="Facebook"
+                                                                 src="./It’s a really strange story – Booklovers_files/facebook.webp"
+                                                                 aria-hidden="true">
+                                                        </a>
+                                                        <a rel="nofollow"
+                                                           href="http://booklovers.ancorathemes.com/wp-login.php?action=wordpress_social_authenticate&amp;mode=login&amp;provider=Twitter&amp;redirect_to=http%3A%2F%2Fbooklovers.ancorathemes.com%2Fshop%2Fits-a-really-strange-story%2F"
+                                                           title="Connect with Twitter"
+                                                           class="wp-social-login-provider wp-social-login-provider-twitter"
+                                                           data-provider="Twitter" role="button">
+                                                            <img alt="Twitter"
+                                                                 src="./It’s a really strange story – Booklovers_files/twitter.webp"
+                                                                 aria-hidden="true">
+                                                        </a>
+                                                    </div>
+                                                    <div class="wp-social-login-widget-clearing"></div>
+                                                </div>
+
+                                                <p class="comment-notes"><span id="email-notes">Your email address will not be published.</span>
+                                                    Required fields are marked <span class="required">*</span>
+                                                </p>
+                                                <div class="comment-form-rating"><label for="rating">Your
+                                                        rating&nbsp;<span
+                                                                class="required">*</span></label>
+                                                    <p class="stars"><span>							<a
+                                                                    class="star-1"
+                                                                    href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#">1</a>							<a
+                                                                    class="star-2"
+                                                                    href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#">2</a>							<a
+                                                                    class="star-3"
+                                                                    href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#">3</a>							<a
+                                                                    class="star-4"
+                                                                    href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#">4</a>							<a
+                                                                    class="star-5"
+                                                                    href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#">5</a>						</span>
+                                                    </p><select name="rating" id="rating" required=""
+                                                                style="display: none;">
+                                                        <option value="">Rate…</option>
+                                                        <option value="5">Perfect</option>
+                                                        <option value="4">Good</option>
+                                                        <option value="3">Average</option>
+                                                        <option value="2">Not that bad</option>
+                                                        <option value="1">Very poor</option>
+                                                    </select></div>
+                                                <p class="comment-form-comment"><label for="comment">Your
+                                                        review&nbsp;<span
+                                                                class="required">*</span></label><textarea id="comment"
+                                                                                                           name="comment"
+                                                                                                           cols="45"
+                                                                                                           rows="8"
+                                                                                                           required=""></textarea>
+                                                </p>
+                                                <p class="comment-form-author"><label
+                                                            for="author">Name&nbsp;<span
+                                                                class="required">*</span></label><input id="author"
+                                                                                                        name="author"
+                                                                                                        type="text"
+                                                                                                        value=""
+                                                                                                        size="30"
+                                                                                                        required=""></p>
+                                                <p class="comment-form-email"><label
+                                                            for="email">Email&nbsp;<span
+                                                                class="required">*</span></label><input id="email"
+                                                                                                        name="email"
+                                                                                                        type="email"
+                                                                                                        value=""
+                                                                                                        size="30"
+                                                                                                        required=""></p>
+                                                <p class="form-submit"><input name="submit" type="submit"
+                                                                              id="submit" class="submit"
+                                                                              value="Submit"> <input
+                                                            type="hidden" name="comment_post_ID" value="251"
+                                                            id="comment_post_ID">
+                                                    <input type="hidden" name="comment_parent"
+                                                           id="comment_parent" value="0">
+                                                </p></form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <section class="related-products-wrap">
+                        <h2>Related products</h2>
+                        <ul class="related-products">
+                            {% for book in books %}
+                                {% include './item.twig' with book %}
+                            {% endfor %}
+                        </ul>
+                    </section>
+                </div>
+            </article>
+        </div>
+    </div>
+{% endblock %}

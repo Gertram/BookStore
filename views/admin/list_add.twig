@@ -1,0 +1,14 @@
+{% if books is empty %}
+    <h1>Нечего добавлять</h1>
+{% else %}
+<form method="post" action="/admin/lists">
+    <input type="text" name="list" value="{{ list_id }}" hidden>
+    <select name="book_id" required>
+        {% for book in books %}
+            <option value="{{ book.book_id }}">{{ book.title }}</option>
+        {% endfor %}
+    </select>
+    <input type="text" name="action" value="add" hidden/>
+    <input type="submit">
+</form>
+{% endif %}

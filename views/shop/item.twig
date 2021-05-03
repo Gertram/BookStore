@@ -1,0 +1,40 @@
+<li  class="list-item">
+    <a href="/shop/{{ book_id }}"
+       class="woocommerce-LoopProduct-link woocommerce-loop-product__link"> </a>
+    <div class="post_item_wrap"><a
+                href="/shop/{{ book_id }}"
+                class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
+        </a>
+        <div class="post_featured"><a
+                    href="/shop/{{ book_id }}"
+                    class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
+            </a>
+            <div class="post_thumb"><a
+                        href="/shop/{{ book_id }}"
+                        class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
+                </a><a class="hover_icon hover_icon_link"
+                       href="/shop/{{ book_id }}">
+                    <span class="onsale">Sale!</span>
+                    <img wbook_idth="320" height="520"
+                         src="/img/{{ img }}"
+                         class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
+                         alt="" loading="lazy"/></a>
+{#                         srcset="http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book6-340x520.jpg 340w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book6-196x300.jpg 196w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book6-670x1024.jpg 670w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book6-600x918.jpg 600w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book6.jpg 680w"#}
+{#                         sizes="(max-wbook_idth: 340px) 100vw, 340px"> </a>#}
+            </div>
+        </div>
+        <div class="post_content">
+            <h2 class="woocommerce-loop-product__title"><a
+                        href="/shop/{{ book_id }}">{{ title }}</a></h2>
+            <span class="price"><del><span class="woocommerce-Price-amount amount"><bdi><span
+                                    class="woocommerce-Price-currencySymbol">$</span>{{ price[0] }}.{{ price[1] }}</bdi></span></del> <ins><span
+                            class="woocommerce-Price-amount amount"><bdi></bdi></span></ins></span>
+{#                            <span class="woocommerce-Price-currencySymbol">$</span>{{ last_price[0] }}.{{ last_parice[1] }}</bdi></span></ins></span>#}
+            <a href="/shop/?add-to-cart={{ book_id }}"
+               data-quantity="1"
+               class="button product_type_simple add_to_cart_button ajax_add_to_cart"
+               data-product_book_id="257" data-product_sku=""
+               aria-label="Add “A banquet of  mouse” to your cart" rel="nofollow">Add to
+                cart</a></div>
+    </div>
+</li>

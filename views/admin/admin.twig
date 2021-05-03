@@ -1,0 +1,42 @@
+<head>
+    <link rel="stylesheet" href="/css/admin.css"/>
+    {% include 'partials/links.twig' %}
+</head>
+<body>
+<h1>Admin panel</h1>
+<h2>Lists panel</h2>
+{% include 'admin/list.twig' with {title:'New Releases',books:lists.new_releases,id:1}%}
+{% include 'admin/list.twig' with {title:'Coming Soon',books:lists.coming_soon,id:2}%}
+{% include 'admin/list.twig' with {title:'Best Sellers',books:lists.best_sellers,id:3}%}
+{% include 'admin/list.twig' with {title:'Award Winner',books:lists.award_winner,id:4}%}
+{% include 'admin/books_panel.twig' with {authors:authors,genrer:genres,books:books} %}
+<h2>Genres</h2>
+<h3>Добавить жанр</h3>
+<form method="post" action="/admin/genres/add">
+    <label>Название<input type="text" name="title" required></label>
+    <input type="submit" value="Добавить">
+</form>
+<form method="post" action="/admin/genres/remove">
+    <label>Все жанры<select name="genre">
+            {% for genre in genres %}
+                <option value="{{ genre.genre_id }}">{{ genre.title }}</option>
+            {% endfor %}
+        </select></label>
+    <input type="submit" value="Удалить">
+</form>
+<h2>Авторы</h2>
+<form method="post" action="/admin/authors/add">
+    <label>Имя<input type="text" name="firstname" required></label>
+    <label>Фамилия<input type="text" name="lastname" required></label>
+    <input type="submit" value="Добавить">
+</form>
+<form method="post" action="/admin/authors/remove">
+    <label>Авторы
+    <select name="author">
+        {% for author in authors %}
+            <option value="{{ author.author_id }}">{{ author.firstname }} {{ author.lastname }}</option>
+        {% endfor %}
+    </select></label>
+    <input type="submit" value="Удалить">
+</form>
+</body>
