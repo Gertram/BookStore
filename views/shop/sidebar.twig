@@ -4,10 +4,13 @@
                class="widget_number_1 widget woocommerce widget_shopping_cart"><h5 class="widget_title">
                 Cart</h5>
             <div class="widget_shopping_cart_content">
-
+                {% if basket is empty %}
                 <p class="woocommerce-mini-cart__empty-message">No products in the cart.</p>
-
-
+                {% else %}
+                    {% for item in basket %}
+                        {% include '/basket/item.twig' with item %}
+                    {% endfor %}
+                {% endif %}
             </div>
         </aside>
         <aside id="woocommerce_price_filter-2"
@@ -27,7 +30,6 @@
                     <option class="cat-item cat-item-37" value="{{ genre.genre_id }}">{{ genre.title }}</option>
                 {% endfor %}
             </select>
-            <input type="submit" form="search_form" value="Поиск">
         </aside>
         <aside id="woocommerce_product_tag_cloud-2"
                class="widget_number_4 widget woocommerce widget_product_tag_cloud"><h5
@@ -37,6 +39,7 @@
                     <option class="cat-item cat-item-37" value="{{ tag.tag_id }}">{{ tag.title }}</option>
                 {% endfor %}
             </select>
+            <a href="/shop"><button>Очистить</button></a>
             <input type="submit" form="search_form" value="Поиск">
         </aside>
     </div>

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const users = require('../models/users')
+const users = require('../models/users');
+const render = require('../app/render');
 
 /* GET users listing. */
 router.get('/:user_id', async function(req, res, next) {
@@ -14,7 +15,7 @@ router.get('/:user_id', async function(req, res, next) {
   }
   user = user[0];
 
-  res.render('users/user',user);
+  render(req,res,'users/user',user);
 });
 
 router.post('/:user_id/redact',async function (req,res,next) {

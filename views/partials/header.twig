@@ -8,7 +8,11 @@
                 <div class="top_panel_top_user_area">
                     <ul id="menu_user" class="menu_user_nav inited sf-js-enabled sf-arrows">
                         <li class="menu_user_login">
+                            {% if huser is not defined %}
                             <a href="/login" class="popup_link popup_login_link icon-user inited">Login</a>
+                            {% else %}
+                                <a href="/users/{{ huser.user_id }}"  class="popup_link popup_login_link icon-user inited">{{huser.username}}</a>
+                            {% endif %}
                             {#<div id="popup_login"
                                  class="popup_wrap popup_login bg_tint_light animated fast fadeOut"
                                  style="display: none;">

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const users = require('../models/users')
+const render = require('../app/render');
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
@@ -8,7 +9,7 @@ router.get('/', async function(req, res, next) {
         res.render("login/login", {title: 'Login'});
         return;
     }
-    res.render('login/already_login');
+    render(req,res,'login/already_login');
 });
 
 router.post('/exit',async function(req,res,next) {

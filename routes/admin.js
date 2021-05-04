@@ -5,6 +5,7 @@ const books = require('../models/books');
 const genres = require('../models/genres');
 const authors = require('../models/authors');
 
+
 /* GET home page. */
 router.get('/', async function (req, res, next) {
     let new_releases = await lists.getNewReleases().getAll();

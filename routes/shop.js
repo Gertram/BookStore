@@ -1,7 +1,10 @@
 var express = require('express');
 var router = express.Router();
+const render = require('../app/render');
 const books = require('../models/books');
 const genres = require('../models/genres');
+const tags = require('../models/tags');
+const getBasket = require('../models/basket');
 /* GET home page. */
 router.get('/', async function(req, res, next) {
   let min_price = req.query.min_price;
@@ -33,14 +36,18 @@ router.get('/', async function(req, res, next) {
   let stags = req.query.tags;
 
   if(stags != null){
-      filters.stags = Array.isArray(stags)?stags:[stags];
+      filters.tags = Array.isArray(stags)?stags:[stags];
   }
-
+  
   let books_list = await books.getAll(filters);
 
   let genres_list = await genres.getAll();
 
-  res.render("shop/shop", { title: 'Express',books:books_list,range:range,genres:genres_list });
+  let tags_list = await tags.getAll();
+
+  let basket = getBasket(req,res);
+
+  render(req,res,"shop/shop", { title: 'Express',books:books_list,range:range,genres:genres_list,tags:tags_list,basket:await basket.products() });
 });
 
 router.get('/:book_id/',async function(req,res,next) {
@@ -51,7 +58,7 @@ router.get('/:book_id/',async function(req,res,next) {
   }
   let books_list = await books.getAll();
 
-  res.render('shop/book/book',{books:books_list,book:book[0]});
+  render(res,req,'shop/book/book',{books:books_list,book:book[0]});
 });
 
 module.exports = router;

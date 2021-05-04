@@ -14,7 +14,7 @@ class Books{
             wheres.push(`(SELECT count(*) FROM books_genres WHERE books_genres.book_id = books.book_id and genre_id in (${filters.genres.join(',')})) >= ${filters.genres.length}`)
         }
         if(filters.tags != null){
-            wheres.push(`(SELECT count(*) FROM books_genres WHERE books_genres.book_id = books.book_id and genre_id in (${filters.tags.join(',')})) >= ${filters.tags.length}`)
+            wheres.push(`(SELECT count(*) FROM books_tags WHERE books_tags.book_id = books.book_id and tag_id in (${filters.tags.join(',')})) >= ${filters.tags.length}`)
         }
         if(wheres.length != 0){
             query += ' WHERE ' + wheres.join(' and ');
