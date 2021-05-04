@@ -1,20 +1,6 @@
 let db = require('../app/db');
 
 class Users{
-    /*static async getAll(){
-        let res = await db.query('SELECT * FROM authors');
-        return  res[0];
-    }
-    static async add(firstname,lastname){
-        db.query('INSERT INTO authors(firstname,lastname) values (?,?)',[firstname,lastname]).catch(err => {
-            console.log(err);
-        });
-    }
-    static async remove(author_id){
-        db.query('DELETE FROM authors where author_id = ?',[author_id]).catch(err => {
-            console.log(err);
-        });
-    }*/
     static async login(login,password){
         let res = await db.query("SELECT user_id from users where (email = ? or username = ?) and password = ?",[login,login,password])
         return res[0]
@@ -31,6 +17,16 @@ class Users{
         let res = await db.query("SELECT user_id from users where email = ? and username = ?",[email,username]);
 
         return res[0]
+    }
+    static async get(user){
+        let res = await db.query('SELECT * FROM users where user_id = ?',[user]);
+        return res[0];
+    }
+    static async save(user,email,user_name,phone){
+        let res = await db.query('UPDATE users SET email = ?,username = ?,phone = ? where user_id = ?',[email,user_name,phone,user]);
+    }
+    static async save_password(user,password){
+        let res = await db.query('UPDATE users SET password = ? where user_id = ?',[password,user]);
     }
 }
 

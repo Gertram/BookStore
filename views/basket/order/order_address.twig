@@ -1,0 +1,9 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <form method="post" action="/basket/buy">
+        <input type="hidden" name="step" value="address">
+        <input type="text" name="address" placeholder="Адрес:">
+        <input type="submit" value="Оплата">
+    </form>
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+<div class="page_content_wrap page_paddings_no">
+    <link rel="stylesheet" type="text/css" href="/css/login.css"/>
+    <div class="content_wrap">
+        <b>Вы уже залогинены</b>
+        <form method="post" action="/login/exit">
+            <input type="submit" value="Выйти">
+        </form>
+    </div>
+    {% endblock %}

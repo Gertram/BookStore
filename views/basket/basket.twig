@@ -1,13 +1,19 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-    {% if basket is null %}
+    <link rel="stylesheet" type="text/css" href="/css/basket.css"/>
+    <div class="content_wrap">
+    {% if basket is empty %}
         <b>Корзина пуста</b>
     {% else %}
     <ul>
     {% for product in basket %}
-        <li>{{ product.title }}</li>
+        {% include './item.twig' with product%}
     {% endfor %}
     </ul>
+        <form method="post" action="/basket/buy">
+            <input type="submit" value="Оформить заказ"/>
+        </form>
     {% endif %}
+    </div>
 {% endblock %}

@@ -13,92 +13,31 @@
         <aside id="woocommerce_price_filter-2"
                class="widget_number_2 widget woocommerce widget_price_filter"><h5 class="widget_title">
                 Filter by price</h5>
-            <form method="get" action="http://booklovers.ancorathemes.com/shop/">
-                <div class="price_slider_wrapper">
-                    <div class="price_slider ui-slider ui-corner-all ui-slider-horizontal ui-widget ui-widget-content"
-                         style="">
-                        <div class="ui-slider-range ui-corner-all ui-widget-header"
-                             style="left: 0%; width: 100%;"></div>
-                        <span tabindex="0" class="ui-slider-handle ui-corner-all ui-state-default"
-                              style="left: 0%;"></span><span tabindex="0"
-                                                             class="ui-slider-handle ui-corner-all ui-state-default"
-                                                             style="left: 100%;"></span></div>
-                    <div class="price_slider_amount" data-step="1">
-                        <input type="text" id="min_price" name="min_price" value="7" data-min="7"
-                               placeholder="Min price" style="display: none;">
-                        <input type="text" id="max_price" name="max_price" value="21" data-max="21"
-                               placeholder="Max price" style="display: none;">
-                        <button type="submit" class="button">Filter</button>
-                        <div class="price_label" style="">
-                            Price: <span class="from">$7</span> — <span class="to">$21</span>
-                        </div>
-                        <input type="hidden" name="q" value="/shop/">
-                        <div class="clear"></div>
-                    </div>
-                </div>
+            <form method="get" id="search_form" action="/shop/">
+                <input type="text" id="min_price" name="min_price" pattern="(\d+)|(\d+.\d{1,2})" value="{{ min_price // 100 }}.{{ min_price % 100 }}" placeholder="Min_pirce">
+                <input type="text" id="max_price" name="max_price" pattern="(\d+)|(\d+.\d{1,2})" value="{{ max_price // 100 }}.{{ max_price % 100 }}" placeholder="Max_price">
+                <button type="submit" class="button">Filter</button>
             </form>
         </aside>
         <aside id="woocommerce_product_categories-2"
                class="widget_number_3 widget woocommerce widget_product_categories"><h5
                     class="widget_title">Product Categories</h5>
-            <ul class="product-categories">
-                <li class="cat-item cat-item-37"><a
-                            href="http://booklovers.ancorathemes.com/product-category/audio-books/">Audio
-                        books</a></li>
-                <li class="cat-item cat-item-51"><a
-                            href="http://booklovers.ancorathemes.com/product-category/award-winners/">Award
-                        winners</a></li>
-                <li class="cat-item cat-item-52"><a
-                            href="http://booklovers.ancorathemes.com/product-category/best-sellers/">Best
-                        sellers</a></li>
-                <li class="cat-item cat-item-40"><a
-                            href="http://booklovers.ancorathemes.com/product-category/biography/">Biography</a>
-                </li>
-                <li class="cat-item cat-item-38"><a
-                            href="http://booklovers.ancorathemes.com/product-category/business-books/">Business
-                        books</a></li>
-                <li class="cat-item cat-item-53"><a
-                            href="http://booklovers.ancorathemes.com/product-category/coming-soon/">Coming
-                        soon</a></li>
-                <li class="cat-item cat-item-41"><a
-                            href="http://booklovers.ancorathemes.com/product-category/cookbooks/">Cookbooks</a>
-                </li>
-                <li class="cat-item cat-item-36"><a
-                            href="http://booklovers.ancorathemes.com/product-category/drama/">Drama</a></li>
-                <li class="cat-item cat-item-54"><a
-                            href="http://booklovers.ancorathemes.com/product-category/new-releases/">New
-                        releases</a></li>
-                <li class="cat-item cat-item-39"><a
-                            href="http://booklovers.ancorathemes.com/product-category/romans/">Romans</a>
-                </li>
-                <li class="cat-item cat-item-65"><a
-                            href="http://booklovers.ancorathemes.com/product-category/uncategorized/">Uncategorized</a>
-                </li>
-            </ul>
+            <select name="genres" form="search_form" multiple class="product-categories">
+                {% for genre in genres %}
+                    <option class="cat-item cat-item-37" value="{{ genre.genre_id }}">{{ genre.title }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" form="search_form" value="Поиск">
         </aside>
         <aside id="woocommerce_product_tag_cloud-2"
                class="widget_number_4 widget woocommerce widget_product_tag_cloud"><h5
                     class="widget_title">Product Tags</h5>
-            <div class="tagcloud"><a
-                        href="http://booklovers.ancorathemes.com/product-tag/childrens-books/"
-                        class="tag-cloud-link tag-link-43 tag-link-position-1" style="font-size: 22pt;"
-                        aria-label="Children&#39;s Books (5 products)">Children's Books</a>
-                <a href="http://booklovers.ancorathemes.com/product-tag/health/"
-                   class="tag-cloud-link tag-link-42 tag-link-position-2" style="font-size: 22pt;"
-                   aria-label="Health (5 products)">Health</a>
-                <a href="http://booklovers.ancorathemes.com/product-tag/history-archaeology/"
-                   class="tag-cloud-link tag-link-44 tag-link-position-3" style="font-size: 13.6pt;"
-                   aria-label="History &amp; Archaeology (3 products)">History &amp; Archaeology</a>
-                <a href="http://booklovers.ancorathemes.com/product-tag/humour/"
-                   class="tag-cloud-link tag-link-47 tag-link-position-4" style="font-size: 13.6pt;"
-                   aria-label="Humour (3 products)">Humour</a>
-                <a href="http://booklovers.ancorathemes.com/product-tag/reference/"
-                   class="tag-cloud-link tag-link-46 tag-link-position-5" style="font-size: 8pt;"
-                   aria-label="Reference (2 products)">Reference</a>
-                <a href="http://booklovers.ancorathemes.com/product-tag/romance/"
-                   class="tag-cloud-link tag-link-45 tag-link-position-6"
-                   style="font-size: 18.266666666667pt;" aria-label="Romance (4 products)">Romance</a>
-            </div>
+            <select name="tags" form="search_form" multiple class="product-categories">
+                {% for tag in tags %}
+                    <option class="cat-item cat-item-37" value="{{ tag.tag_id }}">{{ tag.title }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" form="search_form" value="Поиск">
         </aside>
     </div>
 </div>

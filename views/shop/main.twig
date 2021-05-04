@@ -19,11 +19,14 @@
         </select>
         <input type="hidden" name="paged" value="1">
         <input type="hidden" name="q" value="/shop/"></form>
-
+    {% if books is empty %}
+        <p>Ничего не найденр</p>
+    {% else %}
     <ul class="item-list">
         {%  for book in books %}
             {% include './item.twig' with book %}
         {% endfor %}
     </ul>
+    {% endif %}
 </div>
 </div>

@@ -1,0 +1,12 @@
+<li class="basket_item">
+    <a class="left" href="/shop/{{ book_id }}" ><img src="/img/{{ img }}" /></a>
+    <div class="right">
+        <a class="item_field"  href="/shop/{{ book_id }}">{{ title }}</a>
+        <div class="item_field" >${{ price[0] }}.{{ price[1] }}</div>
+        <div class="item_field">Количество:{{ quantity }}</div>
+        <form method="post" action="/basket/remove">
+            <input type="hidden" name="product" value="{{ book_id }}">
+            <input type="submit" value="удалить">
+        </form>
+    </div>
+</li>

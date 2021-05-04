@@ -18,25 +18,23 @@
                                class="icon-wrap"><img src="/images/search.svg">
                             </a>
                             <a href="" class="book-image">
-                                <img src="/img/book12.jpg">
+                                <img src="/img/{{book.img}}">
                             </a>
                         </div>
                         <div class="info">
-                            <h1 class="product-title entry-title">It’s a really strange story</h1>
-                            <p class="price">$20.55</p>
-                            <p>This delightful book is the latest in the series, this is the story of how a tall, shy
-                                youth from Weston-super-Mare went on to become a self-confessed legend.</p>
-                            <form class="cart"
+                            <h1 class="product-title entry-title">{{ book.title }}</h1>
+                            <p class="price">${{book.price[0]}}.{{ book.price[1] }}</p>
+                            <p>{{ book.description }}</p>
+                            <form class="cart" id="add_product_form"
                                   action="/basket/add"
-                                  method="post" enctype="multipart/form-data">
+                                  method="post">
                                 <label class="screen-reader-text" for="quantity_606dcd6830d18">It’s a really
                                     strange story quantity</label>
-                                <input type="text" name="product" value="{{ book_id }}" hidden>
-                                <input type="text" name="price" value="{{ price[0] }}{{ price[1] }}" hidden>
-                                <input type="number" class="input-text qty text"
+                                <input for="add_product_form" type="text" name="product" value="{{ book.book_id }}" hidden>
+                                <input for="add_product_form" type="number" class="input-text qty text"
                                        step="1" min="1" max="" name="quantity" value="1" title="Qty" size="4"
                                        placeholder="" inputmode="numeric">
-                                <button type="submit" name="add-to-cart" value="251"
+                                <button for="add_product_form" type="submit" name="add-to-cart" value="251"
                                         class="single_add_to_cart_button button alt">Add to cart
                                 </button>
                             </form>

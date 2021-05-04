@@ -7,7 +7,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/query', async function(req, res, next) {
-    let books_list = await books.getAll();
+    let books_list = await books.search(req.query.query);
     res.render("search/results", { title: 'Search',results:books_list });
 });
 

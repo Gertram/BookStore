@@ -16,6 +16,7 @@ const loginRouter = require('./routes/login');
 const registrationRouter = require('./routes/registration');
 const searchRouter = require('./routes/search');
 const basketRouter = require('./routes/basket');
+const ordersRouter = require('./routes/orders');
 
 const app = express();
 
@@ -40,6 +41,15 @@ app.use(function(req, res, next) {
   next();
 });
 
+/*app.use(function (req,res,next) {
+    let user_id = req.coockies.user_id;
+    if(user_id == null){
+        next();
+        return;
+    }
+    next();
+});*/
+
 app.use('/', indexRouter);
 app.use('/admin',adminRouter)
 app.use('/users', usersRouter);
@@ -52,6 +62,7 @@ app.use('/login', loginRouter);
 app.use('/registration', registrationRouter);
 app.use('/search', searchRouter);
 app.use('/basket', basketRouter);
+app.use('/orders', ordersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

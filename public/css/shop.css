@@ -1,5 +1,5 @@
 .shop-sidebar  {
-    flex: 340px;
+    width: 340px;
     padding: 20px;
     flex-shrink: 0;
 }

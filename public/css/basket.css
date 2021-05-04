@@ -1,0 +1,21 @@
+.item_field {
+    display: block;
+}
+
+.basket_item{
+    display: flex;
+}
+
+.left {
+    width:100px;
+    flex-shrink: 0;
+}
+
+.left > img{
+    width:100%;
+}
+
+.right{
+    padding: 1em;
+    flex-grow: 1;
+}
