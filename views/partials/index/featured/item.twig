@@ -1,7 +1,7 @@
 <li>
-    <a href="{{href}}">
+    <a href="/shop/{{book_id}}">
         <img
-             src="{{img}}"
+             src="/img/{{img}}"
              class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail">
         <span class="product-title">{{title}}</span>
     </a>
@@ -13,5 +13,5 @@
     </div>
     {% endif %}
     <span class="woocommerce-Price-amount amount"><bdi><span
-            class="woocommerce-Price-currencySymbol">$</span>{{price}}</bdi></span>
+            class="woocommerce-Price-currencySymbol">$</span>{{price // 100}}.{{ price % 100 }}</bdi></span>
 </li>

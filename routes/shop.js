@@ -5,6 +5,7 @@ const books = require('../models/books');
 const genres = require('../models/genres');
 const tags = require('../models/tags');
 const getBasket = require('../models/basket');
+const raitings = require('../models/raitings');
 /* GET home page. */
 router.get('/', async function(req, res, next) {
   let min_price = req.query.min_price;
@@ -58,7 +59,9 @@ router.get('/:book_id/',async function(req,res,next) {
   }
   let books_list = await books.getAll();
 
-  render(res,req,'shop/book/book',{books:books_list,book:book[0]});
+  let reviews_list = await raitings.getAll();
+
+  render(req,res,'shop/book/book',{books:books_list,book:book[0],reviews:reviews_list});
 });
 
 module.exports = router;

@@ -21,25 +21,33 @@ router.get('/:list_id/add',async function(req,res,next) {
     res.render('admin/list_add.twig',{list_id:list_id,books:books_list});
 });
 
-router.post('/',async function(req,res,next) {
-    const list_id = req.body.list;
-    const action = req.body.action;
-    const book_id = req.body.book_id;
-    let releases = null;
+async function getList(req){
+    const list_id = req.params.list_id;
     if(list_id == 1){
-        releases = await lists.getNewReleases();
+        return lists.getNewReleases();
     } else if(list_id == 2){
-        releases = await lists.getComingSoon();
+        return lists.getComingSoon();
     } else if(list_id == 3){
-        releases = await lists.getBestSellers();
+        return lists.getBestSellers();
     } else if(list_id == 4){
-        releases = await lists.getAwardWinners();
+        return lists.getAwardWinners();
     }
-    if(action === 'remove'){
-        await releases.remove(book_id);
-    }else if(action === 'add'){
-        await releases.add(book_id);
-    }
+}
+
+router.post('/:list_id/remove',async function(req,res,next) {
+    let list = await getList(req);
+    const book_id = req.body.book_id;
+
+    await list.remove(book_id);
+
+    res.redirect('/admin');
+});
+router.post('/:list_id/add',async function(req,res,next) {
+    let list = await getList(req);
+    const book_id = req.body.book_id;
+
+    await list.add(book_id);
+
     res.redirect('/admin');
 });
 

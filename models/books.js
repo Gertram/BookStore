@@ -1,7 +1,7 @@
 let db = require('../app/db');
 
 class Books{
-    static async getAll(filters){
+    static async getAll(filters = {}){
         let query = 'SELECT * FROM books';
         let wheres = [];
         if(filters.min_price != null){
@@ -28,8 +28,12 @@ class Books{
             return val;
         });
     }
+    static async getNew(limit){
+        let res = await db.query('SELECT *,(SELECT SUM(raiting) FROM raitings WHERE raitings.book_id = books.book_id) as raiting,(SELECT COUNT(*) FROM raitings WHERE raitings.book_id = books.book_id) as reviews_count FROM books where book_id in (SELECT * FROM (SELECT book_id FROM books order by date_added desc LIMIT 10) AS t) order BY RAND() LIMIT ?',[limit])
+        return res[0]
+    }
     static async get(book_id){
-        let res = await db.query('SELECT * FROM books WHERE book_id = ?',[book_id]);
+        let res = await db.query('SELECT *,(SELECT SUM(raiting) FROM raitings WHERE raitings.book_id = books.book_id) as raiting,(SELECT COUNT(*) FROM raitings WHERE raitings.book_id = books.book_id) as reviews_count FROM books WHERE book_id = ?',[book_id]);
         return res[0].map(function(val){
             let price = val['price'].toString();
             let left = price.slice(0,-2);
@@ -39,7 +43,7 @@ class Books{
         });
     }
     static async getFilter(books_list){
-        let res = await db.query('SELECT * FROM books WHERE book_id in (?)',[books_list]);
+        let res = await db.query('SELECT *,(SELECT SUM(raiting) FROM raitings WHERE raitings.book_id = books.book_id) as raiting,(SELECT COUNT(*) FROM raitings WHERE raitings.book_id = books.book_id) as reviews_count FROM books WHERE book_id in (?)',[books_list]);
         return res[0].map(function(val){
             let price = val['price'].toString();
             let left = price.slice(0,-2);
@@ -65,6 +69,10 @@ class Books{
     }
     static async getRange(){
         let res = await db.query('SELECT MIN(price) as min_price,MAX(price) as max_price FROM books');
+        return res[0]
+    }
+    static async getMostPopular(limit){
+        let res = await db.query('SELECT *,(SELECT count(*) FROM order_product WHERE order_product.product_id = books.book_id) as quantity,(SELECT SUM(raiting) FROM raitings WHERE raitings.book_id = books.book_id) as raiting,(SELECT COUNT(*) FROM raitings WHERE raitings.book_id = books.book_id) as reviews_count FROM books inner join authors on authors.author_id = books.author_id ORDER BY quantity DESC LIMIT ?',[limit])
         return res[0]
     }
 }

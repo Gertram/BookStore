@@ -37,7 +37,7 @@ router.post('/', async function(req, res, next) {
     user = user[0];
 
     res.cookie('user',user.user_id, {maxAge: 90000000, httpOnly: true, secure: false, overwrite: false})
-    res.redirect('/user/' + user.user_id);
+    res.redirect('/users/' + user.user_id);
 });
 
 module.exports = router;

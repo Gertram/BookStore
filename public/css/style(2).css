@@ -5939,40 +5939,36 @@ footer.widget_area .widget_recent_reviews ul.product_list_widget li+li{
 .isotope_item_products .star-rating{
 	overflow: hidden;
 	position: relative;
-	height: 1em;
 	line-height: 1;
-	font-size: 1em;
-	width: 5.4em;
 	font-family: star;
-	font-size: .78em;
 	margin: 0 auto;
 	padding-bottom: 1px;
 	margin-top: 0.9em;
 	margin-bottom: 0.7em;
 }
-.isotope_item_products .star-rating:before{
+/*.isotope_item_products .star-rating:before{
 	content: "\73\73\73\73\73";
 	color: #d3ced2;
 	float: left;
 	top: 0;
 	left: 0;
 	position: absolute;
-}
+}*/
 
-.isotope_item_products .star-rating span{
+/*.isotope_item_products .star-rating span{
 	overflow: hidden;
 	float: left;
 	top: 0;
 	left: 0;
 	position: absolute;
 	padding-top: 1.7em;
-}
-.isotope_item_products  .star-rating span:before{
+}*/
+/*.isotope_item_products  .star-rating span:before{
 	content: "\53\53\53\53\53";
 	top: 0;
 	position: absolute;
 	left: 0;
-}
+}*/
 
 .content .widget_products h5{
 	position: relative;

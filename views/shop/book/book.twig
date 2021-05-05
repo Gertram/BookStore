@@ -57,154 +57,93 @@
                         </div>
                     </div>
                     <div>
-                        <ul class="tab-wrap">
-                            <li class="description_tab alt-tab active" id="tab-title-description" role="tab"
-                                aria-controls="tab-description">
-                                <a href="#tab-description">
-                                    Description </a>
-                            </li>
-                            <li class="reviews_tab alt-tab" id="tab-title-reviews" role="tab"
-                                aria-controls="tab-reviews">
-                                <a href="#tab-reviews">
-                                    Reviews (0) </a>
-                            </li>
-                        </ul>
-                        <div class="description-panel"
-                             id="tab-description" role="tabpanel" aria-labelledby="tab-title-description"
-                             style="display: block;">
-                            <h2>Description</h2>
-                            <p>Lorem ipsum dolor sit amet, qui sumo copiosae ea, vim dolorum volumus ei. Mei ei
-                                dolor tamquam deleniti. Habemus copiosae his cu, quo ne reque augue. Nonumy
-                                contentiones his eu, vel falli copiosae inimicus te. Liber commune et vix.
-                                Putant quaeque inimicus cu usu, eum civibus delicatissimi an.&nbsp;Tota
-                                suavitate mnesarchum ad nec, at vim propriae voluptua. In vim laudem cetero
-                                interpretaris. Civibus vivendum conclusionemque mel eu. Homero dolorum phaedrum
-                                sed no, eos oratio forensibus te. Mea possim accusamus theophrastus ex, ea dicit
-                                patrioque sit. Vix possim volutpat suscipiantur cu, ex nam purto invidunt, ut
-                                qui nominati pertinacia.</p>
-                        </div>
-                        <div class="review-panel"
-                             id="tab-reviews" role="tabpanel" aria-labelledby="tab-title-reviews"
-                             style="display: none;">
-                            <div id="reviews" class="woocommerce-Reviews">
-                                <div id="comments">
-                                    <h2 class="woocommerce-Reviews-title">
-                                        Reviews </h2>
-                                    <p class="woocommerce-noreviews">There are no reviews yet.</p>
-                                </div>
-                                <div id="review_form_wrapper">
-                                    <div id="review_form">
-                                        <div id="respond" class="comment-respond">
-                                                    <span id="reply-title" class="comment-reply-title">Be the first to review “It’s a really strange story” <small><a
-                                                                    rel="nofollow" id="cancel-comment-reply-link"
-                                                                    href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#respond"
-                                                                    style="display:none;">Cancel reply</a></small></span>
-                                            <form action="http://booklovers.ancorathemes.com/wp-comments-post.php"
-                                                  method="post" id="commentform" class="comment-form">
+                        <script type="text/javascript">
+                            jQuery(document).ready(function($) {
+                                $('.description_tab').on('click',function () {
+                                    $('.description_tab').addClass('active');
+                                    $('.reviews_tab').removeClass('active');
+                                    $('.description-panel').show();
+                                    $('.review-panel').hide();
 
-                                                <style type="text/css">
-                                                    .wp-social-login-connect-with {
-                                                    }
+                                    return false;
+                                });
+                                $('.reviews_tab').on('click',function () {
+                                    $('.description_tab').removeClass('active');
+                                    $('.reviews_tab').addClass('active');
+                                    $('.description-panel').hide();
+                                    $('.review-panel').show();
 
-                                                    .wp-social-login-provider-list {
-                                                    }
-
-                                                    .wp-social-login-provider-list a {
-                                                    }
-
-                                                    .wp-social-login-provider-list img {
-                                                    }
-
-                                                    .wsl_connect_with_provider {
-                                                    }</style>
-                                                <div class="wp-social-login-widget">
-                                                    <div class="wp-social-login-connect-with">Connect with:
-                                                    </div>
-                                                    <div class="wp-social-login-provider-list">
-                                                        <a rel="nofollow"
-                                                           href="http://booklovers.ancorathemes.com/wp-login.php?action=wordpress_social_authenticate&amp;mode=login&amp;provider=Facebook&amp;redirect_to=http%3A%2F%2Fbooklovers.ancorathemes.com%2Fshop%2Fits-a-really-strange-story%2F"
-                                                           title="Connect with Facebook"
-                                                           class="wp-social-login-provider wp-social-login-provider-facebook"
-                                                           data-provider="Facebook" role="button">
-                                                            <img alt="Facebook"
-                                                                 src="./It’s a really strange story – Booklovers_files/facebook.webp"
-                                                                 aria-hidden="true">
-                                                        </a>
-                                                        <a rel="nofollow"
-                                                           href="http://booklovers.ancorathemes.com/wp-login.php?action=wordpress_social_authenticate&amp;mode=login&amp;provider=Twitter&amp;redirect_to=http%3A%2F%2Fbooklovers.ancorathemes.com%2Fshop%2Fits-a-really-strange-story%2F"
-                                                           title="Connect with Twitter"
-                                                           class="wp-social-login-provider wp-social-login-provider-twitter"
-                                                           data-provider="Twitter" role="button">
-                                                            <img alt="Twitter"
-                                                                 src="./It’s a really strange story – Booklovers_files/twitter.webp"
-                                                                 aria-hidden="true">
-                                                        </a>
-                                                    </div>
-                                                    <div class="wp-social-login-widget-clearing"></div>
+                                    return false;
+                                });
+                            });
+                        </script>
+                        <div class="tabs-wrap">
+                            <ul class="tab-wrap">
+                                <li class="description_tab alt-tab active" id="tab-title-description" role="tab"
+                                    aria-controls="tab-description">
+                                    Description
+                                </li>
+                                <li class="reviews_tab alt-tab" id="tab-title-reviews" role="tab"
+                                    aria-controls="tab-reviews">
+                                    Reviews ({{ reviews|length }})
+                                </li>
+                            </ul>
+                            <div class="description-panel"
+                                 id="tab-description" role="tabpanel" aria-labelledby="tab-title-description"
+                                 style="display: block;">
+                                <h2>Description</h2>
+                                <p>{{ book.description }}</p>
+                            </div>
+                            <div class="review-panel"
+                                 id="tab-reviews" role="tabpanel" aria-labelledby="tab-title-reviews"
+                                 style="display: none;">
+                                <div id="reviews" class="woocommerce-Reviews">
+                                    <div id="comments">
+                                        <h2 class="woocommerce-Reviews-title">
+                                            Reviews </h2>
+                                        {% if reviews is empty %}
+                                        <p class="woocommerce-noreviews">There are no reviews yet.</p>
+                                        {% else %}
+                                            {% for review in reviews %}
+                                                <div>
+                                                    <h6>{{ review.username }}</h6>
+                                                    <p>{{ review.text }}</p>
                                                 </div>
-
-                                                <p class="comment-notes"><span id="email-notes">Your email address will not be published.</span>
-                                                    Required fields are marked <span class="required">*</span>
-                                                </p>
-                                                <div class="comment-form-rating"><label for="rating">Your
-                                                        rating&nbsp;<span
-                                                                class="required">*</span></label>
-                                                    <p class="stars"><span>							<a
-                                                                    class="star-1"
-                                                                    href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#">1</a>							<a
-                                                                    class="star-2"
-                                                                    href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#">2</a>							<a
-                                                                    class="star-3"
-                                                                    href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#">3</a>							<a
-                                                                    class="star-4"
-                                                                    href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#">4</a>							<a
-                                                                    class="star-5"
-                                                                    href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#">5</a>						</span>
-                                                    </p><select name="rating" id="rating" required=""
-                                                                style="display: none;">
-                                                        <option value="">Rate…</option>
-                                                        <option value="5">Perfect</option>
-                                                        <option value="4">Good</option>
-                                                        <option value="3">Average</option>
-                                                        <option value="2">Not that bad</option>
-                                                        <option value="1">Very poor</option>
-                                                    </select></div>
-                                                <p class="comment-form-comment"><label for="comment">Your
-                                                        review&nbsp;<span
-                                                                class="required">*</span></label><textarea id="comment"
-                                                                                                           name="comment"
-                                                                                                           cols="45"
-                                                                                                           rows="8"
-                                                                                                           required=""></textarea>
-                                                </p>
-                                                <p class="comment-form-author"><label
-                                                            for="author">Name&nbsp;<span
-                                                                class="required">*</span></label><input id="author"
-                                                                                                        name="author"
-                                                                                                        type="text"
-                                                                                                        value=""
-                                                                                                        size="30"
-                                                                                                        required=""></p>
-                                                <p class="comment-form-email"><label
-                                                            for="email">Email&nbsp;<span
-                                                                class="required">*</span></label><input id="email"
-                                                                                                        name="email"
-                                                                                                        type="email"
-                                                                                                        value=""
-                                                                                                        size="30"
-                                                                                                        required=""></p>
-                                                <p class="form-submit"><input name="submit" type="submit"
-                                                                              id="submit" class="submit"
-                                                                              value="Submit"> <input
-                                                            type="hidden" name="comment_post_ID" value="251"
-                                                            id="comment_post_ID">
-                                                    <input type="hidden" name="comment_parent"
-                                                           id="comment_parent" value="0">
-                                                </p></form>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                    <div id="review_form_wrapper">
+                                        <div id="review_form">
+                                            <div id="respond" class="comment-respond">
+                                                {% if huser is defined %}
+                                                <form action="http://booklovers.ancorathemes.com/wp-comments-post.php"
+                                                      method="post" id="commentform" class="comment-form">
+                                                    <div class="comment-form-rating"><label for="rating">Your
+                                                            rating</label>
+                                                       <select name="rating" id="rating" required="">
+                                                            <option value="">Rate…</option>
+                                                            <option value="5">Perfect</option>
+                                                            <option value="4">Good</option>
+                                                            <option value="3">Average</option>
+                                                            <option value="2">Not that bad</option>
+                                                            <option value="1">Very poor</option>
+                                                        </select></div>
+                                                    <p class="comment-form-comment"><label for="comment">Your
+                                                            review<textarea id="comment" name="comment" required=""></textarea>
+                                                        </label>
+                                                    </p>
+                                                    <p class="form-submit">
+                                                        <input name="submit" type="submit" class="submit" value="Submit">
+                                                    </p>
+                                                </form>
+                                                    {% else %}
+                                                    <a href="/login">Авторизируйтесь чтобы оставить отзыв</a>
+                                                {% endif %}
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="clear"></div>
                                 </div>
-                                <div class="clear"></div>
                             </div>
                         </div>
                     </div>

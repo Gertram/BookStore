@@ -15,7 +15,10 @@ class Genres{
             console.log(err);
         });
     }
-
+    static async getMostNumerous(limit){
+        let res = await db.query('SELECT genres.*,(SELECT count(*) FROM books_genres WHERE books_genres.genre_id = genres.genre_id) as quantity FROM genres order by quantity DESC LIMIT ?',[limit])
+        return res[0];
+    }
 }
 
 module.exports = Genres;

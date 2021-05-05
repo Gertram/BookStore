@@ -6,9 +6,7 @@
                     <aside id="booklovers_widget_socials-3" class="widget_number_1 widget widget_socials">
                         <div class="widget_inner">
                             <div class="logo">
-                                <a href="http://booklovers.ancorathemes.com/"><img
-                                        src="/img/footer-2.png"
-                                        class="logo_main" alt="footer-2" width="195" height="29"><br>
+                                <a href="/"><img src="/img/footer-2.png" class="logo_main" alt="footer-2" ><br>
                                     <div class="logo_slogan">Your Favorite Bookshelf!</div>
                                 </a>
                             </div>
@@ -16,7 +14,7 @@
                                 high-quality services to order and receive the best books. Choose your favorite
                                 book with us!
                             </div>
-                            <h6 class="social_title">Follow Us</h6>
+                            {#<h6 class="social_title">Follow Us</h6>
                             <div class="sc_socials sc_socials_type_icons sc_socials_shape_round sc_socials_size_tiny">
                                 <div class="sc_socials_item"><a href="https://www.facebook.com/AncoraThemes/"
                                                                 target="_blank"
@@ -30,7 +28,7 @@
                                                                 target="_blank"
                                                                 class="social_icons social_instagramm"><span
                                         class="icon-instagramm"></span></a></div>
-                            </div>
+                            </div>#}
                         </div>
 
                     </aside>
@@ -41,17 +39,17 @@
                             <ul id="menu-footer-menu" class="menu">
                                 <li id="menu-item-644"
                                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-644 has_children">
-                                    <a href="http://booklovers.ancorathemes.com/#">find</a>
+                                    <a href="/search">find</a>
                                     <ul class="sub-menu">
                                         <li id="menu-item-643"
                                             class="menu-item menu-item-type-post_type menu-item-object-page menu-item-643">
-                                            <a href="http://booklovers.ancorathemes.com/about/">About us</a>
+                                            <a href="/about">About us</a>
                                         </li>
                                         <li id="menu-item-645"
                                             class="menu-item menu-item-type-post_type menu-item-object-page menu-item-645">
-                                            <a href="http://booklovers.ancorathemes.com/contacts/">Contact
+                                            <a href="/contacts">Contact
                                                 us</a></li>
-                                        <li id="menu-item-646"
+                                        {#<li id="menu-item-646"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-646">
                                             <a href="http://booklovers.ancorathemes.com/#">Cancellations</a>
                                         </li>
@@ -67,17 +65,17 @@
                                                 delivery</a></li>
                                         <li id="menu-item-652"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-652">
-                                            <a href="http://booklovers.ancorathemes.com/#">Wish list</a></li>
+                                            <a href="http://booklovers.ancorathemes.com/#">Wish list</a></li>#}
                                     </ul>
                                 </li>
                                 <li id="menu-item-653"
                                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-653 has_children">
-                                    <a href="http://booklovers.ancorathemes.com/#">shop</a>
+                                    <a href="/shop">shop</a>
                                     <ul class="sub-menu">
                                         <li id="menu-item-654"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-654">
-                                            <a href="http://booklovers.ancorathemes.com/#">My Orders</a></li>
-                                        <li id="menu-item-655"
+                                            <a href="/orders">My Orders</a></li>
+                                        {#<li id="menu-item-655"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-655">
                                             <a href="http://booklovers.ancorathemes.com/#">Shop Collections</a>
                                         </li>
@@ -89,7 +87,7 @@
                                             <a href="http://booklovers.ancorathemes.com/#">Get Help</a></li>
                                         <li id="menu-item-658"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-658">
-                                            <a href="http://booklovers.ancorathemes.com/#">FAQ</a></li>
+                                            <a href="http://booklovers.ancorathemes.com/#">FAQ</a></li>#}
                                     </ul>
                                 </li>
                             </ul>
@@ -101,57 +99,23 @@
                            class="widget_number_3 widget woocommerce widget_recent_reviews"><h5
                             class="widget_title">Best sellers</h5>
                         <ul class="product_list_widget">
-                            <li>
+                            {% for book in fbest_sellers %}
+                                <li>
+                                    <a href="/shop/{{ book.book_id }}">
+                                        <img src="/img/{{book.img}}" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail">
+                                        <span class="product-title">{{ book.title }}</span>
+                                    </a>
 
-                                <a href="http://booklovers.ancorathemes.com/shop/life-in-the-garden/#comment-34">
-                                    <img width="340" height="520"
-                                         src="/img/book4-340x520.jpg"
-                                         class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
-                                         alt="" loading="lazy"
-                                         srcset="http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book4-340x520.jpg 340w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book4-196x300.jpg 196w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book4-670x1024.jpg 670w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book4-600x918.jpg 600w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book4.jpg 680w"
-                                         sizes="(max-width: 340px) 100vw, 340px"> <span class="product-title">Life in the garden</span>
-                                </a>
-
-                                <div class="star-rating" role="img" aria-label="Rated 4 out of 5"><span
-                                        style="width:80%">Rated <strong
-                                        class="rating">4</strong> out of 5</span></div>
-                                <span class="reviewer">by ANC_admin</span>
-
-                            </li>
-                            <li>
-
-                                <a href="http://booklovers.ancorathemes.com/shop/cooking-with-love/#comment-6">
-                                    <img width="340" height="520"
-                                         src="/img/book11-340x520.jpg"
-                                         class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
-                                         alt="" loading="lazy"
-                                         srcset="http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book11-340x520.jpg 340w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book11-196x300.jpg 196w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book11-670x1024.jpg 670w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book11-600x918.jpg 600w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book11.jpg 680w"
-                                         sizes="(max-width: 340px) 100vw, 340px"> <span class="product-title">Cooking with love</span>
-                                </a>
-
-                                <div class="star-rating" role="img" aria-label="Rated 5 out of 5"><span
-                                        style="width:100%">Rated <strong
-                                        class="rating">5</strong> out of 5</span></div>
-                                <span class="reviewer">by ANC_admin</span>
-
-                            </li>
-                            <li>
-
-                                <a href="http://booklovers.ancorathemes.com/shop/new-galaxy/#comment-5">
-                                    <img width="340" height="520"
-                                         src="/img/book8-340x520.jpg"
-                                         class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"
-                                         alt="" loading="lazy"
-                                         srcset="http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book8-340x520.jpg 340w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book8-196x300.jpg 196w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book8-670x1024.jpg 670w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book8-600x918.jpg 600w, http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book8.jpg 680w"
-                                         sizes="(max-width: 340px) 100vw, 340px"> <span class="product-title">New galaxy</span>
-                                </a>
-
-                                <div class="star-rating" role="img" aria-label="Rated 5 out of 5"><span
-                                        style="width:100%">Rated <strong
-                                        class="rating">5</strong> out of 5</span></div>
-                                <span class="reviewer">by ANC_admin</span>
-
-                            </li>
+                                    <div class="star-rating" role="img" aria-label="Rated 4 out of 5">
+                                        {% if book.raiting is null %}
+                                            <span>☆☆☆☆☆</span>
+                                        {% else %}
+                                            <span>{% for i in range(1, book.raiting) %}★{% endfor %}{% for i in range(1, 5 - book.raiting) %}☆{% endfor %}</span>
+                                        {% endif %}
+                                    </div>
+                                    <span class="reviewer">by ANC_admin</span>
+                                </li>
+                            {% endfor %}
                         </ul>
                     </aside>
                 </div>

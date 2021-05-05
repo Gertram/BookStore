@@ -1,10 +1,8 @@
 <h3>{{ title }}</h3>
 <div class="list-wrap">
     {% for book in books %}
-        <form method="post" action="/admin/lists" id="remove_{{ book.book_id }}">
-            <input type="text" name="list "value="{{ id }}" hidden/>
-            <input type="text" name="action" value="remove" hidden/>
-            <input type="text" name="book_id" value="{{ book.book_id }}" hidden/>
+        <form method="post" action="/admin/lists/{{ id }}/remove" id="remove_{{ book.book_id }}">
+            <input type="hidden" name="book_id" value="{{ book.book_id }}"/>
         </form>
         <div class="list-item-wrap">
             <div class="item-wrap">

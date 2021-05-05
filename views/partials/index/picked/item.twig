@@ -2,31 +2,32 @@
      style="display:inline-block; vertical-align: top">
     <div class="post_item post_item_products post_item_products_6			 post_format_standard odd">
         <div class="post_featured">
-            <div class="post_thumb"
-                 data-image="http://booklovers.ancorathemes.com/wp-content/uploads/2016/04/book1.jpg"
-                 data-title="Let the sun shine">
+            <div class="post_thumb">
                 <a class="hover_icon hover_icon_link"
-                   href="{{href}}"><img
-                        class="wp-post-image" width="320"
-                        height="520" alt="Let the sun shine"
-                        src="{{img}}"></a>
+                   href="/shop/{{ book_id }}"><img src="/img/{{img}}"></a>
             </div>
         </div>
         <div class="post_content isotope_item_content">
             <h5 class="post_title"><a
-                    href="{{href}}">{{title}}</a></h5>
+                    href="/shop/{{ book_id }}">{{title}}</a></h5>
             <div class="post_descr">
                 <div class="author_name">
-                    {{author}}
+                    {{firstname}} {{ lastname }}
                 </div>
-                <div class="star-rating"
-                     title="Rated 0 out of 5">
-                            <span style="width:0%">
-                                <strong itemprop="ratingValue" class="rating">0</strong> out of <span itemprop="bestRating">5</span>							based on <span
-                                    itemprop="ratingCount" class="rating">0</span> customer ratings						</span>
+                <style>
+                    .star-rating > span{
+                        font-size: 1.5em;
+                    }
+                </style>
+                <div class="star-rating">
+                    {% if raiting is null %}
+                        <span>☆☆☆☆☆</span>
+                    {% else %}
+                    <span>{% for i in range(1, raiting) %}★{% endfor %}{% for i in range(1, 5 - raiting) %}☆{% endfor %}</span>
+                    {% endif %}
                 </div>
                 <div class="reviews_count">
-                    0 Reviews
+                    {{ reviews_count }} Reviews
                 </div>
 
 
