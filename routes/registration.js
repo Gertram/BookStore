@@ -14,7 +14,7 @@ router.post('/', async function(req, res, next) {
     let password = req.body.password;
     let username = req.body.username;
 
-    let user = await users.create(email,password,username);
+    let user = await users.create(email,password,username,5);
 
     if(user === 'duplicate'){
         res.redirect('back');

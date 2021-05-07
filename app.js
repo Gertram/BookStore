@@ -41,14 +41,20 @@ app.use(function(req, res, next) {
   next();
 });
 
-/*app.use(function (req,res,next) {
-    let user_id = req.coockies.user_id;
-    if(user_id == null){
-        next();
-        return;
+app.use(async function (req,res,next) {
+    const users = require('./models/users');
+    if(req.cookies.user == null){
+        req.user = null;
+        return next();
     }
+    let user = await users.get(req.cookies.user);
+    if(user.length == 0){
+      res.cookies('user',{maxAge:0});
+      return next();
+    }
+    req.user = user;
     next();
-});*/
+});
 
 app.use('/', indexRouter);
 app.use('/admin',adminRouter)

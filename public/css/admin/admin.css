@@ -1,0 +1,78 @@
+.item-wrap{
+    position: relative;
+    margin:auto 10px;
+    border:1px solid #bbbbbb;
+    border-radius: 10px;
+    height: 100%;
+}
+
+.list-item{
+    max-width: 200px;
+}
+
+label{
+    width: 200px;
+    display: block;
+}
+
+.list-item-wrap{
+    display: inline-block;
+}
+
+.item-remove-icon{
+    background:no-repeat center url("/images/remove.png");
+    background-size: contain;
+    z-index: 1;
+    position: absolute;
+    top:0;
+    right: 0;
+    width:24px;
+    border:1px;
+    height: 24px;
+}
+
+.list-wrap{
+    align-items: stretch;
+    flex-direction: row;
+    display: flex;
+}
+
+.item-title, .item-author, .item-price{
+    text-align: center;
+}
+
+.add-item{
+    display: block;
+    height: 100%;
+    min-height: 400px;
+    width:200px;
+    background:no-repeat center url("/img/add-icon.png");
+    background-size: contain;
+}
+
+main{
+    display: flex;
+}
+
+.sidebar{
+    border-bottom: 1px solid #3a3a3a;
+    border-right: 1px solid #3a3a3a;
+    flex-shrink: 0;
+}
+
+.sidebar a {
+    display: block;
+    padding: 1em 3em;
+    color:black;
+    margin:0.5em 1em;
+    border: 1px solid #3a3a3a;
+}
+
+.sidebar a:hover{
+    color: #fe3d2e;
+}
+
+.mainbar{
+    flex-grow: 1;
+    padding: 2em;
+}

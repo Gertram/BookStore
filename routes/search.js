@@ -4,7 +4,7 @@ const books = require('../models/books');
 const render = require('../app/render');
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render("search/search", { title: 'Search' });
+    render(req,res,"search/search", { title: 'Search' });
 });
 
 router.get('/query', async function(req, res, next) {

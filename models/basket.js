@@ -21,6 +21,9 @@ class UserBasket{
     async remove(product){
         let res = await db.query('DELETE FROM baskets WHERE user_id = ? and book_id = ?',[this.user,product]);
     }
+    async clear(){
+        await db.query('DELETE FROM baskets where user_id = ?',[this.user]);
+    }
 }
 
 class CookieBasket{
@@ -56,6 +59,9 @@ class CookieBasket{
         });
 
         this.res.cookie('basket', basket, {maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
+    }
+    async clear(){
+        this.res.cookie('basket',null,{maxAge:0});
     }
 }
 

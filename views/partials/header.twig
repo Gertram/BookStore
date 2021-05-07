@@ -1,4 +1,4 @@
-<header class="top_panel_wrap top_panel_style_4 scheme_original menu_show" style="margin-top: 0px;">
+<header class="top_panel_wrap top_panel_style_4 scheme_original menu_show" style="margin-top: 0px;position: initial">
     <div class="top_panel_wrap_inner top_panel_inner_style_4 top_panel_position_above">
         <div class="top_panel_top">
             <div class="content_wrap clearfix">
@@ -6,12 +6,13 @@
                 <div class="contact_phone_in_top">
                     Free Call <span><a href="tel:123-456-7890">123-456-7890</a></span></div>
                 <div class="top_panel_top_user_area">
-                    <ul id="menu_user" class="menu_user_nav inited sf-js-enabled sf-arrows">
+                    <ul id="menu_user" class="menu_user_nav inited sf-js-enabled sf-arrows" style="display: flex;">
                         <li class="menu_user_login">
                             {% if huser is not defined %}
                             <a href="/login" class="popup_link popup_login_link icon-user inited">Login</a>
                             {% else %}
                                 <a href="/users/{{ huser.user_id }}"  class="popup_link popup_login_link icon-user inited">{{huser.username}}</a>
+                        </li><li><a href="/login/logout" style="height: 100%;border: none; text-transform:none;font-weight: normal;color: #797979;" class="popup_link">Выйти</a>
                             {% endif %}
                             {#<div id="popup_login"
                                  class="popup_wrap popup_login bg_tint_light animated fast fadeOut"

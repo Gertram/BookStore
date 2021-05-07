@@ -1,0 +1,22 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <div class="content_wrap">
+        {% if orders is empty %}
+            <p>Ничего нет</p>
+            <p>Поиск по номеру заказа</p>
+            <form action="/orders/find" method="get">
+                <input type="text" name="order_id">
+                <input type="submit">
+            </form>
+        {% else %}
+    {% for order in orders %}
+        <div>
+            <a href="/orders/{{ order.order_id }}">Номер заказа:{{ order.order_id }}</a>
+            <p>Дата:{{ order.order_date }}</p>
+            <p>Адрес:{{ order.address }}</p>
+        </div>
+    {% endfor %}
+        {% endif %}
+    </div>
+{% endblock %}

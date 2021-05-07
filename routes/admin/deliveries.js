@@ -1,37 +1,29 @@
 var express = require('express');
 var router = express.Router();
-const genres = require('../..//models/genres');
+const authors = require('../..//models/deliveries');
 const render = require('../../app/render');
 
 router.use(async function(req,res,next) {
     //Пользователь не администратор и не менеджер по продажам
-    if(req.user.role != 3 && req.user.role != 1){
+    if(req.user.role != 4 && req.user.role != 1){
         res.status(403);
         return res.send();
     }
     next();
 });
 
-router.get('/',async function(req,res,next) {
-    let genres_list = await genres.getAll();
-    render(req,res,'admin/genres',{genres: genres_list})
-});
-
-router.post('/add',async function(req,res,next) {
-    await genres.add(req.body.title);
+/*router.post('/add',async function(req,res,next) {
+    await authors.add(req.body.firstname,req.body.lastname);
     res.redirect('/admin');
 });
 router.post('/remove',async function(req,res,next) {
-    await genres.remove(req.body.genre);
+    await authors.remove(req.body.author);
     res.redirect('/admin');
 });
 
-
-
-
-
-
-
-
+router.get('/',async function(req,res,next){
+    let authors_list = await authors.getAll();
+    render(req,res,'admin/authors',{authors: authors_list})
+});*/
 
 module.exports = router;

@@ -26,6 +26,7 @@ router.post('/buy',async function (req,res,next) {
             return book;
         });
         let order = await orders.add(books_list,req.body.address,1);
+        basket.clear();
         res.redirect('/orders/' + order)
     }
 });

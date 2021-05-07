@@ -1,7 +1,7 @@
 const users = require('../models/users');
 const books = require('../models/books');
 
-function render(req,res,template,items) {
+function render(req,res,template,items = {}) {
     books.getMostPopular(3).then(mostPopular => {
         items.fbest_sellers = mostPopular;
         if (req.cookies.user != null) {

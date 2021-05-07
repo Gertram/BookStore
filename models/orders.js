@@ -2,11 +2,15 @@ let db = require('../app/db');
 var dateFormat = require('dateformat');
 
 class Orders{
-    /*static async getAll(){
-        let res = await db.query('SELECT * FROM authors');
-        return  res[0];
+    static async getAll(filter){
+        let res = await db.query('SELECT * FROM orders where order_id in (?)',[filter])
+        return res[0];
     }
-    static async add(firstname,lastname){
+    static async getUser(user){
+        let res = await db.query('SELECT * FROM orders where customer_id = ?',[user])
+        return res[0];
+    }
+    /*static async add(firstname,lastname){
         db.query('INSERT INTO authors(firstname,lastname) values (?,?)',[firstname,lastname]).catch(err => {
             console.log(err);
         });
@@ -20,19 +24,12 @@ class Orders{
     static async get(order){
         let res = await db.query("SELECT * FROM orders WHERE order_id = ?",[order]);
 
-        let res2 = await db.query("SELECT * FROM order_product where order_id = ?",[order]);
-
-        res2 = res2[0].map(function(val){
-            let price = val['price'].toString();
-            let left = price.slice(0,-2);
-            let right = price.slice(-2);
-            val['price'] = [left,right];
-            return val;
-        });
+        let res2 = await db.query("SELECT * FROM order_product INNER JOIN books on  order_id = ? and books.book_id = order_product.product_id",[order]);
 
         res = res[0][0];
-        
-        res.products = res2;
+
+        if(res != undefined)
+            res.products = res2[0];
         return res;
     }
 

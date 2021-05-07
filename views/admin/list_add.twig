@@ -1,12 +1,16 @@
-{% if books is empty %}
-    <h1>Нечего добавлять</h1>
-{% else %}
-<form method="post" action="/admin/lists/{{ list_id }}/add">
-    <select name="book_id" required>
-        {% for book in books %}
-            <option value="{{ book.book_id }}">{{ book.title }}</option>
-        {% endfor %}
-    </select>
-    <input type="submit">
-</form>
-{% endif %}
+{% extends './admin_layout.twig' %}
+
+{% block main %}
+    {% if books is empty %}
+        <h1>Нечего добавлять</h1>
+    {% else %}
+        <form method="post" action="/admin/lists/{{ list_id }}/add">
+            <select name="book_id" required>
+                {% for book in books %}
+                    <option value="{{ book.book_id }}">{{ book.title }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit">
+        </form>
+    {% endif %}
+{% endblock %}

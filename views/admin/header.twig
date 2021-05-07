@@ -1,0 +1,12 @@
+<header>
+    <div class="left"><a href="/admin">BookStore</a></div>
+    <div class="right">
+        {% if huser is not defined %}
+            <a href="/login">Login</a>
+        {% else %}
+            <a href="/users/{{ huser.user_id }}">{{ huser.username }}</a>
+            <a href="/login/logout">Logout</a>
+        {% endif %}
+    </div>
+
+</header>

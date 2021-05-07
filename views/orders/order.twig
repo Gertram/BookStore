@@ -1,8 +1,20 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-    {{ order_id }}
-    {{ order_date }}
-    {{ customer_id }}
-    {{ address }}
+    {% if order is not defined %}
+        Такого заказа нет
+    {% else %}
+        <p>{{ order.order_id }}</p>
+        <p>{{ order.order_date }}</p>
+        <p>{{ order.customer_id }}</p>
+        <p>{{ order.address }}</p>
+        {% for item in order.products %}
+            <div>
+                <h2>{{ item.title}}</h2>
+                <p>{{ item.price}}</p>
+                <p>{{ item.quantity}}</p>
+                <p>{{ item.img}}</p>
+            </div>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

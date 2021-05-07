@@ -1,0 +1,19 @@
+{% extends './admin_layout.twig' %}
+
+{% block main %}
+    <h2>Авторы</h2>
+    <form method="post" action="/admin/authors/add">
+        <label>Имя<input type="text" name="firstname" required></label>
+        <label>Фамилия<input type="text" name="lastname" required></label>
+        <input type="submit" value="Добавить">
+    </form>
+    <form method="post" action="/admin/authors/remove">
+        <label>Авторы
+            <select name="author">
+                {% for author in authors %}
+                    <option value="{{ author.author_id }}">{{ author.firstname }} {{ author.lastname }}</option>
+                {% endfor %}
+            </select></label>
+        <input type="submit" value="Удалить">
+    </form>
+{% endblock %}

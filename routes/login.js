@@ -6,19 +6,21 @@ const render = require('../app/render');
 /* GET home page. */
 router.get('/', async function(req, res, next) {
     if(req.cookies.user == null) {
-        res.render("login/login", {title: 'Login'});
+        render(req,res,"login/login", {title: 'Login'});
         return;
     }
     render(req,res,'login/already_login');
 });
 
-router.post('/exit',async function(req,res,next) {
+router.get('/logout',async function(req,res,next) {
    if(req.cookies.user == null){
        res.redirect('back');
        return;
    }
 
    res.cookie('user',null,{maxAge: 0});
+   console.log(req);
+   console.log(res);
    res.redirect('back');
 });
 
@@ -29,7 +31,7 @@ router.post('/', async function(req, res, next) {
 
     let user = await users.login(login,password);
 
-    if(user.length === 0){
+    if(user.length == 0){
         res.redirect('back');
         return;
     }
@@ -37,7 +39,7 @@ router.post('/', async function(req, res, next) {
     user = user[0];
 
     res.cookie('user',user.user_id, {maxAge: 90000000, httpOnly: true, secure: false, overwrite: false})
-    res.redirect('/users/' + user.user_id);
+    res.redirect('back');
 });
 
 module.exports = router;

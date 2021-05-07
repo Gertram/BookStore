@@ -8,22 +8,22 @@
                         class="itemscope post_item post_item_single post_featured_default post_format_standard post-53 page
                     type-page status-publish hentry">
                     <section class="post_content" itemprop="articleBody">
-                        {% include 'partials/index/discover/discover_next_book.twig' with lists%}
-                        {% include 'partials/index/stay_in_touch.twig' %}
+                        {% include './discover/discover_next_book.twig' with lists %}
+                        {% include './stay_in_touch.twig' %}
                         {% include 'partials/row.twig' %}
-                        {% include 'partials/index/choose/choose_your_book.twig' with {genres:genres}%}
+                        {% include './choose/choose_your_book.twig' with {genres:genres}%}
                         {#{% include 'partials/row.twig' %}
-                        {% include 'partials/index/readdown/the_read_down.twig' %}#}
+                        {% include './readdown/the_read_down.twig' %}#}
                         {% include 'partials/row.twig' %}
-                        {% include 'partials/index/picked/picked_by_readers.twig' %}
-                        {#{% include 'partials/index/inspire.twig' %}#}
+                        {% include './picked/picked_by_readers.twig' %}
+                        {#{% include './inspire.twig' %}#}
                         {% include 'partials/row.twig' %}
-                        {% include 'partials/index/featured/featured_bestsellers.twig' with featured_bestsellers%}
-                        {% include 'partials/index/most_popular/most_popular.twig' %}
+                        {% include './featured/featured_bestsellers.twig' with featured_bestsellers%}
+                        {% include './most_popular/most_popular.twig' %}
                         {% include 'partials/row.twig' %}
-                       {# {% include 'partials/index/quote_slider.twig' %}
+                       {# {% include './quote_slider.twig' %}
                         {% include 'partials/row.twig' %}#}
-                        {#{% include 'partials/index/sells.twig' %}
+                        {#{% include './sells.twig' %}
                         {% include 'partials/row.twig' %}#}
                     </section>
                 </article>

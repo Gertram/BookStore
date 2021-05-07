@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Admin panel</title>
+    <link rel="stylesheet" type="text/css" href="/css/admin/admin.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/header.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin/footer.css">
+</head>
+<body>
+    {% include './header.twig' %}
+    <main>
+        {% include './sidebar.twig' %}
+        <div class="mainbar">
+        {% block main %}{% endblock %}
+        </div>
+    </main>
+    {% include './footer.twig' %}
+</body>
+</html>

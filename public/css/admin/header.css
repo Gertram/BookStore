@@ -1,0 +1,23 @@
+header {
+    display: flex;
+    background: #3a3a3a;
+    color: white;
+}
+
+header a {
+    display: inline-block;
+    padding: 1em 3em;
+    color: inherit;
+}
+
+header a:hover{
+    color: #fe3d2e;
+}
+
+header .right{
+    flex-shrink: 0;
+}
+
+header .left{
+    flex-grow: 1;
+}

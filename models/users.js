@@ -5,9 +5,9 @@ class Users{
         let res = await db.query("SELECT user_id from users where (email = ? or username = ?) and password = ?",[login,login,password])
         return res[0]
     }
-    static async create(email,password,username){
+    static async create(email,password,username,role){
         try {
-            let res = await db.query("INSERT into users(email,password,username) VALUES(?,?,?)", [email, password, username]);
+            let res = await db.query("INSERT into users(email,password,username,role) VALUES(?,?,?,?)", [email, password, username,role]);
         }catch (err) {
             if(err.errno = 1062){
                 return 'duplicate';
