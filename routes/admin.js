@@ -9,6 +9,9 @@ const users = require('../models/users');
 const render = require('../app/render');
 
 router.use(async function (req,res,next) {
+    if(req.user == null){
+        return res.redirect('/login');
+    }
     if(req.user.role == 5){
         res.status(403);
         return res.send();
@@ -27,6 +30,16 @@ router.use('/books', require('./admin/books'));
 
 router.use('/genres', require('./admin/genres'));
 
+router.use('/tags', require('./admin/tags'));
+
 router.use('/authors', require('./admin/authors'));
+
+router.use('/providers', require('./admin/providers'));
+
+router.use('/deliveries', require('./admin/deliveries'));
+
+router.use('/reviews', require('./admin/reviews'));
+
+router.use('/users', require('./admin/users'));
 
 module.exports = router;

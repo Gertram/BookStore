@@ -1,0 +1,23 @@
+{% extends '../admin_layout.twig' %}
+
+{% block main %}
+    <h2>Пользователь</h2>
+    <div class="wrap">
+        <div class="fields_wrap">
+            <form method="post" action="/admin/users/{{ user_id }}/redact">
+                <label class="field">Имя пользователя:</label>
+                <input class="field_wrap" type="text" name="username" value="{{ username }}" required>
+                <label class="field">Телефон:</label>
+                <input class="field_wrap" type="tel" name="phone" value="{{ phone }}" required>
+                <label class="field">Электронная почта:</label>
+                <input class="field_wrap" type="email" name="email" value="{{ email }}" required>
+                <label class="field">Пароль</label>
+                <input class="field_wrap" type="password" name="password">
+                <label type="field"><input type="submit" value="Изменить"></label>
+            </form>
+            <form method="post" action="/admin/users/{{ user_id }}/remove">
+                <input type="submit" value="Удалить">
+            </form>
+        </div>
+    </div>
+{% endblock %}

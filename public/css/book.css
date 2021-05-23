@@ -116,3 +116,15 @@
 .list-item{
     margin:2em;
 }
+
+.comment_title {
+    margin:1em auto;
+}
+
+.comment_body{
+    margin:1em auto;
+}
+
+.comment{
+    margin:1em auto;
+}

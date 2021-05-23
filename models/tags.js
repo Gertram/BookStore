@@ -6,16 +6,14 @@ class Tags{
         return  res[0];
     }
     static async add(title){
-        db.query('INSERT INTO tags(title) values (?)',[title]).catch(err => {
-            console.log(err);
-        });
+        await db.query('INSERT INTO tags(title) values (?)',[title]);
     }
-    static async remove(genre_id){
-        db.query('DELETE FROM tags where tag_id = ?',[genre_id]).catch(err => {
-            console.log(err);
-        });
+    static async remove(tag_id){
+        await db.query('DELETE FROM tags where tag_id = ?',[tag_id])
     }
-
+    static async rename(tag_id,title){
+        await db.query('UPDATE tags set title = ? where tag_id = ?',[title,tag_id]);
+    }
 }
 
 module.exports = Tags;

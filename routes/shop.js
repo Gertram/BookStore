@@ -5,7 +5,7 @@ const books = require('../models/books');
 const genres = require('../models/genres');
 const tags = require('../models/tags');
 const getBasket = require('../models/basket');
-const raitings = require('../models/raitings');
+const reviews = require('../models/reviews');
 /* GET home page. */
 router.get('/', async function(req, res, next) {
   let min_price = req.query.min_price;
@@ -51,7 +51,19 @@ router.get('/', async function(req, res, next) {
   render(req,res,"shop/shop", { title: 'Express',books:books_list,range:range,genres:genres_list,tags:tags_list,basket:await basket.products() });
 });
 
+router.post('/:book_id/add_review',async function(req,res,next) {
+  let book = await books.get(req.params.book_id);
+  if(book.length === 0){
+    res.status(404);
+    return;
+  }
+  await reviews.add(req.user.user_id,req.params.book_id,req.body.raiting,req.body.comment);
+
+  res.redirect('back');
+});
+
 router.get('/:book_id/',async function(req,res,next) {
+
   let book = await books.get(req.params.book_id);
   if(book.length === 0){
     res.status(404);
@@ -59,9 +71,17 @@ router.get('/:book_id/',async function(req,res,next) {
   }
   let books_list = await books.getAll();
 
-  let reviews_list = await raitings.getAll();
+  let reviews_list = await reviews.getAllForBook(req.params.book_id), is_comment;
 
-  render(req,res,'shop/book/book',{books:books_list,book:book[0],reviews:reviews_list});
+  is_comment = false;
+
+  reviews_list.forEach(item => {
+      if(req.user != null && item.user_id == req.user.user_id){
+          is_comment = true;
+      }
+  });
+
+  render(req,res,'shop/book/book',{books:books_list,book:book[0],reviews:reviews_list,is_comment:is_comment});
 });
 
 module.exports = router;

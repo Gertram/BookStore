@@ -20,14 +20,22 @@
                     }
                 </style>
                 <div class="star-rating">
-                    {% if raiting is null %}
-                        <span>☆☆☆☆☆</span>
-                    {% else %}
-                    <span>{% for i in range(1, raiting) %}★{% endfor %}{% for i in range(1, 5 - raiting) %}☆{% endfor %}</span>
+                    {% if raiting is not null %}
+                        {% if raiting > 4 and raiting < 6%}
+                            <span>★★★★★</span>
+                        {% elseif raiting > 3 and raiting < 5%}
+                            <span>★★★★☆</span>
+                        {% elseif raiting > 2 and raiting < 4%}
+                            <span>★★★☆☆</span>
+                        {% elseif raiting > 1 and raiting < 3%}
+                            <span>★★☆☆☆</span>
+                        {% elseif raiting > 0 and raiting < 2%}
+                            <span>★☆☆☆☆</span>
+                        {% endif %}
                     {% endif %}
                 </div>
                 <div class="reviews_count">
-                    {{ reviews_count }} Reviews
+                    {{ reviews_count }} Отзывов
                 </div>
 
 

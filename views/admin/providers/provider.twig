@@ -1,0 +1,12 @@
+{% extends '../admin_layout.twig' %}
+
+{% block main %}
+    <h2>Поставщик</h2>
+    <div class="fields_wrap">
+        <div class="field">Имя:{{ name }}</div>
+        <div class="field">Телефон:{{ phone }}</div>
+    </div>
+    <form method="post" action="/admin/providers/{{ provider_id }}/add">
+        <input type="submit" value="Открыть поставку"/>
+    </form>
+{% endblock %}

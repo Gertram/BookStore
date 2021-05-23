@@ -1,0 +1,15 @@
+{% extends '../admin_layout.twig' %}
+
+{% block main %}
+    <h2>Добавить поставщика</h2>
+    <form method="post" action="/admin/providers/add">
+        <label><input type="text" name="name" placeholder="Имя" required/></label>
+        <label><input type="tel" name="phone" placeholder="Телефон" required/></label>
+        <input type="submit" value="Добавить"/>
+    </form>
+    {% for provider in providers %}
+        <div class="fields_wrap">
+            <a class="field" href="/admin/providers/{{ provider.provider_id }}">{{ provider.name }}</a>
+        </div>
+    {% endfor %}
+{% endblock %}

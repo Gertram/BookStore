@@ -1,0 +1,30 @@
+{% extends './admin_layout.twig' %}
+
+{% block main %}
+    <h2>Теги</h2>
+    <div class="wrap">
+        <div class="fields_wrap">
+            <h3 class="field" >Добавить тег</h3>
+            <form method="post" action="/admin/tags/add" enctype="multipart/form-data">
+                <label class="field">Название: <input type="text" name="title" required></label>
+                <label class="field"><input class="field" type="submit" value="Добавить"></label>
+            </form>
+        </div>
+    </div>
+    {% for tag in tags %}
+        <div class="wrap">
+            <div class="fields_wrap">
+                <div class="book_info">
+                    <form method="post" action="/admin/tags/{{ tag.tag_id }}/rename">
+                        <label class="field">Название: <input type="text" name="title" value="{{ tag.title }}"
+                                                              required></label>
+                        <label class="field"><input type="submit" value="Переименовать"></label>
+                    </form>
+                    <form class="field" method="post" action="/admin/tags/{{ tag.tag_id }}/remove">
+                        <input type="submit" value="Удалить">
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

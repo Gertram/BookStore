@@ -2,18 +2,29 @@
 
 {% block main %}
     <h2>Авторы</h2>
-    <form method="post" action="/admin/authors/add">
+    <h3>Добавить автора</h3>
+    <form class="field" method="post" action="/admin/authors/add" enctype="multipart/form-data">
         <label>Имя<input type="text" name="firstname" required></label>
         <label>Фамилия<input type="text" name="lastname" required></label>
-        <input type="submit" value="Добавить">
+        <label>Фото: <input type="file" accept="image/*" name="filedata"></label>
+        <input class="field" type="submit" value="Добавить">
     </form>
-    <form method="post" action="/admin/authors/remove">
-        <label>Авторы
-            <select name="author">
-                {% for author in authors %}
-                    <option value="{{ author.author_id }}">{{ author.firstname }} {{ author.lastname }}</option>
-                {% endfor %}
-            </select></label>
-        <input type="submit" value="Удалить">
-    </form>
+    {% for author in authors %}
+        <div class="wrap">
+            <div class="fields_wrap author_wrap">
+                <img class="author_img" src="/img/{{ author.author_img }}"/>
+                <div class="author_info">
+                    <form class="field" method="post" action="/admin/authors/{{ author.author_id }}/redact" enctype="multipart/form-data">
+                        <label>Имя: <input type="text" name="firstname" value="{{ author.firstname }}"></label>
+                        <label>Фамилия: <input type="text" name="lastname" value="{{ author.lastname }}"></label>
+                        <label>Фото: <input type="file" accept="image/*" name="filedata"></label>
+                        <input type="submit" value="Изменить">
+                    </form>
+                    <form class="field" method="post" action="/admin/authors/{{ author.author_id }}/remove">
+                        <input type="submit" value="Удалить">
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

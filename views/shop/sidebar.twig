@@ -2,10 +2,10 @@
     <div class="sidebar_inner widget_area_inner">
         <aside id="woocommerce_widget_cart-2"
                class="widget_number_1 widget woocommerce widget_shopping_cart"><h5 class="widget_title">
-                Cart</h5>
+                Корзина</h5>
             <div class="widget_shopping_cart_content">
                 {% if basket is empty %}
-                <p class="woocommerce-mini-cart__empty-message">No products in the cart.</p>
+                <p class="woocommerce-mini-cart__empty-message">Корзина пуста.</p>
                 {% else %}
                     {% for item in basket %}
                         {% include '/basket/item.twig' with item %}
@@ -15,17 +15,17 @@
         </aside>
         <aside id="woocommerce_price_filter-2"
                class="widget_number_2 widget woocommerce widget_price_filter"><h5 class="widget_title">
-                Filter by price</h5>
+                Цена</h5>
             <form method="get" id="search_form" action="/shop/">
                 <input type="text" id="min_price" name="min_price" pattern="(\d+)|(\d+.\d{1,2})" value="{{ min_price // 100 }}.{{ min_price % 100 }}" placeholder="Min_pirce">
                 <input type="text" id="max_price" name="max_price" pattern="(\d+)|(\d+.\d{1,2})" value="{{ max_price // 100 }}.{{ max_price % 100 }}" placeholder="Max_price">
-                <button type="submit" class="button">Filter</button>
+                <button type="submit" class="button">Фильтр</button>
             </form>
         </aside>
         <aside id="woocommerce_product_categories-2"
                class="widget_number_3 widget woocommerce widget_product_categories"><h5
-                    class="widget_title">Product Categories</h5>
-            <select name="genres" form="search_form" multiple class="product-categories">
+                    class="widget_title">Жанры</h5>
+            <select style="height:200px" name="genres" form="search_form" multiple class="product-categories">
                 {% for genre in genres %}
                     <option class="cat-item cat-item-37" value="{{ genre.genre_id }}">{{ genre.title }}</option>
                 {% endfor %}
@@ -33,8 +33,8 @@
         </aside>
         <aside id="woocommerce_product_tag_cloud-2"
                class="widget_number_4 widget woocommerce widget_product_tag_cloud"><h5
-                    class="widget_title">Product Tags</h5>
-            <select name="tags" form="search_form" multiple class="product-categories">
+                    class="widget_title">Теги:</h5>
+            <select style="height:200px" name="tags" form="search_form" multiple class="product-categories">
                 {% for tag in tags %}
                     <option class="cat-item cat-item-37" value="{{ tag.tag_id }}">{{ tag.title }}</option>
                 {% endfor %}

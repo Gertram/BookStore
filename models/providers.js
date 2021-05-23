@@ -5,6 +5,10 @@ class Providers{
         let res = await db.query('SELECT * FROM providers');
         return  res[0];
     }
+    static async get(provider){
+        let res = await db.query('SELECT * FROM providers WHERE provider_id = ?',[provider]);
+        return  res[0];
+    }
     static async add(name,phone){
         await db.query('INSERT INTO providers(name,phone) values (?,?)',[name,phone])
     }

@@ -2,14 +2,14 @@
     <div class="top_panel_wrap_inner top_panel_inner_style_4 top_panel_position_above">
         <div class="top_panel_top">
             <div class="content_wrap clearfix">
-                <div class="slogan_in_top">Welcome to our Publishing House!</div>
+                <div class="slogan_in_top">Добро пожаловать в наш магазин!</div>
                 <div class="contact_phone_in_top">
-                    Free Call <span><a href="tel:123-456-7890">123-456-7890</a></span></div>
+                    Бесплатный звонок <span><a href="tel:123-456-7890">123-456-7890</a></span></div>
                 <div class="top_panel_top_user_area">
                     <ul id="menu_user" class="menu_user_nav inited sf-js-enabled sf-arrows" style="display: flex;">
                         <li class="menu_user_login">
                             {% if huser is not defined %}
-                            <a href="/login" class="popup_link popup_login_link icon-user inited">Login</a>
+                            <a href="/login" class="popup_Flink popup_login_link icon-user inited">Войти</a>
                             {% else %}
                                 <a href="/users/{{ huser.user_id }}"  class="popup_link popup_login_link icon-user inited">{{huser.username}}</a>
                         </li><li><a href="/login/logout" style="height: 100%;border: none; text-transform:none;font-weight: normal;color: #797979;" class="popup_link">Выйти</a>
@@ -151,7 +151,7 @@
                         <ul id="menu_main" class="menu_main_nav inited sf-js-enabled sf-arrows">
                             <li id="menu-item-61"
                                 class="menu-item menu-item-type-custom menu-item-object-custom current-menu-ancestor current-menu-parent menu-item-has-children menu-item-61">
-                                <a href="/" class="sf-with-ul">Home</a>
+                                <a href="/" class="sf-with-ul">Главная</a>
                                 <ul class="sub-menu fadeOut animated fast" style="display: none;">
                                     <li id="menu-item-63"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-home current-menu-item page_item page-item-53 current_page_item menu-item-63">
@@ -203,7 +203,7 @@
                             </li>#}
                             <li id="menu-item-262"
                                 class="menu-item menu-item-type-post_type menu-item-object-page menu-item-262">
-                                <a href="/shop">Books</a></li>
+                                <a href="/shop">Магазин</a></li>
                             {#<li id="menu-item-76"
                                 class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-76">
                                 <a href="/blog" class="sf-with-ul">Blog</a>
@@ -251,11 +251,11 @@
                                 <a href="http://booklovers.ancorathemes.com/events_calendar/">Events</a></li>#}
                             <li id="menu-item-1061"
                                 class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-1061">
-                                <a href="/about" class="sf-with-ul">About</a>
+                                <a href="/about" class="sf-with-ul">О Нас</a>
                                 <ul class="sub-menu animated fast fadeOut" style="display: none;">
                                     <li id="menu-item-71"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-71">
-                                        <a href="http://booklovers.ancorathemes.com/about/">About us</a></li>
+                                        <a href="http://booklovers.ancorathemes.com/about/">О Нас</a></li>
                                     <li id="menu-item-69"
                                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-69">
                                         <a href="http://booklovers.ancorathemes.com/authors/">Authors</a></li>
@@ -267,7 +267,7 @@
                             </li>
                             <li id="menu-item-72"
                                 class="menu-item menu-item-type-post_type menu-item-object-page menu-item-72"><a
-                                    href="/contacts">Contacts</a></li>
+                                    href="/contacts">Контакты</a></li>
                             <li id="blob"
                                 style="width: 52.0375px; height: 29.1px; left: 413.513px; top: 0px; background-color: rgba(0, 0, 0, 0); opacity: 0; overflow: hidden;"></li>
                         </ul>
@@ -276,7 +276,7 @@
                         <a href="/basket" class="top_panel_cart_button">
                             <span class=" icon-cart"></span>
                             <span class="contact_cart_totals">
-            <span class="cart_items">0</span></span></a>
+            <span class="cart_items">{{ basket_count }}</span></span></a>
                         <ul class="widget_area sidebar_cart sidebar">
                             <li>
                                 <div class="widget woocommerce widget_shopping_cart" style="display: none;">
@@ -314,7 +314,17 @@
 
     </div>
 </header>
-{% include 'partials/main_slider.twig' %}
+<div class="shop-header">
+    <div class="content-wrap">
+        <h3 class="shop-header-title">Вдохновлять ежедневным чтением</h3>
+        <h4 class="shop-header-text">Посетите наш блог и страницу Узнайте ежедневные вдохновляющие цитаты лучших авторов</h4>
+        {#<div class="shop-header-ref-wrap">
+            <a href="/"
+               class="shop-header-ref">visit our blog</a>
+        </div>#}
+    </div>
+</div>
+{#{% include 'partials/main_slider.twig' %}#}
 <!--
 <div class="header_mobile">
     <div class="content_wrap">

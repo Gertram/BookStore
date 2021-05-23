@@ -1,0 +1,29 @@
+{% extends '../admin_layout.twig' %}
+
+{% block main %}
+    <h2>Books panel</h2>
+    <div>
+        <a href="/admin/books/add">
+            <button>Добавить книгу</button>
+        </a>
+        <form method="get" action="/admin/books">
+            <input type="search" name="query">
+            <input type="submit" value="Поиск">
+        </form>
+        <h3>Список книг</h3>
+        <div class="books_list">
+        {% for book in books %}
+            <div class="fields_wrap book_list_wrap">
+                <div class="book_img">
+                    <img class="book_img" src="/img/{{ book.img }}"/>
+                </div>
+                <div class="book_info">
+                    <div class="field">
+                        <a href="/admin/books/{{ book.book_id }}">{{ book.title }}</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        </div>
+    </div>
+{% endblock %}

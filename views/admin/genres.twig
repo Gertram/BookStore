@@ -2,17 +2,32 @@
 
 {% block main %}
     <h2>Genres</h2>
-    <h3>Добавить жанр</h3>
-    <form method="post" action="/admin/genres/add">
-        <label>Название<input type="text" name="title" required></label>
-        <input type="submit" value="Добавить">
-    </form>
-    <form method="post" action="/admin/genres/remove">
-        <label>Все жанры<select name="genre">
-                {% for genre in genres %}
-                    <option value="{{ genre.genre_id }}">{{ genre.title }}</option>
-                {% endfor %}
-            </select></label>
-        <input type="submit" value="Удалить">
-    </form>
+    <div class="wrap">
+        <div class="fields_wrap">
+            <h3 class="field" >Добавить жанр</h3>
+            <form method="post" action="/admin/genres/add" enctype="multipart/form-data">
+                <label class="field">Название: <input type="text" name="title" required></label>
+                <label class="field">Изображение: <input type="file" name="filedata" required></label>
+                <label class="field"><input class="field" type="submit" value="Добавить"></label>
+            </form>
+        </div>
+    </div>
+    {% for genre in genres %}
+        <div class="wrap">
+            <div class="fields_wrap book_wrap">
+                <div class="book_img"><img class="book_img" src="/img/{{ genre.img }}"></div>
+                <div class="book_info">
+                    <form method="post" action="/admin/genres/{{ genre.genre_id }}/rename">
+                        <label class="field">Название: <input type="text" name="title" value="{{ genre.title }}"
+                                                              required></label>
+                        <label class="field">Изображение: <input type="file" name="filedata"></label>
+                        <label class="field"><input type="submit" value="Переименовать"></label>
+                    </form>
+                    <form class="field" method="post" action="/admin/genres/{{ genre.genre_id }}/remove">
+                        <input type="submit" value="Удалить">
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

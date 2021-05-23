@@ -1,160 +1,63 @@
 <!DOCTYPE html>
 <html lang="ru"
       class="scheme_original js no-touch csstransitions js_active  vc_desktop  vc_transform  vc_transform ">
-
-<script id="tinyhippos-injected">if (window.top.ripple) {
-        window.top.ripple("bootstrap").inject(window, document);
-    }</script>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Booklovers – Your Favorite Bookshelf!</title>
-    <style type="text/css"
-           media="screen">#ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar tbody td a.ui-state-active, #ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar tbody td a.ui-state-active:hover, body #booked-profile-page input[type=submit].button-primary:hover, body .booked-list-view button.button:hover, body .booked-list-view input[type=submit].button-primary:hover, body table.booked-calendar input[type=submit].button-primary:hover, body .booked-modal input[type=submit].button-primary:hover, body table.booked-calendar th, body table.booked-calendar thead, body table.booked-calendar thead th, body table.booked-calendar .booked-appt-list .timeslot .timeslot-people button:hover, body #booked-profile-page .booked-profile-header, body #booked-profile-page .booked-tabs li.active a, body #booked-profile-page .booked-tabs li.active a:hover, body #booked-profile-page .appt-block .google-cal-button > a:hover, #ui-datepicker-div.booked_custom_date_picker .ui-datepicker-header {
-            background: #c4f2d4 !important;
+    <style>
+        .shop-header-ref-wrap{
+            text-align: center;
         }
 
-        body #booked-profile-page input[type=submit].button-primary:hover, body table.booked-calendar input[type=submit].button-primary:hover, body .booked-list-view button.button:hover, body .booked-list-view input[type=submit].button-primary:hover, body .booked-modal input[type=submit].button-primary:hover, body table.booked-calendar th, body table.booked-calendar .booked-appt-list .timeslot .timeslot-people button:hover, body #booked-profile-page .booked-profile-header, body #booked-profile-page .appt-block .google-cal-button > a:hover {
-            border-color: #c4f2d4 !important;
+        .shop-header{
+            background-size: cover;
+            background: url("/images/bg1.jpg") center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            margin:20px 0;
+            min-height: calc(100vw /4);
         }
 
-        body table.booked-calendar tr.days, body table.booked-calendar tr.days th, body .booked-calendarSwitcher.calendar, body #booked-profile-page .booked-tabs, #ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar thead, #ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar thead th {
-            background: #039146 !important;
+        .shop-header > .content-wrap{
+            width:100%;
         }
 
-        body table.booked-calendar tr.days th, body #booked-profile-page .booked-tabs {
-            border-color: #039146 !important;
+        .shop-header-text, .shop-header-title, .shop-header-ref{
+            color:white;
+            text-align: center;
         }
 
-        #ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar tbody td.ui-datepicker-today a, #ui-datepicker-div.booked_custom_date_picker table.ui-datepicker-calendar tbody td.ui-datepicker-today a:hover, body #booked-profile-page input[type=submit].button-primary, body table.booked-calendar input[type=submit].button-primary, body .booked-list-view button.button, body .booked-list-view input[type=submit].button-primary, body .booked-list-view button.button, body .booked-list-view input[type=submit].button-primary, body .booked-modal input[type=submit].button-primary, body table.booked-calendar .booked-appt-list .timeslot .timeslot-people button, body #booked-profile-page .booked-profile-appt-list .appt-block.approved .status-block, body #booked-profile-page .appt-block .google-cal-button > a, body .booked-modal p.booked-title-bar, body table.booked-calendar td:hover .date span, body .booked-list-view a.booked_list_date_picker_trigger.booked-dp-active, body .booked-list-view a.booked_list_date_picker_trigger.booked-dp-active:hover, .booked-ms-modal .booked-book-appt /* Multi-Slot Booking */
-        {
-            background: #56c477;
+        .shop-header-ref{
+            display: inline-block;
+            padding: 0.5em 1.2em;
+            border:2px solid;
+            text-transform: uppercase;
+            font-weight: 700;
+            margin-top: 1em;
         }
 
-        body #booked-profile-page input[type=submit].button-primary, body table.booked-calendar input[type=submit].button-primary, body .booked-list-view button.button, body .booked-list-view input[type=submit].button-primary, body .booked-list-view button.button, body .booked-list-view input[type=submit].button-primary, body .booked-modal input[type=submit].button-primary, body #booked-profile-page .appt-block .google-cal-button > a, body table.booked-calendar .booked-appt-list .timeslot .timeslot-people button, body .booked-list-view a.booked_list_date_picker_trigger.booked-dp-active, body .booked-list-view a.booked_list_date_picker_trigger.booked-dp-active:hover {
-            border-color: #56c477;
+        .shop-header-title{
+            margin:1em;
+            font-size: 1.5em;
         }
 
-        body .booked-modal .bm-window p i.fa, body .booked-modal .bm-window a, body .booked-appt-list .booked-public-appointment-title, body .booked-modal .bm-window p.appointment-title, .booked-ms-modal.visible:hover .booked-book-appt {
-            color: #56c477;
+        .shop-header-text{
+            margin: 1em;
+            font-size: 1.1em;
         }
+    </style>
 
-        .booked-appt-list .timeslot.has-title .booked-public-appointment-title {
-            color: inherit;
-        }</style>
     <meta name="robots" content="noindex,nofollow">
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="format-detection" content="telephone=no">
 
     {% include 'partials/links.twig' %}
-    <script type="text/javascript" src="/js/jquery.min.js"
-            id="jquery-core-js"></script>
-    <script type="text/javascript"
-            src="/js/jquery-migrate.min.js"
-            id="jquery-migrate-js"></script>
-    <script type="text/javascript" src="/js/rbtools.min.js"
-            id="tp-tools-js"></script>
-    <script type="text/javascript"
-            src="/js/jquery.blockUI.min.js"
-            id="jquery-blockui-js"></script>
-    <script type="text/javascript" id="wc-add-to-cart-js-extra">
-        /* <![CDATA[ */
-        var wc_add_to_cart_params = {
-            "ajax_url": "\/wp-admin\/admin-ajax.php",
-            "wc_ajax_url": "\/?wc-ajax=%%endpoint%%",
-            "i18n_view_cart": "View cart",
-            "cart_url": "http:\/\/booklovers.ancorathemes.com\/cart\/",
-            "is_cart": "",
-            "cart_redirect_after_add": "no"
-        };
-        /* ]]> */
-    </script>
-    <script type="text/javascript" src="/js/add-to-cart.min.js"
-            id="wc-add-to-cart-js"></script>
-    <script type="text/javascript"
-            src="/js/woocommerce-add-to-cart.js"
-            id="vc_woocommerce-add-to-cart-js-js"></script>
-    <script type="text/javascript" src="/js/modernizr.min.js"
-            id="modernizr-js"></script>
-    <script type="text/javascript" id="booked-wc-fe-functions-js-extra">
-        /* <![CDATA[ */
-        var booked_wc_variables = {
-            "prefix": "booked_wc_",
-            "ajaxurl": "http:\/\/booklovers.ancorathemes.com\/wp-admin\/admin-ajax.php",
-            "i18n_confirm_appt_edit": "Are you sure you want to change the appointment date? By doing so, the appointment date will need to be approved again.",
-            "i18n_pay": "Are you sure you want to add the appointment to cart and go to checkout?",
-            "i18n_mark_paid": "Are you sure you want to mark this appointment as \"Paid\"?",
-            "i18n_paid": "Paid",
-            "i18n_awaiting_payment": "Awaiting Payment",
-            "checkout_page": "http:\/\/booklovers.ancorathemes.com\/checkout\/"
-        };
-        /* ]]> */
-    </script>
-    <script type="text/javascript"
-            src="/js/frontend-functions.js"
-            id="booked-wc-fe-functions-js"></script>
-    <noscript>
-        <style>.woocommerce-product-gallery {
-                opacity: 1 !important;
-            }</style>
-    </noscript>
     <meta name="generator" content="Powered by WPBakery Page Builder - drag and drop page builder for WordPress.">
     <meta name="generator"
           content="Powered by Slider Revolution 6.3.9 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface.">
-
-    <style type="text/css" data-type="vc_shortcodes-custom-css">
-        .vc_custom_1456131069806 {
-            background-image: url(http://booklovers.ancorathemes.com/wp-content/uploads/2016/02/Layer-81.jpg?id=773) !important;
-        }
-
-        .vc_custom_1455289130875 {
-            background-color: #f5f5f5 !important;
-        }
-
-        .vc_custom_1456137140778 {
-            border-bottom-width: 1px !important;
-            border-bottom-color: #e8e8e8 !important;
-            border-bottom-style: solid !important;
-        }
-
-        .vc_custom_1456744368460 {
-            background-image: url(http://booklovers.ancorathemes.com/wp-content/uploads/2016/02/bg1.jpg?id=329) !important;
-            background-position: center !important;
-            background-repeat: no-repeat !important;
-            background-size: cover !important;
-        }
-
-        .vc_custom_1455289147662 {
-            background-color: #f5f5f5 !important;
-        }
-
-        .vc_custom_1456735764104 {
-            background-image: url(http://booklovers.ancorathemes.com/wp-content/uploads/2016/02/bg2.jpg?id=339) !important;
-            background-position: center !important;
-            background-repeat: no-repeat !important;
-            background-size: cover !important;
-        }
-
-        .vc_custom_1455027096364 {
-            background-color: #de3242 !important;
-        }
-
-        .vc_custom_1493217910336 {
-            padding-top: 1.5em !important;
-        }
-
-        .vc_custom_1493217916802 {
-            margin-bottom: 3.5em !important;
-        }
-    </style>
-    <noscript>
-        <style> .wpb_animate_when_almost_visible {
-                opacity: 1;
-            }</style>
-    </noscript>
-    <style>#rev_slider_2_1_wrapper {
-            height: 505.5421875px
-        }</style>
 </head>
 
 <body class="home page-template-default page page-id-53 theme-booklovers woocommerce-js tribe-js booklovers_body body_style_wide body_filled theme_skin_less article_style_stretch layout_single-standard template_single-standard scheme_original top_panel_show top_panel_above sidebar_hide sidebar_outer_hide wpb-js-composer js-comp-ver-6.5.0 vc_responsive added_to_cart_inited top_panel_fixed">
@@ -162,11 +65,7 @@
    data-description="&lt;i&gt;Return to Home&lt;/i&gt; - &lt;br&gt;navigate to home page of the site"
    data-icon="icon-home" data-url="http://booklovers.ancorathemes.com/" data-separator="yes"></a><a id="toc_top"
                                                                                                     class="sc_anchor"
-                                                                                                    title="To Top"
-                                                                                                    data-description="&lt;i&gt;Back to top&lt;/i&gt; - &lt;br&gt;scroll to top of the page"
-                                                                                                    data-icon="icon-double-up"
-                                                                                                    data-url=""
-                                                                                                    data-separator="yes"></a>
+                                                                                                    ></a>
 <div class="body_wrap">
     <div class="page_wrap">
         {% include 'partials/header.twig' %}

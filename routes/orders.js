@@ -14,21 +14,18 @@ router.get('/', async function(req, res, next) {
     }
 
     let orders_list = await orders.getAll(req.cookies.user);
-    console.log(orders_list);
+
     render(req,res,"orders/orders", {orders:orders_list});
 });
 /* GET home page. */
 router.get('/find', async function(req, res, next) {
     let order_id = req.query.order_id;
     let order = await orders.get(order_id);
-    console.log(order_id);
-    console.log(order);
     render(req,res,"orders/order", {order:order});
 });
 /* GET home page. */
 router.get('/:order', async function(req, res, next) {
     let order = await orders.get(req.params.order);
-    console.log(order);
     render(req,res,"orders/order", {order:order});
 });
 

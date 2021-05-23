@@ -4,48 +4,7 @@
     flex-shrink: 0;
 }
 
-.shop-header-ref-wrap{
-    text-align: center;
-}
 
-.shop-header{
-    background-size: cover;
-    background: url("/images/bg1.jpg") center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-size: cover;
-    margin:20px 0;
-    min-height: calc(100vw /4);
-}
-
-.shop-header > .content-wrap{
-    width:100%;
-}
-
-.shop-header-text, .shop-header-title, .shop-header-ref{
-    color:white;
-    text-align: center;
-}
-
-.shop-header-ref{
-    display: inline-block;
-    padding: 0.5em 1.2em;
-    border:2px solid;
-    text-transform: uppercase;
-    font-weight: 700;
-    margin-top: 1em;
-}
-
-.shop-header-title{
-    margin:1em;
-    font-size: 1.5em;
-}
-
-.shop-header-text{
-    margin: 1em;
-    font-size: 1.1em;
-}
 
 .shop-content {
     display: flex;

@@ -18,19 +18,25 @@
                                class="icon-wrap"><img src="/images/search.svg">
                             </a>
                             <a href="" class="book-image">
-                                <img src="/img/{{book.img}}">
+                                <img src="/img/{{ book.img }}">
                             </a>
                         </div>
                         <div class="info">
                             <h1 class="product-title entry-title">{{ book.title }}</h1>
-                            <p class="price">${{book.price[0]}}.{{ book.price[1] }}</p>
-                            <p>{{ book.description }}</p>
+                            <p class="price">{{ book.price // 100 }}.{{ book.price % 100 }}</p>
+                            <div class="genres">
+                                {% for genre in book.genres %}
+                                    <a href="/shop?genres={{ genre.genre_id }}">{{genre.title}}</a>
+                                {% endfor %}
+                            </div>
+
                             <form class="cart" id="add_product_form"
                                   action="/basket/add"
                                   method="post">
                                 <label class="screen-reader-text" for="quantity_606dcd6830d18">It’s a really
                                     strange story quantity</label>
-                                <input for="add_product_form" type="text" name="product" value="{{ book.book_id }}" hidden>
+                                <input for="add_product_form" type="text" name="product" value="{{ book.book_id }}"
+                                       hidden>
                                 <input for="add_product_form" type="number" class="input-text qty text"
                                        step="1" min="1" max="" name="quantity" value="1" title="Qty" size="4"
                                        placeholder="" inputmode="numeric">
@@ -58,8 +64,8 @@
                     </div>
                     <div>
                         <script type="text/javascript">
-                            jQuery(document).ready(function($) {
-                                $('.description_tab').on('click',function () {
+                            jQuery(document).ready(function ($) {
+                                $('.description_tab').on('click', function () {
                                     $('.description_tab').addClass('active');
                                     $('.reviews_tab').removeClass('active');
                                     $('.description-panel').show();
@@ -67,7 +73,7 @@
 
                                     return false;
                                 });
-                                $('.reviews_tab').on('click',function () {
+                                $('.reviews_tab').on('click', function () {
                                     $('.description_tab').removeClass('active');
                                     $('.reviews_tab').addClass('active');
                                     $('.description-panel').hide();
@@ -102,41 +108,51 @@
                                         <h2 class="woocommerce-Reviews-title">
                                             Reviews </h2>
                                         {% if reviews is empty %}
-                                        <p class="woocommerce-noreviews">There are no reviews yet.</p>
+                                            <p class="woocommerce-noreviews">There are no reviews yet.</p>
                                         {% else %}
                                             {% for review in reviews %}
-                                                <div>
-                                                    <h6>{{ review.username }}</h6>
-                                                    <p>{{ review.text }}</p>
+                                                <div class="comment">
+                                                    <div class="comment_title"><b>{{ review.username }}</b><div class="star-rating" role="img">
+                                                            {% if review.raiting > 4 and review.raiting < 6%}
+                                                                <span>★★★★★</span>
+                                                            {% elseif review.raiting > 3 and review.raiting < 5%}
+                                                                <span>★★★★☆</span>
+                                                            {% elseif review.raiting > 2 and review.raiting < 4%}
+                                                                <span>★★★☆☆</span>
+                                                            {% elseif review.raiting > 1 and review.raiting < 3%}
+                                                                <span>★★☆☆☆</span>
+                                                            {% elseif review.raiting > 0 and review.raiting < 2%}
+                                                                <span>★☆☆☆☆</span>
+                                                            {% endif %}
+                                                        </div></div>
+                                                    <p class="comment_body">{{ review.text }}</p>
                                                 </div>
+                                                <hr>
                                             {% endfor %}
                                         {% endif %}
                                     </div>
                                     <div id="review_form_wrapper">
                                         <div id="review_form">
                                             <div id="respond" class="comment-respond">
-                                                {% if huser is defined %}
-                                                <form action="http://booklovers.ancorathemes.com/wp-comments-post.php"
-                                                      method="post" id="commentform" class="comment-form">
-                                                    <div class="comment-form-rating"><label for="rating">Your
-                                                            rating</label>
-                                                       <select name="rating" id="rating" required="">
+                                                {% if is_comment %}
+
+                                                {% elseif huser is defined %}
+                                                    <form id="review_form" action="/shop/{{ book.book_id }}/add_review" method="post">
+                                                        <label for="rating">Your rating</label>
+                                                        <select style="background: white" name="raiting" id="rating" required>
                                                             <option value="">Rate…</option>
                                                             <option value="5">Perfect</option>
                                                             <option value="4">Good</option>
                                                             <option value="3">Average</option>
                                                             <option value="2">Not that bad</option>
                                                             <option value="1">Very poor</option>
-                                                        </select></div>
-                                                    <p class="comment-form-comment"><label for="comment">Your
-                                                            review<textarea id="comment" name="comment" required=""></textarea>
-                                                        </label>
-                                                    </p>
-                                                    <p class="form-submit">
-                                                        <input name="submit" type="submit" class="submit" value="Submit">
-                                                    </p>
-                                                </form>
-                                                    {% else %}
+                                                        </select>
+                                                        <label style="display: block" for="comment">Your review</label>
+                                                        <textarea style="display: block; background: white;width:100%;"  id="comment"
+                                                                  name="comment" required></textarea>
+                                                        <input type="submit"/>
+                                                    </form>
+                                                {% else %}
                                                     <a href="/login">Авторизируйтесь чтобы оставить отзыв</a>
                                                 {% endif %}
                                             </div>

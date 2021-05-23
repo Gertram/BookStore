@@ -1,4 +1,4 @@
-<li class="list-item">
+<li class="list-item" style="width:200px">
     <a href="/shop/{{ book_id }}"
        class="woocommerce-LoopProduct-link woocommerce-loop-product__link"> </a>
     <div class="post_item_wrap"><a
@@ -14,7 +14,6 @@
                         class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
                 </a><a class="hover_icon hover_icon_link"
                        href="/shop/{{ book_id }}">
-                    <span class="onsale">Sale!</span>
                     <img
                          src="/img/{{ img }}"
                          class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"> </a>
@@ -24,15 +23,13 @@
             <h2 class="woocommerce-loop-product__title"><a
                         href="/shop/{{ book_id }}">A
                     banquet of mouse</a></h2>
-            <span class="price"><del><span class="woocommerce-Price-amount amount"><bdi><span
-                                    class="woocommerce-Price-currencySymbol">$</span>10.20</bdi></span></del> <ins><span
+            <span class="price"><ins><span
                             class="woocommerce-Price-amount amount"><bdi><span
-                                    class="woocommerce-Price-currencySymbol">$</span>9.99</bdi></span></ins></span>
-            <a href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/?add-to-cart=257"
-               data-quantity="1"
-               class="button product_type_simple add_to_cart_button ajax_add_to_cart"
-               data-product_id="257" data-product_sku=""
-               aria-label="Add “A banquet of  mouse” to your cart" rel="nofollow">Add
-                to cart</a></div>
+                                    class="woocommerce-Price-currencySymbol"></span>9.99</bdi></span></ins></span>
+            <form method="post" action="/basket/add">
+                <input type="hidden" name="product" value="{{ book_id }}">
+                <input type="hidden" name="quantity" value="1">
+                <input type="submit" value="Add to cart" >
+            </form></div>
     </div>
 </li>

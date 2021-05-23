@@ -1,0 +1,23 @@
+{% extends '../admin_layout.twig' %}
+
+{% block main %}
+    <h2>Пользователи</h2>
+    {% for user in users %}
+        <div class="wrap">
+            <div class="fields_wrap">
+                <div class="field">Имя пользователя: <a href="/admin/users/{{ user.user_id }}" >{{ user.username }}</a></div>
+                <div class="field">Тип пользователя: {% if user.role == 1 %}
+                    Администратор
+                    {% elseif user.role == 2 %}
+
+                    {% elseif user.role == 3 %}
+                    Менеджер
+                    {% elseif user.role == 4 %}
+                    Сотрудник отдела доставки
+                    {% elseif user.role == 5 %}
+                    Клиент
+                {% endif %}</div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

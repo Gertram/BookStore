@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const authors = require('../..//models/providers');
+const providers = require('../..//models/providers');
+
+const deliveries = require('../..//models/deliveries');
 const render = require('../../app/render');
 
 router.use(async function(req,res,next) {
@@ -12,18 +14,41 @@ router.use(async function(req,res,next) {
     next();
 });
 
-/*router.post('/add',async function(req,res,next) {
-    await authors.add(req.body.firstname,req.body.lastname);
-    res.redirect('/admin');
+router.post('/add',async function(req,res,next) {
+    await providers.add(req.body.name,req.body.phone);
+    res.redirect('back');
 });
+
 router.post('/remove',async function(req,res,next) {
-    await authors.remove(req.body.author);
-    res.redirect('/admin');
+    await providers.remove(req.body.provider);
+    res.redirect('back');
 });
 
 router.get('/',async function(req,res,next){
-    let authors_list = await authors.getAll();
-    render(req,res,'admin/authors',{authors: authors_list})
-});*/
+    let providers_list = await providers.getAll();
+    render(req,res,'admin/providers/providers',{providers: providers_list})
+});
+
+router.get('/:provider_id',async function(req,res,next){
+    console.log(req.params);
+    let provider = await providers.get(req.params.provider_id);
+    if(provider.length == 0){
+        res.status(404);
+        return res.send();
+    }
+    render(req,res,'admin/providers/provider',provider[0])
+});
+
+router.post('/:provider_id/add',async function(req,res,next) {
+    let provider = await providers.get(req.params.provider_id);
+    if(provider.length == 0){
+        res.status(404);
+        return res.send();
+    }
+
+    let id = await deliveries.open(provider[0].provider_id,req.user.user_id);
+
+    res.redirect('/admin/deliveries/' + id + '');
+});
 
 module.exports = router;

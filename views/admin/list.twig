@@ -7,15 +7,20 @@
         <div class="list-item-wrap">
             <div class="item-wrap">
                 <button class="item-remove-icon" form="remove_{{ book.book_id }}"></button>
-                {% include 'index/discover/content_item.twig' with book %}
+                <div class="list-item">
+                    <img src="/img/{{ book.img }}">
+                    <a class="sc_field center" href="/books/{{ book.book_id }}">{{ book.title }}</a>
+                    <div class="sc_field center">{{ book.firstname }} {{ book.lastname }}</div>
+                    <div class="sc_field center">{{ book.price // 100 }}.{{ book.price % 100 }}</div>
+                </div>
             </div>
         </div>
     {% endfor %}
     {% if books|length < 5 %}
-    <div class="list-item-wrap">
-        <div class="item-wrap">
-            <a href="/admin/lists/{{ id }}/add" class="list-item add-item"></a>
+        <div class="list-item-wrap">
+            <div class="item-wrap">
+                <a href="/admin/lists/{{ id }}/add" class="list-item add-item"></a>
+            </div>
         </div>
-    </div>
     {% endif %}
 </div>

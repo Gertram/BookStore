@@ -1,10 +1,14 @@
-var mysql = require('mysql2');
-var pool  = mysql.createPool({
-    connectionLimit : 10,
-    host            : 'localhost',
-    user            : 'root',
-    password        : 'password',
-    database        : 'bookstore'
-}).promise();
+let mysql = require('mysql2');
 
-module.exports = pool;
+let pool = mysql.createPool({
+    connectionLimit: 10,
+    host: 'localhost',
+    user: 'root',
+    password: 'password',
+    database: 'bookstore'
+});
+
+let promise_pool = pool.promise();
+
+
+module.exports = promise_pool;

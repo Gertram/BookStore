@@ -1,9 +1,9 @@
-{% extends 'layout.twig' %}
+    {% extends 'layout.twig' %}
 
 {% block body %}
     <link rel="stylesheet" href="/css/shop.css" type="text/css"/>
     <div class="content-wrap">
-        {% include '/shop/header.twig' %}
+        {#{% include '/shop/header.twig' %}#}
         <div class="shop-content">
             {% include './sidebar.twig' with range%}<!--
             -->{% include './main.twig' %}

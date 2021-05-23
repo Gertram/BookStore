@@ -1,12 +1,17 @@
 <div class="sidebar">
+    {% if huser.role == 1 %}
+        <a href="/admin/users">Пользователи</a>
+        <a href="/admin/reviews">Отзывы</a>
+    {% endif %}
     {% if huser.role == 3 or huser.role == 1 %}
-    <a href="/admin/books">Каталог</a>
-    <a href="/admin/genres">Жанры</a>
-    <a href="/admin/lists">Списки</a>
-    <a href="/admin/authors">Авторы</a>
+        <a href="/admin/books">Каталог</a>
+        <a href="/admin/genres">Жанры</a>
+        <a href="/admin/tags">Теги</a>
+        <a href="/admin/lists">Списки</a>
+        <a href="/admin/authors">Авторы</a>
     {% endif %}
     {% if huser.role == 4 or huser.role == 1 %}
-    <a href="/admin/providers">Поставщики</a>
-    <a href="/admin/deliveries">Поставки</a>
+        <a href="/admin/providers">Поставщики</a>
+        <a href="/admin/deliveries">Поставки</a>
     {% endif %}
 </div>

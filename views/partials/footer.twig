@@ -10,9 +10,9 @@
                                     <div class="logo_slogan">Your Favorite Bookshelf!</div>
                                 </a>
                             </div>
-                            <div class="logo_descr">Our mission to give the customers opportunity to enjoy
-                                high-quality services to order and receive the best books. Choose your favorite
-                                book with us!
+                            <div class="logo_descr">Наша миссия - дать клиентам возможность получать удовольствие
+                                качественные услуги по заказу и получению лучших книг. Выбери свой любимый
+                                бронируйте у нас!
                             </div>
                             {#<h6 class="social_title">Follow Us</h6>
                             <div class="sc_socials sc_socials_type_icons sc_socials_shape_round sc_socials_size_tiny">
@@ -39,16 +39,15 @@
                             <ul id="menu-footer-menu" class="menu">
                                 <li id="menu-item-644"
                                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-644 has_children">
-                                    <a href="/search">find</a>
+                                    <a href="/search">Информация</a>
                                     <ul class="sub-menu">
                                         <li id="menu-item-643"
                                             class="menu-item menu-item-type-post_type menu-item-object-page menu-item-643">
-                                            <a href="/about">About us</a>
+                                            <a href="/about">О Нас</a>
                                         </li>
                                         <li id="menu-item-645"
                                             class="menu-item menu-item-type-post_type menu-item-object-page menu-item-645">
-                                            <a href="/contacts">Contact
-                                                us</a></li>
+                                            <a href="/contacts">Контакты</a></li>
                                         {#<li id="menu-item-646"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-646">
                                             <a href="http://booklovers.ancorathemes.com/#">Cancellations</a>
@@ -70,11 +69,11 @@
                                 </li>
                                 <li id="menu-item-653"
                                     class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-653 has_children">
-                                    <a href="/shop">shop</a>
+                                    <a href="/shop">Каталог</a>
                                     <ul class="sub-menu">
                                         <li id="menu-item-654"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-654">
-                                            <a href="/orders">My Orders</a></li>
+                                            <a href="/orders">Мои заказы</a></li>
                                         {#<li id="menu-item-655"
                                             class="menu-item menu-item-type-custom menu-item-object-custom menu-item-655">
                                             <a href="http://booklovers.ancorathemes.com/#">Shop Collections</a>
@@ -97,7 +96,7 @@
                 <div class="column-1_4">
                     <aside id="woocommerce_recent_reviews-3"
                            class="widget_number_3 widget woocommerce widget_recent_reviews"><h5
-                            class="widget_title">Best sellers</h5>
+                            class="widget_title">Лидеры продаж</h5>
                         <ul class="product_list_widget">
                             {% for book in fbest_sellers %}
                                 <li>
@@ -107,10 +106,18 @@
                                     </a>
 
                                     <div class="star-rating" role="img" aria-label="Rated 4 out of 5">
-                                        {% if book.raiting is null %}
-                                            <span>☆☆☆☆☆</span>
-                                        {% else %}
-                                            <span>{% for i in range(1, book.raiting) %}★{% endfor %}{% for i in range(1, 5 - book.raiting) %}☆{% endfor %}</span>
+                                        {% if book.raiting is not null %}
+                                            {% if book.raiting > 4 and book.raiting < 6%}
+                                                <span>★★★★★</span>
+                                            {% elseif book.raiting > 3 and book.raiting < 5%}
+                                                <span>★★★★☆</span>
+                                            {% elseif book.raiting > 2 and book.raiting < 4%}
+                                                <span>★★★☆☆</span>
+                                            {% elseif book.raiting > 1 and book.raiting < 3%}
+                                                <span>★★☆☆☆</span>
+                                            {% elseif book.raiting > 0 and book.raiting < 2%}
+                                                <span>★☆☆☆☆</span>
+                                            {% endif %}
                                         {% endif %}
                                     </div>
                                     <span class="reviewer">by ANC_admin</span>
@@ -121,13 +128,13 @@
                 </div>
                 <div class="column-1_4">
                     <aside id="text-6" class="widget_number_4 widget widget_text"><h5 class="widget_title">
-                        CONTACT INFO</h5>
+                        Контактная информация</h5>
                         <div class="textwidget">
                             <div class="footer_contact">
-                                <span class="adress">Address:</span> 123, New Lenox<br>Chicago, IL 60606<br>
-                                <span class="phone">Phone:</span> <span><a href="tel: 123-456-7890"> 123-456-7890</a></span><br>
-                                <span class="email">Email:</span><a href="mailto:info@yoursite.com">
-                                info@yoursite.com</a>
+                                <span class="adress">Адрес:</span> <br>г.Казань, ул.Большая Красная, 55<br>
+                                <span class="phone">Телефон:</span> <span><a href="tel: 123-456-7890"> 123-456-7890</a></span><br>
+                                <span class="email">Email:</span><a href="mailto:info@booklovers.com">
+                                info@booklovers.com</a>
                             </div>
                         </div>
                     </aside>

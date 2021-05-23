@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const authors = require('../..//models/deliveries');
+const deliveries = require('../..//models/deliveries');
+const books = require('../..//models/books');
 const render = require('../../app/render');
 
 router.use(async function(req,res,next) {
@@ -12,18 +13,45 @@ router.use(async function(req,res,next) {
     next();
 });
 
-/*router.post('/add',async function(req,res,next) {
-    await authors.add(req.body.firstname,req.body.lastname);
-    res.redirect('/admin');
-});
+
 router.post('/remove',async function(req,res,next) {
-    await authors.remove(req.body.author);
-    res.redirect('/admin');
+    await deliveries.remove(req.body.delivery);
+    res.redirect('back');
 });
 
 router.get('/',async function(req,res,next){
-    let authors_list = await authors.getAll();
-    render(req,res,'admin/authors',{authors: authors_list})
-});*/
+    let deliveries_list = await deliveries.getAll();
+    render(req,res,'admin/deliveries/delivers',{deliveries: deliveries_list})
+});
+router.get('/:delivery_id',async function(req,res,next){
+    let delivery = await deliveries.get(req.params.delivery_id);
+    if(delivery == null){
+        res.status(404);
+        return res.send();
+    }
+
+    render(req,res,'admin/deliveries/delivery',{delivery:delivery,products:await books.getAll()})
+});
+
+router.post('/:delivery_id/add',async function(req,res,next) {
+    let delivery = await deliveries.get(req.params.delivery_id);
+    if(delivery == null){
+        res.status(404);
+        return res.send();
+    }
+
+    await deliveries.add(delivery.delivery_id,req.body.product,req.body.count,req.body.cover);
+    res.redirect('back');
+});
+router.post('/:delivery_id/close',async function(req,res,next) {
+    let delivery = await deliveries.get(req.params.delivery_id);
+    if(delivery == null){
+        res.status(404);
+        return res.send();
+    }
+
+    await deliveries.close(delivery.delivery_id);
+    res.redirect('back');
+});
 
 module.exports = router;

@@ -1,0 +1,14 @@
+
+.list-wrap{
+    align-items: stretch;
+    flex-direction: row;
+    display: flex;
+}
+
+.list-item-wrap{
+    display: inline-block;
+}
+
+.list-item{
+    width: 200px;
+}

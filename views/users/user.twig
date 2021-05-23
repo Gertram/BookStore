@@ -1,15 +1,18 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
+    <style>.block{
+            display:block;
+        }</style>
     <div class="content_wrap">
         <form method="post" action="/users/{{ user_id }}/redact">
-            <label>Имя пользователя:<input type="text" name="username" value="{{ username }}" /></label>
-            <label>Почта:<input type="email" name="email" value="{{ email }}" /></label>
-            <label>Телефон:<input type="tel" name="phone" value="{{ phone }}" /></label>
+            <label class="block">Имя пользователя:<br><input type="text" name="username" value="{{ username }}" /></label>
+            <label class="block">Почта:<br><input type="email" name="email" value="{{ email }}" /></label>
+            <label class="block">Телефон:<br><input type="tel" name="phone" value="{{ phone }}" /></label>
             <input type="submit" value="Сохранить"/>
-        </form>
+        </form><br>
         <form method="post" action="/users/{{ user_id }}/save_password">
-            <label>Новый пароль:<input type="password" name="password" /></label>
+            <label class="block">Новый пароль:<input type="password" name="password" /></label>
             <input type="submit" value="Изменить">
         </form>
     </div>

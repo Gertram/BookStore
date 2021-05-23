@@ -26,8 +26,13 @@ router.post('/buy',async function (req,res,next) {
             return book;
         });
         let order = await orders.add(books_list,req.body.address,1);
+
+        if(order.status === false){
+            return res.redirect('/basket?error=count_error=product=' + order.product);
+        }
+
         basket.clear();
-        res.redirect('/orders/' + order)
+        res.redirect('/orders/' + order.order_id)
     }
 });
 

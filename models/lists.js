@@ -12,14 +12,28 @@ class List{
         return res[0];
     }
     async getAll(){
-        let res = await db.query(select_query,[this.list_id]);
-        return res[0].map(function(val){
-            let price = val['price'].toString();
-            let left = price.slice(0,-2);
-            let right = price.slice(-2);
-            val['price'] = [left,right];
+        let promise1 = db.query(`SELECT books.* from lists_content inner join books on lists_content.list_id = ? and lists_content.book_id = books.book_id`,[this.list_id]);
+        let promise2 = db.query(`SELECT authors.*,books_authors.book_id from lists_content inner join books_authors on lists_content.list_id = ? and lists_content.book_id = books_authors.book_id inner join authors on books_authors.author_id = authors.author_id`,[this.list_id])
+
+        let res = await Promise.all([promise1,promise2])
+
+
+        let res1 = res[0][0];
+        let res2 = res[1][0];
+
+        res1 = res1.map(val=>{
+            res2.forEach(item=>{
+                if(item.book_id == val.book_id){
+                    if(val.authors == null){
+                        val.authors = [];
+                    }
+                    val.authors.push(item);
+                }
+            })
             return val;
-        });
+        })
+
+        return res1;
     }
     async add(book_id){
         let res = await db.query(add_query,[this.list_id,book_id]);

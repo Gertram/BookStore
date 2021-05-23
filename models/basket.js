@@ -1,4 +1,5 @@
 let db = require('../app/db');
+let books = require('./books')
 
 class UserBasket{
     constructor(user){

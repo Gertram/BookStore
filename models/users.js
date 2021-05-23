@@ -1,6 +1,12 @@
-let db = require('../app/db');
+let mongo = require('../app/mongo');
 
 class Users{
+    static async getAll(){
+
+        let res = await db.query('SELECT * FROM users');
+
+        return res[0];
+    }
     static async login(login,password){
         let res = await db.query("SELECT user_id from users where (email = ? or username = ?) and password = ?",[login,login,password])
         return res[0]

@@ -2,6 +2,7 @@ const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
+const multer  = require("multer");
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
@@ -28,6 +29,7 @@ app.set('view engine', 'twig');
 
 app.use(logger('dev'));
 app.use(express.json());
+app.use(multer({dest:"uploads"}).single("filedata"));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
@@ -52,7 +54,7 @@ app.use(async function (req,res,next) {
       res.cookies('user',{maxAge:0});
       return next();
     }
-    req.user = user;
+    req.user = user[0];
     next();
 });
 

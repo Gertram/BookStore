@@ -7,7 +7,11 @@
 }
 
 .list-item{
-    max-width: 200px;
+    width: 200px;
+}
+
+.center{
+    text-align: center;
 }
 
 label{
@@ -35,6 +39,10 @@ label{
     align-items: stretch;
     flex-direction: row;
     display: flex;
+}
+
+.list-item img{
+    width:100%;
 }
 
 .item-title, .item-author, .item-price{
@@ -75,4 +83,60 @@ main{
 .mainbar{
     flex-grow: 1;
     padding: 2em;
+}
+
+.sc_field{
+    display: block;
+    padding:0.25em 0.5em;
+}
+
+.wrap{
+    margin:1em;
+}
+
+.author_img, .book_img{
+    width:200px;
+    flex-shrink: 0;
+}
+
+.author_info, .book_info{
+    flex-grow: 0;
+}
+
+.fields_wrap{
+    display: inline-block;
+    padding:0.5em;
+    border: 1px solid #3a3a3a;
+    border-radius: 0.5em;
+}
+
+.author_wrap, .book_wrap {
+    display: flex;
+}
+
+.field{
+    width:auto;
+    display: block;
+    padding:0.5em 2em;
+}
+
+.field_wrap{
+    margin:0.5em 2em;
+    display: block;
+}
+
+.book_list_wrap{
+    width: 200px;
+}
+
+.books_list{
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 1fr;
+    grid-gap: 8px;
+}
+
+.book_description{
+    width:500px;
+    height:200px;
 }

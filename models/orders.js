@@ -36,23 +36,51 @@ class Orders{
     static async add(products,address,customer){
         let date = dateFormat(new Date(), "yyyy-mm-dd")
 
-        let res = await db.query('INSERT INTO orders(order_date,address,customer_id) values(?,?,?)',[date,address,customer])
+        const books = products.map(product => product.book_id).join(',');
 
-        let values = [];
+        let trans = db.startTransaction();
 
-        let order_id = res[0].insertId;
+        try {
+            const promise1 = trans.query('INSERT INTO orders(order_date,address,customer_id) values(?,?,?)', [date, address, customer]);
+            const promise2 = trans.query(`SELECT COALESCE((SELECT SUM(count) FROM delivery_product where product_id = book_id),0) - COALESCE((SELECT SUM(quantity) FROM order_product where product_id = book_id),0) as quantity,book_id FROM books where book_id in (${books})`);
 
-        products.forEach(product => {
-            values.push(`(${order_id},${product.book_id},${product.price[0]}${product.price[1]},${product.quantity})`)
-        });
+            const res = await Promise.all(promise1,promise2);
 
-        values = values.join(',');
+            const order_id = res[0][0].insertId;
 
-        console.log(values)
+            const counts = res[1][0];
 
-        res = await db.query(`INSERT INTO order_product(order_id,product_id,price,quantity) VALUES ${values};`);
+            let values = [];
 
-        return order_id;
+            products.forEach(product => {
+                counts.forEach(item =>{
+                   if(item.book_id == product.book_id && item.quantity < product.quantity){
+                        trans.rollback();
+                        trans.execute();
+                        return {status:false,product:item.book_id};
+                   }
+                });
+                values.push(`(${order_id},${product.book_id},${product.price[0]}${product.price[1]},${product.quantity})`)
+            });
+
+            values = values.join(',');
+
+            console.log(values)
+
+            res = await trans.query(`INSERT INTO order_product(order_id,product_id,price,quantity) VALUES ${values};`);
+
+            trans.commit();
+
+        }catch (err) {
+            trans.rollback();
+            console.log(err);
+            trans.execute();
+            return {status:false};
+        }
+
+        trans.execute();
+
+        return {status:true,order_id:order_id};
     }
 }
 

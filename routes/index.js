@@ -21,6 +21,7 @@ router.get('/', async function (req, res, next) {
     let mostPopular = await authors.getMostPopular(4);
     let featured_bestsellers_list = await featured_bestsellers.getRandom();
     let new_list = await books.getNew(4);
+
     render(req, res, "index/index", {
         title: 'BookStore',
         lists: mbooks,
