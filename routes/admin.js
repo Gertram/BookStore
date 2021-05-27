@@ -42,4 +42,6 @@ router.use('/reviews', require('./admin/reviews'));
 
 router.use('/users', require('./admin/users'));
 
+router.use('/featured_bestsellers', require('./admin/featured_bestsellers'));
+
 module.exports = router;

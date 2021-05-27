@@ -1,19 +1,22 @@
-let db = require('../app/db');
+const mongo = require('../app/mongo');
+var ObjectId = require('mongodb').ObjectID;
 
 class Providers{
     static async getAll(){
-        let res = await db.query('SELECT * FROM providers');
-        return  res[0];
+        return (await this.providers()).find().toArray()
     }
     static async get(provider){
-        let res = await db.query('SELECT * FROM providers WHERE provider_id = ?',[provider]);
-        return  res[0];
+        return (await this.providers()).findOne({_id:ObjectId(provider)});
     }
     static async add(name,phone){
-        await db.query('INSERT INTO providers(name,phone) values (?,?)',[name,phone])
+        return (await this.providers()).insertOne({name:name,phone:phone}).ops;
     }
     static async remove(provider_id){
-        await db.query('DELETE FROM providers where provider_id = ?',[provider_id])
+        return (await this.providers()).findAndDelete({_id:ObjectId(provider_id)});
+    }
+    static async providers(){
+        const db = await mongo();
+        return db.collection("providers");
     }
 }
 

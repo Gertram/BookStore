@@ -1,18 +1,22 @@
-let db = require('../app/db');
+const mongo = require('../app/mongo');
+var ObjectId = require('mongodb').ObjectID;
 
 class Tags{
     static async getAll(){
-        let res = await db.query('SELECT * FROM tags');
-        return  res[0];
+        return (await this.tags()).find().toArray();
     }
     static async add(title){
-        await db.query('INSERT INTO tags(title) values (?)',[title]);
+        return (await this.tags()).insertOne({title:title});
     }
     static async remove(tag_id){
-        await db.query('DELETE FROM tags where tag_id = ?',[tag_id])
+        return (await this.tags()).findOneAndDelete({_id:ObjectId(tag_id)})
     }
     static async rename(tag_id,title){
-        await db.query('UPDATE tags set title = ? where tag_id = ?',[title,tag_id]);
+        return (await this.tags()).findOneAndUpdate({_id:ObjectId(tag_id)},{$set:{title:title}})
+    }
+    static async tags(){
+        const db = await mongo();
+        return db.collection("tags");
     }
 }
 

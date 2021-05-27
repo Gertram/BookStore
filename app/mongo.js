@@ -8,6 +8,7 @@ const url = 'mongodb://localhost:27017';
 const dbName = 'BookStore';
 
 module.exports = async function(){
-    const client = await MongoClient.connect(url);
-    return client.db(dbName);
+    const mongoClient = new MongoClient(url, { useUnifiedTopology: true });
+    const connect = await mongoClient.connect();
+    return connect.db(dbName);
 };

@@ -9,7 +9,7 @@
     </form>
     {% for provider in providers %}
         <div class="fields_wrap">
-            <a class="field" href="/admin/providers/{{ provider.provider_id }}">{{ provider.name }}</a>
+            <a class="field" href="/admin/providers/{{ provider._id }}">{{ provider.name }}</a>
         </div>
     {% endfor %}
 {% endblock %}

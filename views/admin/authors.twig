@@ -14,13 +14,13 @@
             <div class="fields_wrap author_wrap">
                 <img class="author_img" src="/img/{{ author.author_img }}"/>
                 <div class="author_info">
-                    <form class="field" method="post" action="/admin/authors/{{ author.author_id }}/redact" enctype="multipart/form-data">
+                    <form class="field" method="post" action="/admin/authors/{{ author._id }}/redact" enctype="multipart/form-data">
                         <label>Имя: <input type="text" name="firstname" value="{{ author.firstname }}"></label>
                         <label>Фамилия: <input type="text" name="lastname" value="{{ author.lastname }}"></label>
                         <label>Фото: <input type="file" accept="image/*" name="filedata"></label>
                         <input type="submit" value="Изменить">
                     </form>
-                    <form class="field" method="post" action="/admin/authors/{{ author.author_id }}/remove">
+                    <form class="field" method="post" action="/admin/authors/{{ author._id }}/remove">
                         <input type="submit" value="Удалить">
                     </form>
                 </div>

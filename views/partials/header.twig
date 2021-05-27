@@ -11,7 +11,7 @@
                             {% if huser is not defined %}
                             <a href="/login" class="popup_Flink popup_login_link icon-user inited">Войти</a>
                             {% else %}
-                                <a href="/users/{{ huser.user_id }}"  class="popup_link popup_login_link icon-user inited">{{huser.username}}</a>
+                                <a href="/users/{{ huser._id }}"  class="popup_link popup_login_link icon-user inited">{{huser.username}}</a>
                         </li><li><a href="/login/logout" style="height: 100%;border: none; text-transform:none;font-weight: normal;color: #797979;" class="popup_link">Выйти</a>
                             {% endif %}
                             {#<div id="popup_login"

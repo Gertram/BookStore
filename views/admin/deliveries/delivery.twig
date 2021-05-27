@@ -3,23 +3,23 @@
 {% block main %}
     <h2>Поставка</h2>
     <div class="fields_wrap">
-        <div class="field">Номер:{{ delivery.delivery_id }}</div>
+        <div class="field">Номер:{{ delivery._id }}</div>
         <div class="field">Дата:{{ delivery.delivery_date }}</div>
-        <div class="field">Принимающий:<a href="/admin/users/{{ delivery.receiver_id }}">{{ delivery.username }}</a></div>
+        <div class="field">Принимающий:<a href="/admin/users/{{ delivery.receiver._id }}">{{ delivery.receiver.username }}</a></div>
     </div>
     <h2>Товары</h2>
     {% for product in delivery.products %}
         <div class="fields_wrap">
-            <div class="field">Product id: {{ product.product_id }}</div>
+            <div class="field">Product: {{ product.info.title }}</div>
             <div class="field">Количество: {{ product.count }}</div>
-            <div class="field">Тип обложки: {% if product.cover_type == 1%}Твердая{% else %}Мягкая{% endif %}</div>
+{#            <div class="field">Тип обложки: {% if product.cover_type == 1%}Твердая{% else %}Мягкая{% endif %}</div>#}
         </div>
     {% endfor %}
     {% if delivery.status == 1 %}
-        <form method="post" action="/admin/deliveries/{{ delivery.delivery_id }}/add">
+        <form method="post" action="/admin/deliveries/{{ delivery._id }}/add">
             <label>Выберите продукт<select name="product" required>
-                    {% for product in products %}
-                        <option value="{{ product.book_id }}">{{ product.title }}</option>
+                    {% for book in books %}
+                        <option value="{{ book._id }}">{{ book.title }}</option>
                     {% endfor %}
                 </select></label>
             <label>Количество<input type="number" name="count"></label>
@@ -29,7 +29,7 @@
                 </select></label>
             <input type="submit" value="Добавить товар">
         </form>
-        <form method="post" action="/admin/deliveries/{{ delivery.delivery_id }}/close">
+        <form method="post" action="/admin/deliveries/{{ delivery._id }}/close">
             <input type="submit" value="Закрыть поставка">
         </form>
         {% else %}

@@ -15,12 +15,12 @@
         <div class="wrap">
             <div class="fields_wrap">
                 <div class="book_info">
-                    <form method="post" action="/admin/tags/{{ tag.tag_id }}/rename">
+                    <form method="post" action="/admin/tags/{{ tag._id }}/rename">
                         <label class="field">Название: <input type="text" name="title" value="{{ tag.title }}"
                                                               required></label>
                         <label class="field"><input type="submit" value="Переименовать"></label>
                     </form>
-                    <form class="field" method="post" action="/admin/tags/{{ tag.tag_id }}/remove">
+                    <form class="field" method="post" action="/admin/tags/{{ tag._id }}/remove">
                         <input type="submit" value="Удалить">
                     </form>
                 </div>

@@ -32,23 +32,25 @@ router.get('/',async function(req,res,next){
 router.get('/:provider_id',async function(req,res,next){
     console.log(req.params);
     let provider = await providers.get(req.params.provider_id);
-    if(provider.length == 0){
+    if(provider == null){
         res.status(404);
         return res.send();
     }
-    render(req,res,'admin/providers/provider',provider[0])
+    render(req,res,'admin/providers/provider',provider)
 });
 
 router.post('/:provider_id/add',async function(req,res,next) {
     let provider = await providers.get(req.params.provider_id);
-    if(provider.length == 0){
+    if(provider == null){
         res.status(404);
         return res.send();
     }
 
-    let id = await deliveries.open(provider[0].provider_id,req.user.user_id);
+    console.log(req.user._id);
 
-    res.redirect('/admin/deliveries/' + id + '');
+    let delivery = await deliveries.open(provider._id,req.user._id);
+
+    res.redirect('/admin/deliveries/' + delivery._id);
 });
 
 module.exports = router;

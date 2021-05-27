@@ -19,26 +19,19 @@ router.get('/logout',async function(req,res,next) {
    }
 
    res.cookie('user',null,{maxAge: 0});
-   console.log(req);
-   console.log(res);
    res.redirect('back');
 });
 
 /* GET home page. */
 router.post('/', async function(req, res, next) {
-    let login = req.body.login;
-    let password = req.body.password;
+    let user = await users.login(req.body.login,req.body.password);
 
-    let user = await users.login(login,password);
-
-    if(user.length == 0){
+    if(user == null) {
         res.redirect('back');
         return;
     }
 
-    user = user[0];
-
-    res.cookie('user',user.user_id, {maxAge: 90000000, httpOnly: true, secure: false, overwrite: false})
+    res.cookie('user',user._id, {maxAge: 90000000, httpOnly: true, secure: false, overwrite: false})
     res.redirect('back');
 });
 

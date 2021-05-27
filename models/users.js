@@ -1,38 +1,49 @@
-let mongo = require('../app/mongo');
+const mongo = require('../app/mongo');
+var ObjectId = require('mongodb').ObjectID;
 
 class Users{
     static async getAll(){
+        const users = await this.users();
 
-        let res = await db.query('SELECT * FROM users');
+        let res = await users.find().toArray();
 
-        return res[0];
+        return res;
+    }
+    static async users(){
+        const db = await mongo();
+        return db.collection("users");
     }
     static async login(login,password){
-        let res = await db.query("SELECT user_id from users where (email = ? or username = ?) and password = ?",[login,login,password])
-        return res[0]
+        const users = await this.users();
+
+        let res = await users.findOne({$and:[{$or:[{email:login},{username:login}]},{password:password}]});
+
+        return res
     }
     static async create(email,password,username,role){
-        try {
-            let res = await db.query("INSERT into users(email,password,username,role) VALUES(?,?,?,?)", [email, password, username,role]);
-        }catch (err) {
-            if(err.errno = 1062){
-                return 'duplicate';
-            }
-        }
+        const users = await this.users();
 
-        let res = await db.query("SELECT user_id from users where email = ? and username = ?",[email,username]);
+        let res = await users.insertOne({username:username,email:email,password:password,role:role});
 
-        return res[0]
+        return res.ops[0];
     }
     static async get(user){
-        let res = await db.query('SELECT * FROM users where user_id = ?',[user]);
-        return res[0];
+        const users = await this.users();
+
+        let res = await users.findOne({_id:ObjectId(user)});
+        return res;
     }
     static async save(user,email,user_name,phone){
-        let res = await db.query('UPDATE users SET email = ?,username = ?,phone = ? where user_id = ?',[email,user_name,phone,user]);
+        const users = await this.users();
+
+        let res = await users.findOneAndUpdate({_id:ObjectId(user)},{$set:{username:user_name,email:email,phone:phone}});
+        return res.ops;
     }
     static async save_password(user,password){
-        let res = await db.query('UPDATE users SET password = ? where user_id = ?',[password,user]);
+        const users = await this.users();
+
+        let res = await users.findOneAndUpdate({_id:ObjectId(user)},{$set:{password:password}});
+        return res.ops;
     }
 }
 

@@ -1,0 +1,31 @@
+{% extends '../admin_layout.twig' %}
+
+{% block main %}
+    <h2>Будущие бестселлеры</h2>
+    <div class="list-wrap">
+
+        {% for book in books %}
+            <form method="post" action="/admin/featured_bestsellers/remove" id="remove_{{ book._id }}">
+                <input type="hidden" name="book_id" value="{{ book._id }}"/>
+            </form>
+            <div class="list-item-wrap">
+                <div class="item-wrap">
+                    <button class="item-remove-icon" form="remove_{{ book._id }}"></button>
+                    <div class="list-item">
+                        <img src="/img/{{ book.img }}">
+                        <a class="sc_field center" href="/books/{{ book._id }}">{{ book.title }}</a>
+                        <div class="sc_field center">{{ book.firstname }} {{ book.lastname }}</div>
+                        <div class="sc_field center">{{ book.price // 100 }}.{{ book.price % 100 }}</div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+        {% if books|length < 5 %}
+            <div class="list-item-wrap">
+                <div class="item-wrap">
+                    <a href="/admin/featured_bestsellers/add" class="list-item add-item"></a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

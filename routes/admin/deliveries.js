@@ -21,16 +21,21 @@ router.post('/remove',async function(req,res,next) {
 
 router.get('/',async function(req,res,next){
     let deliveries_list = await deliveries.getAll();
+
+    console.log(deliveries_list);
+
     render(req,res,'admin/deliveries/delivers',{deliveries: deliveries_list})
 });
-router.get('/:delivery_id',async function(req,res,next){
+
+router.post('/:delivery_id/close',async function(req,res,next) {
     let delivery = await deliveries.get(req.params.delivery_id);
     if(delivery == null){
         res.status(404);
         return res.send();
     }
 
-    render(req,res,'admin/deliveries/delivery',{delivery:delivery,products:await books.getAll()})
+    await deliveries.close(delivery._id);
+    res.redirect('back');
 });
 
 router.post('/:delivery_id/add',async function(req,res,next) {
@@ -40,18 +45,18 @@ router.post('/:delivery_id/add',async function(req,res,next) {
         return res.send();
     }
 
-    await deliveries.add(delivery.delivery_id,req.body.product,req.body.count,req.body.cover);
+    await deliveries.add(delivery._id,req.body.product,req.body.count,req.body.cover);
     res.redirect('back');
 });
-router.post('/:delivery_id/close',async function(req,res,next) {
+
+router.get('/:delivery_id',async function(req,res,next){
     let delivery = await deliveries.get(req.params.delivery_id);
     if(delivery == null){
         res.status(404);
         return res.send();
     }
 
-    await deliveries.close(delivery.delivery_id);
-    res.redirect('back');
+    render(req,res,'admin/deliveries/delivery',{delivery:delivery,books:await books.getAll()})
 });
 
 module.exports = router;

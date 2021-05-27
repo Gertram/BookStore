@@ -6,7 +6,7 @@
         <div class="field">Имя:{{ name }}</div>
         <div class="field">Телефон:{{ phone }}</div>
     </div>
-    <form method="post" action="/admin/providers/{{ provider_id }}/add">
+    <form method="post" action="/admin/providers/{{ _id }}/add">
         <input type="submit" value="Открыть поставку"/>
     </form>
 {% endblock %}

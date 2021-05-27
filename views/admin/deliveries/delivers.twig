@@ -4,10 +4,10 @@
     {% for delivery in deliveries %}
         <div class="wrap">
             <div class="fields_wrap">
-                <div class="field">От: <a href="/admin/providers/{{ delivery.provider.id }}">{{ delivery.name }}</a>
+                <div class="field">От: <a href="/admin/providers/{{ delivery.provider._id }}">{{ delivery.provider.name }}</a>
                 </div>
                 <div class="field">Номер поставки:<a
-                            href="/admin/deliveries/{{ delivery.provider_id }}">{{ delivery.delivery_id }}</a></div>
+                            href="/admin/deliveries/{{ delivery._id }}">{{ delivery._id }}</a></div>
                 <div class="field">Дата:{{ delivery.delivery_date }}</div>
             </div>
         </div>

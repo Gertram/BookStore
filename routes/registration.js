@@ -20,7 +20,9 @@ router.post('/', async function(req, res, next) {
         res.redirect('back');
     }
 
-    res.send(user);
+    res.cookie('user',user._id, {maxAge: 90000000, httpOnly: true, secure: false, overwrite: false})
+
+    res.redirect('/users/' + user._id);
 });
 
 module.exports = router;

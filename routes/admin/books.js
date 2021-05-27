@@ -29,12 +29,14 @@ router.post('/add',async function(req,res,next) {
     if(filedata === undefined){
         return res.redirect('back');
     }
+    const genres = Array.isArray(req.body.genres)?req.body.genres:[req.body.genres];
+    const authors = Array.isArray(req.body.authors)?req.body.authors:[req.body.authors];
     const items = filedata.originalname.split('.');
     const filename = filedata.filename + '.' + items[items.length - 1];
     console.log(filename);
     fs.rename(filedata.path,'public/img/' + filename,function(err){
-        books.add(req.body.title,req.body.description,0,filename,req.body.genres,req.body.authors).then(book => {
-            res.redirect('/admin/books/' + book);
+        books.add(req.body.title,req.body.description,0,filename,genres,authors).then(book => {
+            res.redirect('/admin/books/' + book._id);
         });
     });
 });
@@ -87,7 +89,9 @@ router.post('/:book_id/remove',async function(req,res,next) {
 });
 
 router.get('/:book_id',async function(req,res,next) {
-    let book = await books.getShort(req.params.book_id);
+
+    let book = await books.get(req.params.book_id);
+
     if(book == null){
         res.status(404);
         return res.send();

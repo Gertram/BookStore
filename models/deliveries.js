@@ -1,56 +1,74 @@
 let db = require('../app/db');
 var dateFormat = require('dateformat');
+const mongo = require('../app/mongo');
+var ObjectId = require('mongodb').ObjectID;
 
-class Deliveries{
-    static async getAll(){
-        let res = await db.query('SELECT * FROM deliveries inner join providers on deliveries.provider_id = providers.provider_id');
-        return  res[0];
+class Deliveries {
+    static async deliveries() {
+        return (await mongo()).collection('deliveries')
     }
-    static async get(delivery){
-        let res = await db.query('SELECT deliveries.*,users.username FROM deliveries INNER JOIN users on delivery_id = ? and users.user_id = deliveries.receiver_id',[delivery]);
 
-        let res2 = await db.query("SELECT * FROM delivery_product INNER JOIN books on  delivery_id = ? and books.book_id = delivery_product.product_id",[delivery]);
-
-        res = res[0][0];
-
-        if(res != undefined)
-            res.products = res2[0];
-        return res;
+    static async getAll() {
+        const delivers = await (await this.deliveries()).aggregate([
+            {$unwind: {path: "$receiver"}},
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "receiver.$id",
+                    foreignField: "_id",
+                    as: "receiver"
+                }
+            },
+            {$unwind: {path: "$provider"}},
+            {
+                $lookup: {
+                    from: "providers",
+                    localField: "provider.$id",
+                    foreignField: "_id",
+                    as: "provider"
+                }
+            }
+        ]).toArray();
+        return delivers.map(item => {
+            item.provider = item.provider[0];
+            item.receiver = item.receiver[0];
+            return item;
+        });
     }
-    static async add(delivery_id,product_id,count,cover_type){
-        let res = await db.query('INSERT INTO delivery_product(delivery_id,product_id,count,cover_type) VALUES(?,?,?,?)',[delivery_id,product_id,count,cover_type]);
+
+    static async get(delivery_id) {
+        const delivery = await (await this.deliveries()).findOne({_id: ObjectId(delivery_id)});
+        delivery.provider = await (await mongo()).collection("providervs").findOne({_id: ObjectId(delivery.provider.oid)})
+        delivery.receiver = await (await mongo()).collection("users").findOne({_id: ObjectId(delivery.receiver.oid)})
+        return delivery;
     }
-    static async open(provider_id,receiver_id){
+
+    static async add(delivery_id, product_id, count, cover_type) {
+        let products = await (await this.deliveries()).findOne({_id: ObjectId(delivery_id)}).products;
+        if (products == null) {
+            products = [];
+        }
+        products.push({count: count, info: {$ref: "books", $id: ObjectId(product_id), $db: "BookStore"}});
+
+        return (await this.deliveries()).findOneAndUpdate({_id: ObjectId(delivery_id)}, {$set: {products: products}})
+    }
+
+    static async open(provider_id, receiver_id) {
 
         let date = dateFormat(new Date(), "yyyy-mm-dd")
 
-        console.log(date);
-
-        let res = await db.query('INSERT INTO deliveries(provider_id,delivery_date,receiver_id,status) values (?,?,?,1)',[provider_id,date,receiver_id])
-
-        let values = [];
-
-        return res[0].insertId;
-
-        /*products.forEach(product => {
-            values.push(`(${delivery_id},${product.product_id},${product.count},${product.cover_type})`)
-        });
-
-        values = values.join(',');
-
-        console.log(values)
-
-        res = await db.query(`INSERT INTO delivery_product(delivery_id,product_id,count,cover_type) VALUES ${values};`);*/
-
-        return delivery_id;
+        return (await (await this.deliveries()).insertOne({
+            delivery_date: date,
+            status: 1,
+            products: [],
+            receiver: {$ref: "users", $id: receiver_id, $db: "BookStore"},
+            provider: {$ref: "providers", $id: ObjectId(provider_id), $db: "BookStore"}
+        })).ops[0]
     }
-    static async close(delivery_id){
-        await db.query("UPDATE deliveries SET status = 2 where delivery_id = ?",[delivery_id]);
-        await db.query('UPDATE books_quantity as bq,(SELECT * FROM delivery_product where delivery_id = 1) as dp SET bq.quantity = bq.quantity + dp.count where bq.book_id = dp.product_id and bq.cover_type = dp.cover_type and dp.delivery_id = ?',[delivery_id])
+
+    static async close(delivery_id) {
+        (await this.deliveries()).findOneAndUpdate({_id: ObjectId(delivery_id)}, {$set: {status: 2}})
     }
-    /*static async remove(provider_id){
-        await db.query('DELETE FROM deliveries where provider_id = ?',[provider_id])
-    }*/
 }
 
 module.exports = Deliveries;

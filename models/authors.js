@@ -1,31 +1,35 @@
-let db = require('../app/db');
+const mongo = require('../app/mongo');
+var ObjectId = require('mongodb').ObjectID;
 
 
 class Authors{
+    static async authors(){
+        return (await mongo()).collection("authors");
+    }
     static async getAll(){
-        let res = await db.query('SELECT * FROM authors');
-        return  res[0];
+        return (await this.authors()).find().toArray();
     }
     static async get(author){
-        let res = await db.query('SELECT * FROM authors where author_id = ?',[author]);
-        return  res[0][0];
+        return (await this.authors()).findOne({_id:author});
     }
     static async add(firstname,lastname,img){
-        await db.query('INSERT INTO authors(firstname,lastname,author_img) values (?,?,?)',[firstname,lastname,img]);
+        return (await this.authors()).insertOne({firstname:firstname,lastname:lastname,author_img:img,views:0})
+    }
+    static async addView(author){
+        return (await this.authors()).findOneAndUpdate({_id:ObjectId(author)},{$inc:{views:1}})
     }
     static async redact(author_id,firstname,lastname,img = null){
         if(img != null) {
-            await db.query('UPDATE authors SET firstname = ?,lastname = ?,author_img = ? where author_id = ?', [firstname, lastname, img,author_id]);
+            return (await this.authors()).findOneAndUpdate({_id:ObjectId(author_id)},{$set:{firstname:firstname,lastname:lastname,author_img:img}})
         } else {
-            await db.query('UPDATE authors SET firstname = ?,lastname = ? where author_id = ?', [firstname, lastname, author_id]);
+            return (await this.authors()).findOneAndUpdate({_id:ObjectId(author_id)},{$set:{firstname:firstname,lastname:lastname}})
         }
     }
     static async getMostPopular(limit){
-        let res = await db.query(`SELECT *,(SELECT count(*) From order_product where product_id in (SELECT book_id FROM books_authors where books_authors.author_id = authors.author_id)) as quantity FROM authors ORDER BY quantity DESC LIMIT ?`,[limit])
-        return res[0]
+        return (await this.authors()).find().sort({views:-1}).limit(limit).toArray()
     }
     static async remove(author_id){
-        await db.query('DELETE FROM authors where author_id = ?',[author_id]);
+        return (await this.authors()).findOneAndDelete({_id:author_id});
     }
 
 }

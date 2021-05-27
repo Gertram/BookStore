@@ -17,13 +17,13 @@
             <div class="fields_wrap book_wrap">
                 <div class="book_img"><img class="book_img" src="/img/{{ genre.img }}"></div>
                 <div class="book_info">
-                    <form method="post" action="/admin/genres/{{ genre.genre_id }}/rename">
+                    <form method="post" action="/admin/genres/{{ genre._id }}/rename">
                         <label class="field">Название: <input type="text" name="title" value="{{ genre.title }}"
                                                               required></label>
                         <label class="field">Изображение: <input type="file" name="filedata"></label>
                         <label class="field"><input type="submit" value="Переименовать"></label>
                     </form>
-                    <form class="field" method="post" action="/admin/genres/{{ genre.genre_id }}/remove">
+                    <form class="field" method="post" action="/admin/genres/{{ genre._id }}/remove">
                         <input type="submit" value="Удалить">
                     </form>
                 </div>

@@ -22,13 +22,15 @@ router.get('/', async function (req, res, next) {
     let featured_bestsellers_list = await featured_bestsellers.getRandom();
     let new_list = await books.getNew(4);
 
+    console.log(genres_list);
+
     render(req, res, "index/index", {
         title: 'BookStore',
         lists: mbooks,
         genres: genres_list,
         picked: picked,
         most_popular: mostPopular,
-        featured_bestsellers: {best: featured_bestsellers_list[0], news: new_list}
+        featured_bestsellers: {best: featured_bestsellers_list, news: new_list}
     });
 });
 

@@ -50,11 +50,11 @@ app.use(async function (req,res,next) {
         return next();
     }
     let user = await users.get(req.cookies.user);
-    if(user.length == 0){
-      res.cookies('user',{maxAge:0});
+    if(user == null){
+      res.cookie('user',{maxAge:0});
       return next();
     }
-    req.user = user[0];
+    req.user = user;
     next();
 });
 
