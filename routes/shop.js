@@ -10,7 +10,7 @@ const reviews = require('../models/reviews');
 router.get('/', async function(req, res, next) {
   let min_price = req.query.min_price;
   let max_price = req.query.max_price;
-  let range = (await books.getRange())[0];
+  let range = (await books.getRange());
   let filters = {};
   if(min_price == null){
       min_price = range.min_price;
@@ -69,6 +69,8 @@ router.get('/:book_id/',async function(req,res,next) {
     res.status(404);
     return;
   }
+  await books.addView(req.params.book_id);
+
   let books_list = await books.getAll();
 
   let reviews_list = await reviews.getAllForBook(req.params.book_id), is_comment;

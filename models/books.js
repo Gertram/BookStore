@@ -1,5 +1,6 @@
 const mongo = require('../app/mongo');
 var ObjectId = require('mongodb').ObjectID;
+var dateFormat = require('dateformat');
 
 
 const count_sql = "COALESCE((SELECT SUM(count) FROM delivery_product where product_id = book_id),0) - COALESCE((SELECT SUM(quantity) FROM order_product where product_id = book_id),0) as quantity"
@@ -40,9 +41,7 @@ class Books{
         });*/
     }
     static async getNew(limit){
-        /*let res = await db.query('SELECT *,((SELECT SUM(raiting) FROM reviews WHERE reviews.book_id = books.book_id) / (SELECT COUNT(*) FROM reviews WHERE reviews.book_id = books.book_id)) as raiting,(SELECT COUNT(*) FROM reviews WHERE reviews.book_id = books.book_id) as reviews_count FROM books where book_id in (SELECT * FROM (SELECT book_id FROM books order by date_added desc LIMIT 10) AS t) order BY RAND() LIMIT ?',[limit])
-
-        return res[0]*/
+        return (await this.books()).find().limit(limit).sort({"added_date":-1}).toArray();
     }
 
     static async get(book_id){
@@ -64,53 +63,44 @@ class Books{
         });*/
     }
     static async redact(book_id,title,price,description,img,genres,authors){
-        genres = genres.map(item=>{
-            return {"$res":"genres","$db":"BookStore","$id":ObjectId(item)}
-        });
-        authors = authors.map(item=>{
-            return {"$res":"authors","$db":"BookStore","$id":ObjectId(item)}
-        });
+        genres = genres.map(item => ({"$ref":"genres","$id":ObjectId(item),"$db":"BookStore"}));
+        authors = authors.map(item => ({"$ref":"authors","$id":ObjectId(item),"$db":"BookStore"}));
         if(img == null){
-            return (await this.books).findOneAndUpdate({_id:book_id},{$set:{title:title,price:price,description:description,genres:genres,authors:authors}});
+            return (await this.books()).findOneAndUpdate({_id:ObjectId(book_id)},{$set:{title:title,price:price,description:description,genres:genres,authors:authors}});
         }
-        return (await this.books).findOneAndUpdate({_id:book_id},{$set:{title:title,price:price,description:description,img:img,genres:genres,authors:authors}});
+        return (await this.books()).findOneAndUpdate({_id:ObjectId(book_id)},{$set:{title:title,price:price,description:description,img:img,genres:genres,authors:authors}});
+    }
+    static async addView(book_id){
+        return (await this.genres()).findOneAndUpdate({_id:ObjectId(book_id)},{$inc:{views:1}})
     }
     static async add(title,description,price,img,genres,authors){
+        let date = dateFormat(new Date(), "yyyy-mm-dd")
+
         genres = genres.map(item=>{
             return {"$ref":"genres","$db":"BookStore","$id":ObjectId(item)}
         });
         authors = authors.map(item=>{
             return {"$ref":"authors","$db":"BookStore","$id":ObjectId(item)}
         });
-        return (await (await this.books()).insertOne({title:title,price:price,description:description,img:img,genres:genres,authors:authors})).ops[0];
+        return (await (await this.books()).insertOne({title:title,price:price,description:description,img:img,added_date:date,genres:genres,authors:authors})).ops[0];
     }
     static async search(keyword){
-        /*keyword = '%' + keyword + '%';
-        let res = await db.query("SELECT * FROM books WHERE title like ? or description like ?",[keyword,keyword]);
-        return res[0].map(function(val){
-            let price = val['price'].toString();
-            let left = price.slice(0,-2);
-            let right = price.slice(-2);
-            val['price'] = [left,right];
-            return val;
-        });*/
+        let res = await (await this.books()).find({title:{$regex:keyword,$options:'i'}}).toArray()
+        console.log(res);
+        return res;
     }
     static async getRange(){
-        /*let res = await db.query('SELECT MIN(price) as min_price,MAX(price) as max_price FROM books');
-        return res[0]*/
+        const res = await (await this.books()).aggregate([
+            {$group:{_id:"$item",min_price:{$min:"$price"},max_price:{$max:"$price"}}}
+        ]).toArray();
+        console.log(res);
+        return res[0];
     }
     static async getMostPopular(limit){
-        /*const query = `SELECT *,
-                (SELECT count(*) FROM order_product WHERE order_product.product_id = books.book_id) as quantity,
-                ((SELECT SUM(raiting) FROM reviews WHERE reviews.book_id = books.book_id) / (SELECT COUNT(*) FROM reviews WHERE reviews.book_id = books.book_id)) as raiting,
-                (SELECT COUNT(*) FROM reviews WHERE reviews.book_id = books.book_id) as reviews_count 
-                FROM books ORDER BY quantity DESC LIMIT ${limit}`;
-
-        let res = await db.query(query)
-        return res[0]*/
+        return (await this.books()).find().sort({views:-1}).limit(limit).toArray();
     }
     static async remove(book_id){
-        //let res = await db.query('DELETE FROM books WHERE book_id = ?',book_id);
+        return (await this.books()).findOneAndDelete({_id:ObjectId(book_id)});
     }
 }
 

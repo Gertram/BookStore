@@ -1,39 +1,48 @@
 const mongo = require('../app/mongo');
 var ObjectId = require('mongodb').ObjectID;
 
-class List{
-    constructor(list_id){
+class List {
+    constructor(list_id) {
         this.list_id = list_id;
     }
-    async list(){
-        return (await mongo()).collection(this.list_id);
+
+    async books() {
+        return (await mongo()).collection("books");
     }
-    async getAll(){
-        return (await this.list()).find().toArray();
+
+    async getAll() {
+        return await (await this.books()).find({"lists.list": this.list_id}).toArray();
     }
-    async add(book_id){
-        return (await this.list()).insertOne({"$ref":"books","$id":ObjectId(book_id),"$db":"BookStore"}).ops;
+
+    async add(book_id) {
+        return (await this.books()).findOneAndUpdate({_id: ObjectId(book_id)}, {$push: {lists: {list: this.list_id}}});
     }
-    async remove(book_id){
-        return (await this.list()).findOneAndDelete({})
+
+    async remove(book_id) {
+        return (await this.books()).findOneAndUpdate({_id: ObjectId(book_id)}, {$pull: {lists: {list: this.list_id}}});
     }
 
 }
 
-class Lists{
-    static getNewReleases(){
-        return new List("NewReleases");
+class Lists {
+    static getNewReleases() {
+        return new List("1");
     }
-    static getComingSoon(){
-        return new List("ComingSoon");
+
+    static getComingSoon() {
+        return new List("2");
     }
-    static getBestSellers(){
-        return new List("BestSellers");
+
+    static getBestSellers() {
+        return new List("3");
     }
-    static getAwardWinners(){
-        return new List("AwardWinners");
+
+    static getAwardWinners() {
+        return new List("4");
     }
 }
 
-
-module.exports = Lists;
+module.exports = {
+    Lists: Lists,
+    List: List
+};

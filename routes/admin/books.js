@@ -53,15 +53,15 @@ router.get('/',async function(req,res,next) {
 
 router.post('/:book_id/redact',async function(req,res,next) {
 
-    let book = await books.getShort(req.params.book_id);
+    let book = await books.get(req.params.book_id);
     if(book == null){
         res.status(404);
         return res.send();
     }
     let filedata = req.file;
 
-    let authors = req.body.authors;
-    let genres = req.body.genres;
+    let authors = Array.isArray(req.body.authors)?req.body.authors:[req.body.authors];
+    let genres = Array.isArray(req.body.genres)?req.body.genres:[req.body.genres];
     const price = Math.round(100 *parseFloat(req.body.price));
 
     const description = req.body.description;
@@ -97,11 +97,17 @@ router.get('/:book_id',async function(req,res,next) {
         return res.send();
     }
 
-    book.authors = book.authors.map(val => val.author_id);
-    book.genres = book.genres.map(val => val.genre_id);
+    book.authors = book.authors.map(val => val._id.toString());
+    book.genres = book.genres.map(val => val._id.toString());
 
-    let genres_list = await genres.getAll();
-    let authors_list = await authors.getAll();
+    let genres_list = (await genres.getAll()).map(item =>{
+        item._id = item._id.toString();
+        return item;
+    });
+    let authors_list = (await authors.getAll()).map(item =>{
+        item._id = item._id.toString();
+        return item;
+    });
 
     render(req,res,'admin/books/book',{
         book:book,

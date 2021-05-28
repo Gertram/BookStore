@@ -1,7 +1,7 @@
 <h3>{{ title }}</h3>
 <div class="list-wrap">
     {% for book in books %}
-        <form method="post" action="/admin/lists/{{ _id }}/remove" id="remove_{{ book._id }}">
+        <form method="post" action="/admin/lists/{{ id }}/remove" id="remove_{{ book._id }}">
             <input type="hidden" name="book_id" value="{{ book._id }}"/>
         </form>
         <div class="list-item-wrap">
@@ -19,7 +19,7 @@
     {% if books|length < 5 %}
         <div class="list-item-wrap">
             <div class="item-wrap">
-                <a href="/admin/lists/{{ _id }}/add" class="list-item add-item"></a>
+                <a href="/admin/lists/{{ id }}/add" class="list-item add-item"></a>
             </div>
         </div>
     {% endif %}

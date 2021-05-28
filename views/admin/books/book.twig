@@ -17,7 +17,7 @@
                     <label class="field">Жанры</label>
                     <select class="field_wrap" name="genres" multiple required>
                         {% for genre in genres_list %}
-                            <option value="{{ genre.genre_id }}" {% if genre._id in book.genres %} selected {% endif %}>{{ genre.title }}</option>
+                            <option value="{{ genre._id }}" {% if genre._id in book.genres %} selected {% endif %}>{{ genre.title }}</option>
                         {% endfor %}
                     </select>
                     <label class="field">Авторы</label>

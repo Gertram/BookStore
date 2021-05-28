@@ -1,14 +1,16 @@
-let db = require('../app/db');
+const mongo = require('../app/mongo');
+var ObjectId = require('mongodb').ObjectID;
 var dateFormat = require('dateformat');
 
 class Orders{
+    static async orders(){
+        return (await mongo()).collection("orders");
+    }
     static async getAll(filter){
-        let res = await db.query('SELECT * FROM orders where order_id in (?)',[filter])
-        return res[0];
+        return (await this.orders()).find({_id:{$in:[filter]}})
     }
     static async getUser(user){
-        let res = await db.query('SELECT * FROM orders where customer_id = ?',[user])
-        return res[0];
+        return (await this.orders()).find({customer:{id:user}})
     }
     /*static async add(firstname,lastname){
         db.query('INSERT INTO authors(firstname,lastname) values (?,?)',[firstname,lastname]).catch(err => {
@@ -22,25 +24,33 @@ class Orders{
     }*/
 
     static async get(order){
-        let res = await db.query("SELECT * FROM orders WHERE order_id = ?",[order]);
-
-        let res2 = await db.query("SELECT * FROM order_product INNER JOIN books on  order_id = ? and books.book_id = order_product.product_id",[order]);
-
-        res = res[0][0];
-
-        if(res != undefined)
-            res.products = res2[0];
-        return res;
+        return (await this.orders()).aggregate([
+            {$unwind: {path: "$products"}},
+            {
+                $lookup: {
+                    from: "books",
+                    localField: "products.$id",
+                    foreignField: "_id",
+                    as: "book"
+                }
+            }
+        ]).toArray();
     }
 
     static async add(products,address,customer){
         let date = dateFormat(new Date(), "yyyy-mm-dd")
 
-        const books = products.map(product => product.book_id).join(',');
+        /*const books = products.map(product => product.book_id).join(',');
 
-        let trans = db.startTransaction();
+        let trans = db.startTransaction();*/
 
-        try {
+        products = products.map(item => {
+           return {$res:"books",$id:ObjectId(item),$db:"BooksStore"};
+        });
+
+        return (await this.orders()).insertOne({address:address,date:date,customer:{$res:"users",$id:ObjectId(customer),$db:"BooksStore"},products:products})
+
+        /*try {
             const promise1 = trans.query('INSERT INTO orders(order_date,address,customer_id) values(?,?,?)', [date, address, customer]);
             const promise2 = trans.query(`SELECT COALESCE((SELECT SUM(count) FROM delivery_product where product_id = book_id),0) - COALESCE((SELECT SUM(quantity) FROM order_product where product_id = book_id),0) as quantity,book_id FROM books where book_id in (${books})`);
 
@@ -80,7 +90,7 @@ class Orders{
 
         trans.execute();
 
-        return {status:true,order_id:order_id};
+        return {status:true,order_id:order_id};*/
     }
 }
 

@@ -1,40 +1,59 @@
-let db = require('../app/db');
+const mongo = require('../app/mongo');
+var ObjectId = require('mongodb').ObjectID;
 let books = require('./books')
 
-class UserBasket{
-    constructor(user){
+class UserBasket {
+    constructor(user) {
         this.user = user;
     }
-    async products(){
-        let res = await db.query('SELECT books.*,baskets.quantity FROM baskets INNER JOIN books ON user_id = ? and books.book_id = baskets.book_id',[this.user])
 
-        return res[0].map(function(val){
-            let price = val['price'].toString();
-            let left = price.slice(0,-2);
-            let right = price.slice(-2);
-            val['price'] = [left,right];
-            return val;
+    async baskets() {
+        return (await mongo()).collection("baskets");
+    }
+
+    async products() {
+        return (await this.baskets()).aggregate([
+            {$match: {_id: this.user}},
+            {$unwind: {path: "$products"}},
+            {
+                $lookup: {
+                    from: "books",
+                    localField: "products.$id",
+                    foreignField: "_id",
+                    as: "book"
+                }
+            }
+        ]).toArray();
+
+    }
+
+    async add(product, quantity) {
+        var items = (await (await this.baskets()).findOne({_id: this.user})).products;
+        items.add(product);
+        return (await this.baskets()).findOneAndUpdate({_id: this.user}, {$set: {products: items}});
+    }
+
+    async remove(product) {
+        var items = (await (await this.baskets()).findOne({_id: this.user}).products).filter(item => {
+            return item.id != product;
         });
+        return (await this.baskets()).findOneAndUpdate({_id: this.user}, {$set: {products: items}});
     }
-    async add(product,quantity){
-        let res = await db.query('INSERT INTO baskets(user_id,book_id,quantity) VALUES(?,?,?)',[this.user,product,quantity]);
-    }
-    async remove(product){
-        let res = await db.query('DELETE FROM baskets WHERE user_id = ? and book_id = ?',[this.user,product]);
-    }
-    async clear(){
-        await db.query('DELETE FROM baskets where user_id = ?',[this.user]);
+
+    async clear() {
+        return (await this.baskets()).findOneAndDelete({_id: this.user})
     }
 }
 
-class CookieBasket{
-    constructor(req,res){
+class CookieBasket {
+    constructor(req, res) {
         this.res = res;
         this.req = req;
     }
-    async products(){
+
+    async products() {
         let products = this.req.cookies.basket;
-        if(products == null){
+        if (products == null) {
             return [];
         }
         let books_list = await books.getFilter(products.map(val => val.product));
@@ -43,9 +62,10 @@ class CookieBasket{
             return book;
         });
     }
-    async add(product,quantity){
+
+    async add(product, quantity) {
         let basket = this.req.cookies.basket;
-        if(basket == null){
+        if (basket == null) {
             basket = [];
         }
 
@@ -53,7 +73,8 @@ class CookieBasket{
 
         this.res.cookie('basket', basket, {maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
     }
-    async remove(product){
+
+    async remove(product) {
         let basket = this.req.cookies.basket;
         basket = basket.filter(item => {
             return item.product != product;
@@ -61,13 +82,14 @@ class CookieBasket{
 
         this.res.cookie('basket', basket, {maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
     }
-    async clear(){
-        this.res.cookie('basket',null,{maxAge:0});
+
+    async clear() {
+        this.res.cookie('basket', null, {maxAge: 0});
     }
 }
 
-function getBasket(req,res){
-    if(req.cookies.user == null) {
+function getBasket(req, res) {
+    if (req.cookies.user == null) {
         return new CookieBasket(req, res)
     }
     return new UserBasket(req.cookies.user);

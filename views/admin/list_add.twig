@@ -7,7 +7,7 @@
         <form method="post" action="/admin/lists/{{ list_id }}/add">
             <select name="book_id" required>
                 {% for book in books %}
-                    <option value="{{ book.book_id }}">{{ book.title }}</option>
+                    <option value="{{ book._id }}">{{ book.title }}</option>
                 {% endfor %}
             </select>
             <input type="submit">

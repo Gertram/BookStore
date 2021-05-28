@@ -3,7 +3,6 @@
 {% block main %}
     <h2>Будущие бестселлеры</h2>
     <div class="list-wrap">
-
         {% for book in books %}
             <form method="post" action="/admin/featured_bestsellers/remove" id="remove_{{ book._id }}">
                 <input type="hidden" name="book_id" value="{{ book._id }}"/>

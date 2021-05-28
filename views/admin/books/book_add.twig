@@ -6,6 +6,8 @@
         <form class="fields_wrap" method="post" action="/admin/books/add" enctype="multipart/form-data">
             <label class="field" >Название</label>
             <input class="field_wrap" type="text" name="title" required>
+            <label class="field">Цена</label>
+            <input type="text" name="price" />
             <label class="field" for="genres">Жанры</label>
             <select class="field_wrap" name="genres" multiple required>
                     {% for genre in genres %}

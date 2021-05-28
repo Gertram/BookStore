@@ -10,10 +10,10 @@ const render = require('../app/render');
 router.get('/', async function (req, res, next) {
 
     let mbooks = {
-        new_releases: await lists.getNewReleases().getAll(),
-        coming_soon: await lists.getComingSoon().getAll(),
-        best_sellers: await lists.getBestSellers().getAll(),
-        award_winners: await lists.getAwardWinners().getAll()
+        new_releases: await lists.Lists.getNewReleases().getAll(),
+        coming_soon: await lists.Lists.getComingSoon().getAll(),
+        best_sellers: await lists.Lists.getBestSellers().getAll(),
+        award_winners: await lists.Lists.getAwardWinners().getAll()
     };
 
     let genres_list = await genres.getMostNumerous(4);
@@ -22,7 +22,7 @@ router.get('/', async function (req, res, next) {
     let featured_bestsellers_list = await featured_bestsellers.getRandom();
     let new_list = await books.getNew(4);
 
-    console.log(genres_list);
+    console.log(featured_bestsellers_list);
 
     render(req, res, "index/index", {
         title: 'BookStore',
