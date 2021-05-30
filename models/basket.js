@@ -3,12 +3,13 @@ var ObjectId = require('mongodb').ObjectID;
 let books = require('./books')
 
 class UserBasket {
-    constructor(user) {
+    constructor(user,db) {
         this.user = user;
+        this.db = db;
     }
 
     async baskets() {
-        return (await mongo()).collection("baskets");
+        return this.db.collection("baskets");
     }
 
     async products() {
@@ -92,7 +93,7 @@ function getBasket(req, res) {
     if (req.cookies.user == null) {
         return new CookieBasket(req, res)
     }
-    return new UserBasket(req.cookies.user);
+    return new UserBasket(req.cookies.user,req.db);
 }
 
 module.exports = getBasket;

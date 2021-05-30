@@ -41,8 +41,11 @@ router.post('/add',async function(req,res,next) {
 router.get('/',async function(req,res,next) {
     const query = req.query.query;
 
-    let books_list = await (query == null?books.getAll():books.search(query));
-
+    var start = Date.now();
+    let books_list = await (query == null?books(req).getAll():books(req).search(query));
+    var end = Date.now();
+    var msElapsed = end - start;
+    console.log(`Async function took ${msElapsed / 1000} seconds to complete.`);
     render(req,res,'admin/books/books',{
         books:books_list
     });
@@ -87,14 +90,14 @@ router.post('/:book_id/remove',async function(req,res,next) {
 
 router.get('/:book_id',async function(req,res,next) {
 
-    let book = await books.get(req.params.book_id);
+    let book = await books(req).get(req.params.book_id);
 
     if(book == null){
         res.status(404);
         return res.send();
     }
 
-    book.authors = book.authors.map(val => val._id.toString());
+    /*book.authors = book.authors.map(val => val._id.toString());
     book.genres = book.genres.map(val => val._id.toString());
 
     let genres_list = (await genres.getAll()).map(item =>{
@@ -104,12 +107,12 @@ router.get('/:book_id',async function(req,res,next) {
     let authors_list = (await authors.getAll()).map(item =>{
         item._id = item._id.toString();
         return item;
-    });
+    });*/
 
     render(req,res,'admin/books/book',{
         book:book,
-        authors_list:authors_list,
-        genres_list:genres_list
+        /*authors_list:authors_list,
+        genres_list:genres_list*/
     });
 });
 

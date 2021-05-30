@@ -1,4 +1,3 @@
-const mongo = require('../app/mongo');
 var ObjectId = require('mongodb').ObjectID;
 var dateFormat = require('dateformat');
 
@@ -6,10 +5,13 @@ var dateFormat = require('dateformat');
 const count_sql = "COALESCE((SELECT SUM(count) FROM delivery_product where product_id = book_id),0) - COALESCE((SELECT SUM(quantity) FROM order_product where product_id = book_id),0) as quantity"
 
 class Books{
-    static async books(){
-        return (await mongo()).collection("books");
+    constructor(db){
+        this.db = db;
     }
-    static async getAll(filters = {}){
+    async books(){
+        return this.db.collection("books");
+    }
+    async getAll(filters = {}){
         return (await this.books()).find().toArray();
         /*let query = 'SELECT * FROM books';
         let wheres = [];
@@ -40,19 +42,19 @@ class Books{
             return val;
         });*/
     }
-    static async getNew(limit){
+    async getNew(limit){
         return (await this.books()).find().limit(limit).sort({"added_date":-1}).toArray();
     }
 
-    static async get(book_id){
+    async get(book_id){
         const book = await (await this.books()).findOne({_id:ObjectId(book_id)})
         const genres_list = book.genres.map(item => ObjectId(item.oid));
-        book.genres = await (await mongo()).collection("genres").find({_id:{$in: genres_list}}).toArray()
+        book.genres = await this.db.collection("genres").find({_id:{$in: genres_list}}).toArray()
         const authors_list = book.authors.map(item => ObjectId(item.oid));
-        book.authors = await (await mongo()).collection("authors").find({_id:{$in: authors_list}}).toArray()
+        book.authors = await this.db.collection("authors").find({_id:{$in: authors_list}}).toArray()
         return book;
     }
-    static async getFilter(books_list){
+    async getFilter(books_list){
         /*let res = await db.query('SELECT *,((SELECT SUM(raiting) FROM reviews WHERE reviews.book_id = books.book_id) / (SELECT COUNT(*) FROM reviews WHERE reviews.book_id = books.book_id)) as raiting,(SELECT COUNT(*) FROM reviews WHERE reviews.book_id = books.book_id) as reviews_count FROM books WHERE book_id in (?)',[books_list]);
         return res[0].map(function(val){
             let price = val['price'].toString();
@@ -62,7 +64,7 @@ class Books{
             return val;
         });*/
     }
-    static async redact(book_id,title,price,description,img,genres,authors){
+    async redact(book_id,title,price,description,img,genres,authors){
         genres = genres.map(item => ({"$ref":"genres","$id":ObjectId(item),"$db":"BookStore"}));
         authors = authors.map(item => ({"$ref":"authors","$id":ObjectId(item),"$db":"BookStore"}));
         if(img == null){
@@ -70,10 +72,10 @@ class Books{
         }
         return (await this.books()).findOneAndUpdate({_id:ObjectId(book_id)},{$set:{title:title,price:price,description:description,img:img,genres:genres,authors:authors}});
     }
-    static async addView(book_id){
+    async addView(book_id){
         return (await this.genres()).findOneAndUpdate({_id:ObjectId(book_id)},{$inc:{views:1}})
     }
-    static async add(title,description,price,isbn,img,genres,authors){
+    async add(title,description,price,isbn,img,genres,authors){
         let date = dateFormat(new Date(), "yyyy-mm-dd")
 
         genres = genres.map(item=>{
@@ -84,24 +86,26 @@ class Books{
         });
         return (await (await this.books()).insertOne({title:title,isbn:isbn,price:price,description:description,img:img,added_date:date,genres:genres,authors:authors})).ops[0];
     }
-    static async search(keyword){
+    async search(keyword){
         let res = await (await this.books()).find({title:{$regex:keyword,$options:'i'}}).toArray()
         console.log(res);
         return res;
     }
-    static async getRange(){
+    async getRange(){
         const res = await (await this.books()).aggregate([
             {$group:{_id:"$item",min_price:{$min:"$price"},max_price:{$max:"$price"}}}
         ]).toArray();
         console.log(res);
         return res[0];
     }
-    static async getMostPopular(limit){
+    async getMostPopular(limit){
         return (await this.books()).find().sort({views:-1}).limit(limit).toArray();
     }
-    static async remove(book_id){
+    async remove(book_id){
         return (await this.books()).findOneAndDelete({_id:ObjectId(book_id)});
     }
 }
 
-module.exports = Books;
+module.exports = function(req){
+    return new Books(req.db);
+};

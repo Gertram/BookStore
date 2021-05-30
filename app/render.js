@@ -6,7 +6,7 @@ function render(req, res, template, items = {}) {
     basket(req, res).products().then(produts => {
         const count = produts.length;
         items.basket_count = count;
-        books.getMostPopular(3).then(mostPopular => {
+        books(req).getMostPopular(3).then(mostPopular => {
             items.fbest_sellers = mostPopular;
             items['huser'] = req.user;
             return res.render(template, items);

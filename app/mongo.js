@@ -7,8 +7,8 @@ const url = 'mongodb+srv://db_user:7CaLVvUg8UUJbch@cluster0.gpmad.mongodb.net/Bo
 // Database Name
 const dbName = 'BookStore';
 
-module.exports = async function(){
-    const mongoClient = new MongoClient(url, { useUnifiedTopology: true });
-    const connect = await mongoClient.connect();
-    return connect.db(dbName);
+module.exports = {
+    mongoClient:new MongoClient(url, { useUnifiedTopology: true })
+    /*const connect = await mongoClient.connect();
+    return connect.db(dbName);*/
 };
