@@ -73,7 +73,7 @@ class Books{
     static async addView(book_id){
         return (await this.genres()).findOneAndUpdate({_id:ObjectId(book_id)},{$inc:{views:1}})
     }
-    static async add(title,description,price,img,genres,authors){
+    static async add(title,description,price,isbn,img,genres,authors){
         let date = dateFormat(new Date(), "yyyy-mm-dd")
 
         genres = genres.map(item=>{
@@ -82,7 +82,7 @@ class Books{
         authors = authors.map(item=>{
             return {"$ref":"authors","$db":"BookStore","$id":ObjectId(item)}
         });
-        return (await (await this.books()).insertOne({title:title,price:price,description:description,img:img,added_date:date,genres:genres,authors:authors})).ops[0];
+        return (await (await this.books()).insertOne({title:title,isbn:isbn,price:price,description:description,img:img,added_date:date,genres:genres,authors:authors})).ops[0];
     }
     static async search(keyword){
         let res = await (await this.books()).find({title:{$regex:keyword,$options:'i'}}).toArray()

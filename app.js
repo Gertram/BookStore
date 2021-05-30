@@ -46,14 +46,14 @@ app.use(function(req, res, next) {
 app.use(async function (req,res,next) {
     const users = require('./models/users');
     if(req.cookies.user == null){
-        req.user = null;
         return next();
     }
     let user = await users.get(req.cookies.user);
-    if(user == null){
+    if(user === undefined){
       res.cookie('user',{maxAge:0});
       return next();
     }
+
     req.user = user;
     next();
 });

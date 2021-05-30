@@ -12,6 +12,8 @@
                     <input class="field_wrap field" type="text" name="title" value="{{ book.title }}" class="field" required>
                     <label class="field">Цена</label>
                     <input class="field_wrap field" type="text" name="price" value="{{ book.price  // 100 }}.{{ book.price % 100 }}" required>
+                    <label class="field">ISBN</label>
+                    <input class="field_wrap" type="text" name="isbn" pattern="\d{13}" placeholder="13:цифр"/>
                     <label class="field">Изображение</label>
                     <input class="field_wrap" type="file" name="filedata" accept="image/*">
                     <label class="field">Жанры</label>

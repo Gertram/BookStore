@@ -15,15 +15,13 @@ router.use(async function(req,res,next) {
 
 router.post('/add',async function(req,res,next) {
     let filedata = req.file;
-    console.log(filedata);
     if(filedata === undefined){
         return res.redirect('back');
     }
     const items = filedata.originalname.split('.');
     const filename = filedata.filename + '.' + items[items.length - 1];
-    console.log(filename);
     fs.rename(filedata.path,'public/img/' + filename,function(err){
-        authors.add(req.body.firstname,req.body.lastname,filename).then(val =>{
+        authors.add(req.body.firstname.trim(),req.body.lastname.trim(),filename).then(val =>{
             res.redirect('back');
         });
     });
@@ -36,7 +34,6 @@ router.post('/:author_id/remove',async function(req,res,next) {
 });
 router.post('/:author_id/redact',async function(req,res,next) {
     let filedata = req.file;
-    console.log(filedata);
     if(filedata !== undefined){
         const items = filedata.originalname.split('\\')
         const filename = filedata.filename + '.' + items[items.length - 1]

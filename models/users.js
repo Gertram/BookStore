@@ -31,6 +31,7 @@ class Users{
         const users = await this.users();
 
         let res = await users.findOne({_id:ObjectId(user)});
+
         return res;
     }
     static async save(user,email,user_name,phone){

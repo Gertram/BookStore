@@ -19,8 +19,6 @@ router.get('/add',async function(req,res,next) {
     let genres_list = await genres.getAll();
     let authors_list = await authors.getAll();
 
-
-
     res.render('admin/books/book_add',{authors:authors_list,genres:genres_list});
 });
 
@@ -33,9 +31,8 @@ router.post('/add',async function(req,res,next) {
     const authors = Array.isArray(req.body.authors)?req.body.authors:[req.body.authors];
     const items = filedata.originalname.split('.');
     const filename = filedata.filename + '.' + items[items.length - 1];
-    console.log(filename);
     fs.rename(filedata.path,'public/img/' + filename,function(err){
-        books.add(req.body.title,req.body.description,0,filename,genres,authors).then(book => {
+        books.add(req.body.title.trim(),req.body.description.trim(),req.body.price.trim(),req.body.isbn,filename,genres,authors).then(book => {
             res.redirect('/admin/books/' + book._id);
         });
     });

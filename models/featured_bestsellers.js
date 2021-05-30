@@ -57,7 +57,7 @@ class FeaturedtSelllers {
             },
         ]).toArray();
 
-        return book[0].book[0];
+        //return book[0].book[0];
     }
 
     static async add(book_id) {
