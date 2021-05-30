@@ -14,42 +14,42 @@ router.use(async function(req,res,next) {
 });
 
 router.get('/',async function(req,res,next){
-    let users_list = await users.getAll();
+    let users_list = await users(req).getAll();
     render(req,res,'admin/users/users',{users: users_list})
 });
 
 router.post('/:user_id/redact',async function(req,res,next){
-    let user = await users.get(req.params.user_id);
+    let user = await users(req).get(req.params.user_id);
     if(user.length == 0){
         res.status(404);
         return res.send();
     }
 
-    await users.save(req.params.user_id,req.body.email,req.body.username,req.body.phone);
+    await users(req).save(req.params.user_id,req.body.email,req.body.username,req.body.phone);
 
     const password = req.body.password;
 
     if(password.length != 0){
-        await users.save_password(req.params.user_id,password);
+        await users(req).save_password(req.params.user_id,password);
     }
 
    res.redirect('back');
 });
 
 router.post('/:user_id/remove',async function(req,res,next){
-    let user = await users.get(req.params.user_id);
+    let user = await users(req).get(req.params.user_id);
     if(user.length == 0){
         res.status(404);
         return res.send();
     }
 
-    await users.remove(req.params.user_id);
+    await users(req).remove(req.params.user_id);
 
     res.redirect('/admin/users')
 });
 
 router.get('/:user_id',async function(req,res,next){
-    let user = await users.get(req.params.user_id);
+    let user = await users(req).get(req.params.user_id);
     if(user.length == 0){
         res.status(404);
         return res.send();

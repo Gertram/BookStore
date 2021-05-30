@@ -14,7 +14,7 @@ router.use(async function(req,res,next) {
 });
 
 router.get('/', async function (req, res, next) {
-    const list = await featured_bestsellers.getAll();
+    const list = await featured_bestsellers(req).getAll();
     render(req,res,'admin/featured_bestsellers/index', {
         books:list
     })
@@ -23,17 +23,17 @@ router.get('/', async function (req, res, next) {
 router.get('/add', async function (req, res, next) {
 
     render(req,res,'admin/featured_bestsellers/add',{
-        books:await books.getAll()
+        books:await books(req).getAll()
     });
 });
 
 router.post('/remove', async function (req, res, next) {
-    await featured_bestsellers.remove(req.body.book_id);
+    await featured_bestsellers(req).remove(req.body.book_id);
 
     res.redirect('/admin/featured_bestsellers');
 });
 router.post('/add', async function (req, res, next) {
-    await featured_bestsellers.add(req.body.book_id);
+    await featured_bestsellers(req).add(req.body.book_id);
 
     res.redirect('/admin/featured_bestsellers');
 });

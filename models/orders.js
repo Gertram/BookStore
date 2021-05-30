@@ -3,13 +3,16 @@ var ObjectId = require('mongodb').ObjectID;
 var dateFormat = require('dateformat');
 
 class Orders{
-    static async orders(){
-        return (await mongo()).collection("orders");
+    constructor(db){
+        this.db = db;
     }
-    static async getAll(filter){
+    async orders(){
+        return this.db.collection("orders");
+    }
+    async getAll(filter){
         return (await this.orders()).find({_id:{$in:[filter]}})
     }
-    static async getUser(user){
+    async getUser(user){
         return (await this.orders()).find({customer:{id:user}})
     }
     /*static async add(firstname,lastname){
@@ -17,13 +20,13 @@ class Orders{
             console.log(err);
         });
     }
-    static async remove(author_id){
+   async remove(author_id){
         db.query('DELETE FROM authors where author_id = ?',[author_id]).catch(err => {
             console.log(err);
         });
     }*/
 
-    static async get(order){
+   async get(order){
         return (await this.orders()).aggregate([
             {$unwind: {path: "$products"}},
             {
@@ -37,7 +40,7 @@ class Orders{
         ]).toArray();
     }
 
-    static async add(products,address,customer){
+   async add(products,address,customer){
         let date = dateFormat(new Date(), "yyyy-mm-dd")
 
         /*const books = products.map(product => product.book_id).join(',');
@@ -94,4 +97,6 @@ class Orders{
     }
 }
 
-module.exports = Orders;
+module.exports = function (req) {
+    return new Orders(req.db);
+};

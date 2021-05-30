@@ -10,17 +10,17 @@ const render = require('../app/render');
 router.get('/', async function (req, res, next) {
 
     let mbooks = {
-        new_releases: await lists.Lists.getNewReleases().getAll(),
-        coming_soon: await lists.Lists.getComingSoon().getAll(),
-        best_sellers: await lists.Lists.getBestSellers().getAll(),
-        award_winners: await lists.Lists.getAwardWinners().getAll()
+        new_releases: await lists.Lists(req).getNewReleases().getAll(),
+        coming_soon: await lists.Lists(req).getComingSoon().getAll(),
+        best_sellers: await lists.Lists(req).getBestSellers().getAll(),
+        award_winners: await lists.Lists(req).getAwardWinners().getAll()
     };
 
-    let genres_list = await genres.getMostNumerous(4);
-    let picked = await books.getMostPopular(4);
-    let mostPopular = await authors.getMostPopular(4);
-    let featured_bestsellers_list = await featured_bestsellers.getRandom();
-    let new_list = await books.getNew(4);
+    let genres_list = await genres(req).getMostNumerous(4);
+    let picked = await books(req).getMostPopular(4);
+    let mostPopular = await authors(req).getMostPopular(4);
+    let featured_bestsellers_list = await featured_bestsellers(req).getRandom();
+    let new_list = await books(req).getNew(4);
 
     console.log(featured_bestsellers_list);
 

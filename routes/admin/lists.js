@@ -14,10 +14,10 @@ router.use(async function(req,res,next) {
 });
 
 router.get('/', async function (req, res, next) {
-    let new_releases = await lists.Lists.getNewReleases().getAll();
-    let coming_soon = await lists.Lists.getComingSoon().getAll();
-    let best_sellers = await lists.Lists.getBestSellers().getAll();
-    let award_winner = await lists.Lists.getAwardWinners().getAll();
+    let new_releases = await lists.Lists(req).getNewReleases().getAll();
+    let coming_soon = await lists.Lists(req).getComingSoon().getAll();
+    let best_sellers = await lists.Lists(req).getBestSellers().getAll();
+    let award_winner = await lists.Lists(req).getAwardWinners().getAll();
 
     render(req,res,'admin/lists', {
         new_releases: new_releases,
@@ -29,18 +29,18 @@ router.get('/', async function (req, res, next) {
 
 router.get('/:list_id/add', async function (req, res, next) {
     let list_id = req.params.list_id;
-    let books_list = await books.getAll();
+    let books_list = await books(req).getAll();
 
-    let releases = await (new lists.List(list_id)).getAll();
+    let releases = await (new lists.List(list_id,req)).getAll();
 
     releases = releases.map(val => val['_id'].toString());
 
-    books_list = books_list.filter(val => !releases.includes(val['_id'].toString()));
+    books_list = books_list(req).filter(val => !releases.includes(val['_id'].toString()));
     render(req,res,'admin/list_add.twig', {list_id: list_id, books: books_list});
 });
 
 router.post('/:list_id/remove', async function (req, res, next) {
-    let list = new lists.List(req.params.list_id);
+    let list = new lists.List(req.params.list_id,req);
     const book_id = req.body.book_id;
 
     await list.remove(book_id);
@@ -48,7 +48,7 @@ router.post('/:list_id/remove', async function (req, res, next) {
     res.redirect('back');
 });
 router.post('/:list_id/add', async function (req, res, next) {
-    let list = new lists.List(req.params.list_id);
+    let list = new lists.List(req.params.list_id,req);
     const book_id = req.body.book_id;
 
     await list.add(book_id);

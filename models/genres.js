@@ -3,31 +3,35 @@ var ObjectId = require('mongodb').ObjectID;
 
 
 class Genres{
-    static async getAll(){
+    constructor(db){
+        this.db = db;
+    }
+    async getAll(){
         return (await this.genres()).find().toArray();
     }
-    static async add(title,img){
+    async add(title,img){
         return (await this.genres()).insertOne({title:title,img:img,views:0});
     }
-    static async remove(genre_id){
+    async remove(genre_id){
         return (await this.genres()).findOneAndDelete({_id:ObjectId(genre_id)})
     }
-    static async rename(genre_id,title,img){
+    async rename(genre_id,title,img){
         if(img == null){
             return (await this.genres()).findOneAndUpdate({_id:ObjectId(genre_id)},{$set:{title:title}})
         }
         return (await this.genres()).findOneAndUpdate({_id:ObjectId(genre_id)},{$set:{title:title,img:img}})
     }
-    static async addView(genre_id){
+    async addView(genre_id){
         return (await this.genres()).findOneAndUpdate({_id:ObjectId(genre_id)},{$inc:{views:1}})
     }
-    static async getMostNumerous(limit){
+    async getMostNumerous(limit){
         return (await this.genres()).find().sort({views:-1}).limit(limit).toArray()
     }
-    static async genres(){
-        const db = await mongo();
-        return db.collection("genres");
+    async genres(){
+        return this.db.collection("genres");
     }
 }
 
-module.exports = Genres;
+module.exports = function (req) {
+    return new Genres(req.db);
+};

@@ -14,7 +14,7 @@ router.use(async function(req,res,next) {
 });
 
 router.get('/',async function(req,res,next) {
-    let genres_list = await genres.getAll();
+    let genres_list = await genres(req).getAll();
     render(req,res,'admin/genres',{genres: genres_list})
 });
 
@@ -27,13 +27,13 @@ router.post('/add',async function(req,res,next) {
     const filename = filedata.filename + '.' + items[items.length - 1];
     console.log(filename);
     fs.rename(filedata.path,'public/img/' + filename,function(err){
-        genres.add(req.body.title,filename).then(genre => {
+        genres(req).add(req.body.title,filename).then(genre => {
             res.redirect('/admin/genres/');
         });
     });
 });
 router.post('/:genre_id/remove',async function(req,res,next) {
-    await genres.remove(req.params.genre_id);
+    await genres(req).remove(req.params.genre_id);
     res.redirect('back');
 });
 router.post('/:genre_id/rename',async function(req,res,next) {
@@ -43,12 +43,12 @@ router.post('/:genre_id/rename',async function(req,res,next) {
         const filename = filedata.filename + '.' + items[items.length - 1]
         fs.rename(filedata.path,'public/img/' + filename,function(err){
             console.log(err);
-            genres.rename(req.params.genre_id,req.body.title,filename).then(val =>{
+            genres(req).rename(req.params.genre_id,req.body.title,filename).then(val =>{
                 res.redirect('back');
             });
         });
     }else {
-        await genres.rename(req.params.genre_id,req.body.title,null);
+        await genres(req).rename(req.params.genre_id,req.body.title,null);
         res.redirect('back');
     }
 });

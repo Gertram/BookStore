@@ -2,11 +2,14 @@ const mongo = require('../app/mongo');
 var ObjectId = require('mongodb').ObjectID;
 
 class FeaturedtSelllers {
-    static async bestsellers() {
-        return (await mongo()).collection("featured_bestsellers");
+    constructor(db){
+        this.db = db;
+    }
+    async bestsellers() {
+        return this.db.collection("featured_bestsellers");
     }
 
-    static async getAll() {
+    async getAll() {
         let books = await (await this.bestsellers()).aggregate([
             {$unwind: {path: "$info"}},
             {
@@ -43,7 +46,7 @@ class FeaturedtSelllers {
         return books;
     }
 
-    static async getRandom() {
+    async getRandom() {
         const book = await (await this.bestsellers()).aggregate([
             {$sample: {size: 1}},
             {$unwind: {path: "$info"}},
@@ -60,7 +63,7 @@ class FeaturedtSelllers {
         //return book[0].book[0];
     }
 
-    static async add(book_id) {
+    async add(book_id) {
         return (await (await this.bestsellers()).insertOne({
             info: {
                 $ref: "books",
@@ -70,10 +73,12 @@ class FeaturedtSelllers {
         })).ops[0];
     }
 
-    static async remove(book_id) {
+    async remove(book_id) {
         return (await this.bestsellers()).findOneAndDelete({_id: ObjectId(book_id)});
     }
 
 }
 
-module.exports = FeaturedtSelllers;
+module.exports = function (req) {
+    return new FeaturedtSelllers(req.db);
+};

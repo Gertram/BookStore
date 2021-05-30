@@ -14,20 +14,20 @@ router.use(async function (req, res, next) {
 });
 
 router.get('/', async function (req, res, next) {
-    let tags_list = await tags.getAll();
+    let tags_list = await tags(req).getAll();
     render(req, res, 'admin/tags', {tags: tags_list})
 });
 
 router.post('/add', async function (req, res, next) {
-    const genre = await tags.add(req.body.title);
+    const genre = await tags(req).add(req.body.title);
     res.redirect('/admin/tags/');
 });
 router.post('/:tag_id/remove', async function (req, res, next) {
-    await tags.remove(req.params.tag_id);
+    await tags(req).remove(req.params.tag_id);
     res.redirect('back');
 });
 router.post('/:tag_id/rename', async function (req, res, next) {
-    await tags.rename(req.params.tag_id, req.body.title);
+    await tags(req).rename(req.params.tag_id, req.body.title);
     res.redirect('back');
 });
 

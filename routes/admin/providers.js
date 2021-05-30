@@ -15,23 +15,23 @@ router.use(async function(req,res,next) {
 });
 
 router.post('/add',async function(req,res,next) {
-    await providers.add(req.body.name,req.body.phone);
+    await providers(req).add(req.body.name,req.body.phone);
     res.redirect('back');
 });
 
 router.post('/remove',async function(req,res,next) {
-    await providers.remove(req.body.provider);
+    await providers(req).remove(req.body.provider);
     res.redirect('back');
 });
 
 router.get('/',async function(req,res,next){
-    let providers_list = await providers.getAll();
+    let providers_list = await providers(req).getAll();
     render(req,res,'admin/providers/providers',{providers: providers_list})
 });
 
 router.get('/:provider_id',async function(req,res,next){
     console.log(req.params);
-    let provider = await providers.get(req.params.provider_id);
+    let provider = await providers(req).get(req.params.provider_id);
     if(provider == null){
         res.status(404);
         return res.send();
@@ -40,7 +40,7 @@ router.get('/:provider_id',async function(req,res,next){
 });
 
 router.post('/:provider_id/add',async function(req,res,next) {
-    let provider = await providers.get(req.params.provider_id);
+    let provider = await providers(req).get(req.params.provider_id);
     if(provider == null){
         res.status(404);
         return res.send();
@@ -48,7 +48,7 @@ router.post('/:provider_id/add',async function(req,res,next) {
 
     console.log(req.user._id);
 
-    let delivery = await deliveries.open(provider._id,req.user._id);
+    let delivery = await deliveries(req).open(provider._id,req.user._id);
 
     res.redirect('/admin/deliveries/' + delivery._id);
 });

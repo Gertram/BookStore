@@ -9,23 +9,23 @@ router.get('/', async function(req, res, next) {
             return render(req,res,'orders/orders',{orders:[]})
         }
 
-        let orders_List = await orders_list.getAll(req.cookies.orders);
+        let orders_List = await orders(req).getAll(req.cookies.orders);
         return render(req,res,"orders/orders", {orders:orders_list});
     }
 
-    let orders_list = await orders.getAll(req.cookies.user);
+    let orders_list = await orders(req).getAll(req.cookies.user);
 
     render(req,res,"orders/orders", {orders:orders_list});
 });
 /* GET home page. */
 router.get('/find', async function(req, res, next) {
     let order_id = req.query.order_id;
-    let order = await orders.get(order_id);
+    let order = await orders(req).get(order_id);
     render(req,res,"orders/order", {order:order});
 });
 /* GET home page. */
 router.get('/:order', async function(req, res, next) {
-    let order = await orders.get(req.params.order);
+    let order = await orders(req).get(req.params.order);
     render(req,res,"orders/order", {order:order});
 });
 

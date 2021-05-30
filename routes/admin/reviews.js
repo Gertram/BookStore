@@ -13,30 +13,30 @@ router.use(async function(req,res,next) {
 });
 
 router.post('/:review_id/reject',async function(req,res,next) {
-    let review = await reviews.get(req.params.review_id);
+    let review = await reviews(req).get(req.params.review_id);
     if(review.length == 0){
         res.status(404);
         return res.send();
     }
-    await reviews.reject(req.params.review_id,req.user.user_id,req.body.cause);
+    await reviews(req).reject(req.params.review_id,req.user.user_id,req.body.cause);
     res.redirect('back');
 });
 router.post('/:review_id/approve',async function(req,res,next) {
-    let review = await reviews.get(req.params.review_id);
+    let review = await reviews(req).get(req.params.review_id);
     if(review.length == 0){
         res.status(404);
         return res.send();
     }
-    await reviews.approve(req.params.review_id,req.user.user_id);
+    await reviews(req).approve(req.params.review_id,req.user.user_id);
     res.redirect('back');
 });
 
 router.get('/',async function(req,res,next){
-    let reviews_list = await reviews.getAllWithBook();
+    let reviews_list = await reviews(req).getAllWithBook();
     render(req,res,'admin/reviews/reviews',{reviews: reviews_list})
 });
 router.get('/:review_id',async function(req,res,next){
-    let review = await reviews.get(req.params.review_id);
+    let review = await reviews(req).get(req.params.review_id);
     if(review.length == 0){
         res.status(404);
         return res.send();

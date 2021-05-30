@@ -4,11 +4,14 @@ const mongo = require('../app/mongo');
 var ObjectId = require('mongodb').ObjectID;
 
 class Deliveries {
-    static async deliveries() {
-        return (await mongo()).collection('deliveries')
+    constructor(db){
+        this.db = db;
+    }
+    async deliveries() {
+        return this.db.collection('deliveries')
     }
 
-    static async getAll() {
+    async getAll() {
         const delivers = await (await this.deliveries()).aggregate([
             {$unwind: {path: "$receiver"}},
             {
@@ -36,14 +39,14 @@ class Deliveries {
         });
     }
 
-    static async get(delivery_id) {
+    async get(delivery_id) {
         const delivery = await (await this.deliveries()).findOne({_id: ObjectId(delivery_id)});
         delivery.provider = await (await mongo()).collection("providervs").findOne({_id: ObjectId(delivery.provider.oid)})
         delivery.receiver = await (await mongo()).collection("users").findOne({_id: ObjectId(delivery.receiver.oid)})
         return delivery;
     }
 
-    static async add(delivery_id, product_id, count, cover_type) {
+    async add(delivery_id, product_id, count, cover_type) {
         let products = await (await this.deliveries()).findOne({_id: ObjectId(delivery_id)}).products;
         if (products == null) {
             products = [];
@@ -53,7 +56,7 @@ class Deliveries {
         return (await this.deliveries()).findOneAndUpdate({_id: ObjectId(delivery_id)}, {$set: {products: products}})
     }
 
-    static async open(provider_id, receiver_id) {
+    async open(provider_id, receiver_id) {
 
         let date = dateFormat(new Date(), "yyyy-mm-dd")
 
@@ -66,9 +69,11 @@ class Deliveries {
         })).ops[0]
     }
 
-    static async close(delivery_id) {
+    async close(delivery_id) {
         (await this.deliveries()).findOneAndUpdate({_id: ObjectId(delivery_id)}, {$set: {status: 2}})
     }
 }
 
-module.exports = Deliveries;
+module.exports = function (req) {
+    return new Deliveries(req.db);
+};

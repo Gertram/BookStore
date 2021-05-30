@@ -97,7 +97,7 @@ router.get('/:book_id',async function(req,res,next) {
         return res.send();
     }
 
-    /*book.authors = book.authors.map(val => val._id.toString());
+    book.authors = book.authors.map(val => val._id.toString());
     book.genres = book.genres.map(val => val._id.toString());
 
     let genres_list = (await genres.getAll()).map(item =>{
@@ -107,12 +107,12 @@ router.get('/:book_id',async function(req,res,next) {
     let authors_list = (await authors.getAll()).map(item =>{
         item._id = item._id.toString();
         return item;
-    });*/
+    });
 
     render(req,res,'admin/books/book',{
         book:book,
-        /*authors_list:authors_list,
-        genres_list:genres_list*/
+        authors_list:authors_list,
+        genres_list:genres_list
     });
 });
 

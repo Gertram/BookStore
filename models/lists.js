@@ -2,12 +2,13 @@ const mongo = require('../app/mongo');
 var ObjectId = require('mongodb').ObjectID;
 
 class List {
-    constructor(list_id) {
+    constructor(list_id,db) {
         this.list_id = list_id;
+        this.db = db;
     }
 
     async books() {
-        return (await mongo()).collection("books");
+        return this.db.collection("books");
     }
 
     async getAll() {
@@ -25,24 +26,31 @@ class List {
 }
 
 class Lists {
-    static getNewReleases() {
-        return new List("1");
+    constructor(db){
+        this.db = db;
+    }
+   getNewReleases() {
+        return new List("1",this.db);
     }
 
-    static getComingSoon() {
-        return new List("2");
+   getComingSoon() {
+        return new List("2",this.db);
     }
 
-    static getBestSellers() {
-        return new List("3");
+   getBestSellers() {
+        return new List("3",this.db);
     }
 
-    static getAwardWinners() {
-        return new List("4");
+   getAwardWinners() {
+        return new List("4",this.db);
     }
 }
 
 module.exports = {
-    Lists: Lists,
-    List: List
+    Lists: function (req) {
+        return new Lists(req.db);
+    },
+    List: function (id,req) {
+        return new Lists(id,req.db);
+    }
 };

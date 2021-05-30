@@ -24,7 +24,7 @@ router.get('/logout',async function(req,res,next) {
 
 /* GET home page. */
 router.post('/', async function(req, res, next) {
-    let user = await users.login(req.body.login,req.body.password);
+    let user = await users(req).login(req.body.login,req.body.password);
 
     if(user == null) {
         res.redirect('back');

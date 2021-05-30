@@ -9,7 +9,7 @@ router.get('/:user_id', async function(req, res, next) {
   if(user_id == null){
     return res.redirect('.login');
   }
-  let user = await users.get(req.params.user_id);
+  let user = await users(req).get(req.params.user_id);
   if(user.length == 0){
     return res.status(301);
   }
@@ -19,11 +19,11 @@ router.get('/:user_id', async function(req, res, next) {
 });
 
 router.post('/:user_id/redact',async function (req,res,next) {
-    await users.save(req.params.user_id,req.body.email,req.body.username,req.body.phone);
+    await users(req).save(req.params.user_id,req.body.email,req.body.username,req.body.phone);
     res.redirect('back');
 });
 router.post('/:user_id/save_password',async function (req,res,next) {
-    await users.save_password(req.params.user_id,req.body.password);
+    await users(req).save_password(req.params.user_id,req.body.password);
   res.redirect('back');
 });
 

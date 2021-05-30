@@ -10,7 +10,7 @@ const reviews = require('../models/reviews');
 router.get('/', async function(req, res, next) {
   let min_price = req.query.min_price;
   let max_price = req.query.max_price;
-  let range = (await books.getRange());
+  let range = (await books(req).getRange());
   let filters = {};
   if(min_price == null){
       min_price = range.min_price;
@@ -40,11 +40,11 @@ router.get('/', async function(req, res, next) {
       filters.tags = Array.isArray(stags)?stags:[stags];
   }
   
-  let books_list = await books.getAll(filters);
+  let books_list = await books(req).getAll(filters);
 
-  let genres_list = await genres.getAll();
+  let genres_list = await genres(req).getAll();
 
-  let tags_list = await tags.getAll();
+  let tags_list = await tags(req).getAll();
 
   let basket = getBasket(req,res);
 

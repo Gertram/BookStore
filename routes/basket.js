@@ -20,7 +20,7 @@ router.post('/buy',async function (req,res,next) {
         render(req,res,'basket/order/order_payment',{address:req.body.address});
     } else if(step === "payment"){
         let basket = req.cookies.basket;
-        let books_list = await books.getFilter(basket.map(val => val.product));
+        let books_list = await books(req).getFilter(basket.map(val => val.product));
         books_list = books_list.map(book => {
             book.quantity = basket.filter(item => item.product == book.book_id)[0].quantity;
             return book;
