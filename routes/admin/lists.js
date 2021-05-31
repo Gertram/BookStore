@@ -31,25 +31,39 @@ router.get('/:list_id/add', async function (req, res, next) {
     let list_id = req.params.list_id;
     let books_list = await books(req).getAll();
 
-    let releases = await (new lists.List(list_id,req)).getAll();
+    let releases = await lists.List(list_id,req).getAll();
 
     releases = releases.map(val => val['_id'].toString());
 
-    books_list = books_list(req).filter(val => !releases.includes(val['_id'].toString()));
+    books_list = books_list.filter(val => !releases.includes(val['_id'].toString()));
     render(req,res,'admin/list_add.twig', {list_id: list_id, books: books_list});
 });
 
 router.post('/:list_id/remove', async function (req, res, next) {
-    let list = new lists.List(req.params.list_id,req);
+    let list = lists.List(req.params.list_id,req);
     const book_id = req.body.book_id;
 
     await list.remove(book_id);
 
     res.redirect('back');
 });
-router.post('/:list_id/add', async function (req, res, next) {
-    let list = new lists.List(req.params.list_id,req);
+router.post('/add', async function (req, res, next) {
+    let list = lists.List(req.body.list_id,req);
     const book_id = req.body.book_id;
+
+    let books_list = await list.getAll();
+
+    if(books_list.length === 4){
+        return res.send("Список полон");
+    }
+
+    books_list = books_list.map(item => item._id.toString());
+
+    for(let i = 0;i < books_list.length;i++){
+        if(book_id == books_list[i]){
+            return res.send("Книга уже в списке");
+        }
+    }
 
     await list.add(book_id);
 

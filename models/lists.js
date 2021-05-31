@@ -51,6 +51,6 @@ module.exports = {
         return new Lists(req.db);
     },
     List: function (id,req) {
-        return new Lists(id,req.db);
+        return new List(id,req.db);
     }
 };

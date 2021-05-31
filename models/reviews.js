@@ -6,7 +6,7 @@ class Reviews{
     constructor(db){
         this.db = db;
     }
-    async books(){
+    async reviews(){
         return this.db.collection("reviews");
     }
     async getAll(){

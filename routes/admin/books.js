@@ -53,7 +53,7 @@ router.get('/',async function(req,res,next) {
 
 router.post('/:book_id/redact',async function(req,res,next) {
 
-    let book = await books.get(req.params.book_id);
+    let book = await books(req).get(req.params.book_id);
     if(book == null){
         res.status(404);
         return res.send();
@@ -100,11 +100,11 @@ router.get('/:book_id',async function(req,res,next) {
     book.authors = book.authors.map(val => val._id.toString());
     book.genres = book.genres.map(val => val._id.toString());
 
-    let genres_list = (await genres.getAll()).map(item =>{
+    let genres_list = (await genres(req).getAll()).map(item =>{
         item._id = item._id.toString();
         return item;
     });
-    let authors_list = (await authors.getAll()).map(item =>{
+    let authors_list = (await authors(req).getAll()).map(item =>{
         item._id = item._id.toString();
         return item;
     });

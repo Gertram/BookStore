@@ -15,12 +15,16 @@
                 </div>
             </div>
         </div>
+        {% else %}
+        <div class="field">
+            Список пуст
+        </div>
     {% endfor %}
-    {% if books|length < 5 %}
+    {#{% if books|length < 5 %}
         <div class="list-item-wrap">
             <div class="item-wrap">
                 <a href="/admin/lists/{{ id }}/add" class="list-item add-item"></a>
             </div>
         </div>
-    {% endif %}
+    {% endif %}#}
 </div>

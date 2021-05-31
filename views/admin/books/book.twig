@@ -31,6 +31,17 @@
                     <textarea class="field_wrap book_description" name="description">{{ book.description }}</textarea>
                     <label class="field"><input type="submit" value="Изменить"></label>
                 </form>
+                <form method="post" action="/admin/lists/add">
+                    <label>Добавить книгу в список</label>
+                    <input type="hidden" name="book_id" value="{{ book._id }}">
+                    <select name="list_id" required>
+                        <option value="1">Новые релизы</option>
+                        <option value="2">Скоро в продаже</option>
+                        <option value="3">Лидеры продаж</option>
+                        <option value="4">Получатели наград</option>
+                    </select>
+                    <input type="submit" value="Добавить">
+                </form>
                 <form method="post" action="/admin/books/{{ book._id }}/remove">
                     <input type="submit" value="Удалить">
                 </form>
