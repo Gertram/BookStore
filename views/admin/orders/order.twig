@@ -1,0 +1,89 @@
+{% extends '../admin_layout.twig' %}
+
+{% block main %}
+    <div class="content_wrap">
+        <div class="content">
+            <style>
+                p {
+                    margin: 1em;
+                    color: black;
+                }
+
+                .info {
+                    border: 1px solid #999999;
+                }
+
+                .products {
+                    padding: 1em;
+                    margin: 1em;
+                }
+
+                .product h2 {
+                    padding: 0.5em;
+                    background: #eeeeee;
+                }
+
+                .product p {
+                    margin: 0;
+                    padding: 0.5em;
+                }
+
+                .product p:nth-child(odd) {
+                    background: #cccccc;
+                }
+
+                .product p:nth-child(even) {
+                    background: #dddddd;
+                }
+            </style>
+            {% if order is not defined %}
+                Такого заказа нет
+            {% else %}
+                <div class="info">
+                    <p><b>Номер заказа:</b> <i>{{ order._id }}</i></p>
+                    <p><b>Дата заказа:</b> <i>{{ order.date }}</i></p>
+                    <p><b>Заказчик:</b> <i>{{ order.surname }} {{ order.name }} {{ order.middlename }}</i></p>
+                    <p><b>Статус</b> <i>{% if order.status == 1 %}
+                                В обработке
+                            {% elseif order.status == 2 %}
+                                Собирается
+                            {% elseif order.status == 3 %}
+                                Отправляется
+                            {% elseif order.status == 4 %}
+                                Доставляется
+                            {% elseif order.status == 5 %}
+                                Завершен
+                            {% endif %}</i></p>
+                    <p><b>Телефон:</b> <i>{{ order.phone }}</i></p>
+                    <p><b>Адрес доставки:</b> <i>{{ order.address }}</i></p>
+                </div>
+                {% if order.status < 5 %}
+                    <form method="post" action="/admin/orders/{{ order._id }}/next">
+                        {% if order.status == 1 %}
+                    <input type="submit" value="Заказ обработан">
+                    {% elseif order.status == 2 %}
+                        <input type="submit" value="Заказ собран">
+                    {% elseif order.status == 3 %}
+                        <input type="submit" value="Заказ отправлен">
+                    {% elseif order.status == 4 %}
+                        <input type="submit" value="Заказ доставлен">
+                        {% endif %}
+                    </form>
+                {% endif %}
+                <div class="products">
+                    {% for item in order.products %}
+                        <div class="basket_item" style="margin:10px;display: flex">
+                            <a class="left" href="/shop/{{ item.book._id }}">
+                                <img style="width: 100px;" src="/img/{{ item.book.img }}"/></a>
+                            <div class="right" style="margin:10px">
+                                <a class="item_field" href="/shop/{{ item.book._id }}">{{ item.book.title }}</a>
+                                <div class="item_field">{{ item.book.price // 100 }}.{{ item.book.price % 100 }}</div>
+                                <div class="item_field">Количество:{{ item.quantity }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

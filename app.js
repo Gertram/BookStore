@@ -7,7 +7,7 @@ const logger = require('morgan');
 const mongo = require('./app/mongo');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
+const myRouter = require('./routes/my');
 const shopRouter = require('./routes/shop');
 const contactsRouter = require('./routes/contacts');
 const linksRouter = require('./routes/links');
@@ -19,6 +19,7 @@ const registrationRouter = require('./routes/registration');
 const searchRouter = require('./routes/search');
 const basketRouter = require('./routes/basket');
 const ordersRouter = require('./routes/orders');
+const bookmarksRouter = require('./routes/bookmarks');
 
 module.exports = async function() {
     const app = express();
@@ -69,7 +70,7 @@ module.exports = async function() {
 
     app.use('/', indexRouter);
     app.use('/admin', adminRouter)
-    app.use('/users', usersRouter);
+    app.use('/my', myRouter);
     app.use('/shop', shopRouter);
     app.use('/contacts', contactsRouter);
     app.use('/links', linksRouter);
@@ -80,6 +81,7 @@ module.exports = async function() {
     app.use('/search', searchRouter);
     app.use('/basket', basketRouter);
     app.use('/orders', ordersRouter);
+    app.use('/bookmarks', bookmarksRouter);
 
 // catch 404 and forward to error handler
     app.use(function (req, res, next) {

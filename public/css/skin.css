@@ -5482,14 +5482,6 @@ h6 {
     color: #797979;
 }
 
-.scheme_original .wp-block-calendar a,
-.scheme_original .widget_area_inner a,
-.scheme_original .widget_area_inner ul li:before,
-.scheme_original .widget_area_inner ul li a:hover,
-.scheme_original .widget_area_inner button:before {
-    color: #de3241;
-}
-
 .scheme_blue .wp-block-calendar a,
 .scheme_blue .widget_area_inner a,
 .scheme_blue .widget_area_inner ul li:before,

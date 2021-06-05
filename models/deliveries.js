@@ -41,8 +41,8 @@ class Deliveries {
 
     async get(delivery_id) {
         const delivery = await (await this.deliveries()).findOne({_id: ObjectId(delivery_id)});
-        delivery.provider = await (await mongo()).collection("providervs").findOne({_id: ObjectId(delivery.provider.oid)})
-        delivery.receiver = await (await mongo()).collection("users").findOne({_id: ObjectId(delivery.receiver.oid)})
+        delivery.provider = await this.db.collection("providervs").findOne({_id: ObjectId(delivery.provider.oid)})
+        delivery.receiver = await this.db.collection("users").findOne({_id: ObjectId(delivery.receiver.oid)})
         return delivery;
     }
 

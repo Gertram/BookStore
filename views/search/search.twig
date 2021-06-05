@@ -7,6 +7,41 @@
                 <input type="search" name="query" placeholder="Запрос:">
                 <input type="submit" value="Найти">
             </form>
+            {% for res in results %}
+                <div style="display: flex">
+                    <img class="book_img" style="flex-grow: 0;width:200px;" src="/img/{{ res.img }}" />
+                    <div class="right" style="margin:10px;">
+                        {% include 'partials/raiting.twig' with {raiting:res.raiting} %}
+                        <a href="/shop/{{ res._id }}" class="book_title" style="display:block;">{{ res.title }}</a>
+                        <div class="book_authors">
+                            Авторы:
+                            {% for author in res.authors %}
+                                <span>{{ author.firstname }} {{ author.lastname }}</span>
+                            {% endfor %}
+                        </div>
+                        <div>Цена: {{ res.price }}</div>
+                        <div class="book_genres">
+                            Жанры:
+                            {% for genre in res.genres %}
+                                <span>{{ genre.title }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="book_tags">
+                            Теги:
+                            {% for tag in res.tags %}
+                                <span>{{ tag.title }}</span>
+                            {% endfor %}
+                        </div>
+                        <div class="book_ISBN">
+                            ISBN: {{ res.isbn }}
+                        </div>
+                        <div class="description">
+                            Описание:
+                            {{ res.descrption }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

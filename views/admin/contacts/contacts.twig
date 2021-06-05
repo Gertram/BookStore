@@ -1,0 +1,20 @@
+{% extends '../admin_layout.twig' %}
+
+{% block main %}
+    <h2>Вопросы</h2>
+    {% for request in requests %}
+        <div class="wrap">
+            <div class="fields_wrap">
+                <div class="field">Имя: {{ request.name }}</div>
+                <div class="field">Почта: {{ request.email }}</div>
+                <div class="field">Вопрос: {{ request.question }}</div>
+                <div class="field">Сообщение: {{ request.message }}</div>
+                <form class="field_wrap" method="post" action="/admin/contacts/{{ request._id }}/remove">
+                    <input type="submit" value="Удалить">
+                </form>
+            </div>
+        </div>
+        {% else %}
+        <div>Вопросов нет</div>
+    {% endfor %}
+{% endblock %}

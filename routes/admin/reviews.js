@@ -30,19 +30,29 @@ router.post('/:review_id/approve',async function(req,res,next) {
     await reviews(req).approve(req.params.review_id,req.user.user_id);
     res.redirect('back');
 });
-
-router.get('/',async function(req,res,next){
-    let reviews_list = await reviews(req).getAllWithBook();
-    render(req,res,'admin/reviews/reviews',{reviews: reviews_list})
-});
-router.get('/:review_id',async function(req,res,next){
+router.post('/:review_id/remove',async function(req,res,next) {
     let review = await reviews(req).get(req.params.review_id);
     if(review.length == 0){
         res.status(404);
         return res.send();
     }
+    await reviews(req).remove(req.params.review_id);
+    res.redirect('/admin/reviews');
+});
 
-    render(req,res,'admin/reviews/review',review[0])
+router.get('/',async function(req,res,next){
+    let reviews_list = await reviews(req).getAllWithBook();
+    console.log(reviews_list);
+    return render(req,res,'admin/reviews/reviews',{reviews: reviews_list})
+});
+router.get('/:review_id',async function(req,res,next){
+    let review = await reviews(req).get(req.params.review_id);
+    if(review == null){
+        res.status(404);
+        return res.send();
+    }
+
+    return render(req,res,'admin/reviews/review',review)
 });
 
 

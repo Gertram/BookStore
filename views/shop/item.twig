@@ -1,4 +1,4 @@
-<li  class="list-item">
+<div  class="list-item">
     <a href="/shop/{{ _id }}"
        class="woocommerce-LoopProduct-link woocommerce-loop-product__link"> </a>
     <div class="post_item_wrap"><a
@@ -31,8 +31,8 @@
 {#                            <span class="woocommerce-Price-currencySymbol"></span>{{ last_price[0] }}.{{ last_parice[1] }}</bdi></span></ins></span>#}
             <form method="post" action="/basket/add">
                 <input type="hidden" name="product" value="{{ _id }}">
-                <input type="submit" value="Add to cart" >
+                <input type="submit" value="Добавить" >
                 <input type="hidden" name="quantity" value="1">
             </form></div>
     </div>
-</li>
+</div>

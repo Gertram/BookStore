@@ -15,18 +15,19 @@ router.get('/', async function(req, res, next) {
 
     let orders_list = await orders(req).getAll(req.cookies.user);
 
-    render(req,res,"orders/orders", {orders:orders_list});
+    return render(req,res,"orders/orders", {orders:orders_list});
 });
 /* GET home page. */
 router.get('/find', async function(req, res, next) {
     let order_id = req.query.order_id;
     let order = await orders(req).get(order_id);
-    render(req,res,"orders/order", {order:order});
+    return render(req,res,"orders/order", {order:order});
 });
 /* GET home page. */
 router.get('/:order', async function(req, res, next) {
     let order = await orders(req).get(req.params.order);
-    render(req,res,"orders/order", {order:order});
+    console.log(order)
+    return render(req,res,"orders/order", {order:order});
 });
 
 module.exports = router;

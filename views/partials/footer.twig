@@ -100,26 +100,12 @@
                         <ul class="product_list_widget">
                             {% for book in fbest_sellers %}
                                 <li>
-                                    <a href="/shop/{{ book.book_id }}">
+                                    <a href="/shop/{{ book._id }}">
                                         <img src="/img/{{book.img}}" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail">
                                         <span class="product-title">{{ book.title }}</span>
                                     </a>
 
-                                    <div class="star-rating" role="img" aria-label="Rated 4 out of 5">
-                                        {% if book.raiting is not null %}
-                                            {% if book.raiting > 4 and book.raiting < 6%}
-                                                <span>★★★★★</span>
-                                            {% elseif book.raiting > 3 and book.raiting < 5%}
-                                                <span>★★★★☆</span>
-                                            {% elseif book.raiting > 2 and book.raiting < 4%}
-                                                <span>★★★☆☆</span>
-                                            {% elseif book.raiting > 1 and book.raiting < 3%}
-                                                <span>★★☆☆☆</span>
-                                            {% elseif book.raiting > 0 and book.raiting < 2%}
-                                                <span>★☆☆☆☆</span>
-                                            {% endif %}
-                                        {% endif %}
-                                    </div>
+                                    {% include 'partials/raiting.twig' with {raiting:book.raiting} %}
                                     <span class="reviewer">by ANC_admin</span>
                                 </li>
                             {% endfor %}

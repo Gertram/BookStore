@@ -1,0 +1,86 @@
+{% extends '../admin_layout.twig' %}
+
+{% block main %}
+    <h2>Все заказы</h2>
+    <h3>Поиск заказа по номеру</h3>
+    <form method="get" action="/admin/orders/goto">
+        <input type="text" name="order">
+        <input type="submit" value="Найти">
+    </form>
+    <form method="get" id="search_form">
+        <label>Сортировка по</label>
+        <select name="sortby">
+            <option value="">--------------------</option>
+            <option value="date">По позврастанию даты</option>
+            <option value="date_desc">По убыванию даты</option>
+            <option value="amount">По возрастанию стоимости</option>
+            <option value="amount_desc">По убыванию стоимости</option>
+            <option value="customer">По возрастанию закачика</option>
+            <option value="customer_desc">По убыванию заказчика</option>
+        </select><br>
+        <label>Фильтрация</label><br>
+        <label>Начальная дата: <input type="date" name="mindate"></label><br>
+        <label>Конечная дата: <input type="date" name="maxdate"></label><br>
+        <label>По заказчику: <input type="text" name="customer"></label>
+        <label>По статусу: <select name="status">
+                <option value="">----------------</option>
+                <option value="1">В обработке</option>
+                <option value="2">Собирается</option>
+                <option value="3">Отправлен</option>
+                <option value="4">Доставлен</option>
+                <option value="5">Завершен</option>
+            </select></label>
+        <input type="submit" value="Сортировать">
+    </form>
+    {% if orders|length == 0 %}
+        <div>Заказов нет</div>
+    {% else %}
+        <style>
+            table {
+                font-size: 16px;
+            }
+        </style>
+        <table border="1px" cellpadding="10" cellspacing="0">
+            <thead>
+            <th>Номер</th>
+            <th>Заказчик</th>
+            <th>Статус</th>
+            <th>Телефон</th>
+            <th>Сумма</th>
+            <th>Дата</th>
+            <th>Адрес</th>
+            <th>Покупатель</th>
+            </thead>
+            {% for order in orders %}
+                <tr>
+                    <td><a href="/admin/orders/{{ order._id }}">{{ order._id }}</a></td>
+                    <td>{{ order.surname }} {{ order.name }} {{ order.middlename }}</td>
+                    <td>
+                        {% if order.status == 1 %}
+                            В обработке
+                        {% elseif order.status == 2 %}
+                            Собирается
+                        {% elseif order.status == 3 %}
+                            Отправлен
+                        {% elseif order.status == 4 %}
+                            Доставлен
+                        {% elseif order.status == 5 %}
+                            Завершен
+                        {% endif %}
+                    </td>
+                    <td>{{ order.phone }}</td>
+                    <td>{{ order.amount }}</td>
+                    <td>{{ order.date }}</td>
+                    <td>{{ order.address }}</td>
+                    <td>{% if order.customer == null %}
+                            Гость
+                        {% else %}
+                            Пользователь: <a
+                                href="/admin/users/{{ order.customer._id }}">{{ order.customer.username }}</a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

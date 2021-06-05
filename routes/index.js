@@ -9,13 +9,7 @@ const render = require('../app/render');
 /* GET home page. */
 router.get('/', async function (req, res, next) {
 
-    let mbooks = {
-        new_releases: await lists.Lists(req).getNewReleases().getAll(),
-        coming_soon: await lists.Lists(req).getComingSoon().getAll(),
-        best_sellers: await lists.Lists(req).getBestSellers().getAll(),
-        award_winners: await lists.Lists(req).getAwardWinners().getAll()
-    };
-
+    let mlists = await lists.Lists(req).getAll()
     let genres_list = await genres(req).getMostNumerous(4);
     let picked = await books(req).getMostPopular(4);
     let mostPopular = await authors(req).getMostPopular(4);
@@ -24,9 +18,9 @@ router.get('/', async function (req, res, next) {
 
     console.log(featured_bestsellers_list);
 
-    render(req, res, "index/index", {
+    return render(req, res, "index/index", {
         title: 'BookStore',
-        lists: mbooks,
+        lists: mlists,
         genres: genres_list,
         picked: picked,
         most_popular: mostPopular,

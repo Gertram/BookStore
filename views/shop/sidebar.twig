@@ -8,7 +8,14 @@
                 <p class="woocommerce-mini-cart__empty-message">Корзина пуста.</p>
                 {% else %}
                     {% for item in basket %}
-                        {% include '/basket/item.twig' with item %}
+                        <div class="book_wrap" style="display: flex;margin:10px 0">
+                            <img class="book_img" style="width:50px;flex-grow: 0" src="/img/{{ item.book.img }}">
+                            <div class="right" style="margin:5px;">
+                                <a class="book_title" href="/shop/{{ item.book._id }}">{{ item.book.title }}</a>
+                                <div class="field">Цена: {{ item.book.price // 100}}.{{ item.book.price % 100 }}</div>
+                                <div class="field">Количество: {{ item.quantity }}</div>
+                            </div>
+                        </div>
                     {% endfor %}
                 {% endif %}
             </div>
@@ -16,9 +23,9 @@
         <aside id="woocommerce_price_filter-2"
                class="widget_number_2 widget woocommerce widget_price_filter"><h5 class="widget_title">
                 Цена</h5>
-            <form method="get" id="search_form" action="/shop/">
-                <input type="text" id="min_price" name="min_price" pattern="(\d+)|(\d+.\d{1,2})" value="{{ min_price // 100 }}.{{ min_price % 100 }}" placeholder="Min_pirce">
-                <input type="text" id="max_price" name="max_price" pattern="(\d+)|(\d+.\d{1,2})" value="{{ max_price // 100 }}.{{ max_price % 100 }}" placeholder="Max_price">
+            <form method="get" id="search_form">
+                <input type="text" style="width:40%;margin:0.5em 3.33%" id="min_price" name="min_price" pattern="(\d+)|(\d+.\d{1,2})" value="{{ min_price // 100 }}.{{ min_price % 100 }}" placeholder="Min_pirce">
+                <input type="text" style="width:40%;margin:0.5em 3.33%" id="max_price" name="max_price" pattern="(\d+)|(\d+.\d{1,2})" value="{{ max_price // 100 }}.{{ max_price % 100 }}" placeholder="Max_price">
                 <button type="submit" class="button">Фильтр</button>
             </form>
         </aside>

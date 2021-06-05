@@ -9,30 +9,40 @@ const render = require('../app/render');
 /* GET home page. */
 router.get('/', async function (req, res, next) {
     let products = await getBasket(req,res).products();
-    render(req,res,"basket/basket", {title: 'Basket', basket: products});
+
+    console.log(products);
+
+    return render(req,res,"basket/basket", {title: 'Basket', basket: products});
 });
 
 router.post('/buy',async function (req,res,next) {
     let step = req.body.step;
     if(step == null){
-        render(req,res,'basket/order/order_address');
+        return render(req,res,'basket/order/order_address');
     } else if(step === "address"){
-        render(req,res,'basket/order/order_payment',{address:req.body.address});
+        return render(req,res,'basket/order/order_payment',{
+            surname:req.body.surname,
+            name:req.body.name,
+            middlename:req.body.middlename,
+            phone:req.body.phone,
+            address:req.body.address});
     } else if(step === "payment"){
-        let basket = req.cookies.basket;
-        let books_list = await books(req).getFilter(basket.map(val => val.product));
-        books_list = books_list.map(book => {
-            book.quantity = basket.filter(item => item.product == book.book_id)[0].quantity;
-            return book;
-        });
-        let order = await orders.add(books_list,req.body.address,1);
-
-        if(order.status === false){
-            return res.redirect('/basket?error=count_error=product=' + order.product);
-        }
+        let basket = getBasket(req,res);
+        let order = await orders(req).add(await basket.products(),
+            req.body.surname,
+            req.body.name,
+            req.body.middlename,
+            req.body.phone,
+            req.body.address,
+            req.body.card_number,
+            req.body.card_validity,
+            req.body.card_owner,
+            req.body.card_code,
+            req.user == null?1:req.user._id
+        );
 
         basket.clear();
-        res.redirect('/orders/' + order.order_id)
+        res.redirect('/orders/' + order._id)
     }
 });
 
@@ -49,6 +59,12 @@ router.post('/add', async function (req, res, next) {
 router.post("/remove",async function (req,res,next) {
     let product = req.body.product;
     await getBasket(req,res).remove(product);
+
+    res.redirect('back');
+});
+router.post("/clear",async function (req,res,next) {
+    let product = req.body.product;
+    await getBasket(req,res).clear();
 
     res.redirect('back');
 });

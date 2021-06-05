@@ -1,11 +1,9 @@
 <div>
     <div class="fields_wrap ">
-        <div class="field">Для: <a href="/admin/books/{{ book_id }}">{{ title }}</a></div>
-        <div class="field">Кем: <a href="/admin/users/{{ user_id }}">{{ username }}</a></div>
-        <div class="field">Рейтинг: {% if raiting is null %}<span>☆☆☆☆☆</span>{% else %}
-                <span>{% for i in range(1, raiting) %}★{% endfor %}{% for i in range(1, 5 - raiting) %}☆{% endfor %}</span>{% endif %}
-        </div>
+        <div class="field">Для: <a href="/admin/books/{{ book._id }}">{{ book.title }}</a></div>
+        <div class="field">Кем: <a href="/admin/users/{{ user._id }}">{{ user.username }}</a></div>
+        <div class="field">Рейтинг: {% include 'partials/raiting.twig' with {raiting:book.raiting} %}</div>
         <div class="field">{{ text|striptags|truncate(50, true) }}</div>
-        <div class="field"><a href="/admin/reviews/{{ review_id }}">Рассмотреть</a></div>
+        <div class="field"><a href="/admin/reviews/{{ _id }}">Рассмотреть</a></div>
     </div>
 </div>

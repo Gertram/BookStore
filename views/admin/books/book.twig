@@ -12,8 +12,10 @@
                     <input class="field_wrap field" type="text" name="title" value="{{ book.title }}" class="field" required>
                     <label class="field">Цена</label>
                     <input class="field_wrap field" type="text" name="price" value="{{ book.price  // 100 }}.{{ book.price % 100 }}" required>
+                    <label class="field">Количество</label>
+                    <input class="field_wrap field" type="number" min="0" name="quantity" value="{{ book.quantity }}" required>
                     <label class="field">ISBN</label>
-                    <input class="field_wrap" type="text" name="isbn" pattern="\d{13}" placeholder="13:цифр"/>
+                    <input class="field_wrap" type="text" name="isbn" pattern="\d{13}" value="{{ book.isbn }}" placeholder="13:цифр"/>
                     <label class="field">Изображение</label>
                     <input class="field_wrap" type="file" name="filedata" accept="image/*">
                     <label class="field">Жанры</label>
@@ -28,6 +30,12 @@
                             <option value="{{ author._id }}" {% if author._id in book.authors %} selected {% endif %}>{{ author.firstname }} {{ author.lastname }}</option>
                         {% endfor %}
                     </select>
+                    <label class="field">Теги</label>
+                    <select class="field_wrap" name="tags" multiple>
+                        {% for tag in tags_list %}
+                            <option value="{{ tag._id }}" {% if tag._id in book.tags %} selected {% endif %}>{{ tag.title }}</option>
+                        {% endfor %}
+                    </select>
                     <textarea class="field_wrap book_description" name="description">{{ book.description }}</textarea>
                     <label class="field"><input type="submit" value="Изменить"></label>
                 </form>
@@ -35,13 +43,23 @@
                     <label>Добавить книгу в список</label>
                     <input type="hidden" name="book_id" value="{{ book._id }}">
                     <select name="list_id" required>
-                        <option value="1">Новые релизы</option>
-                        <option value="2">Скоро в продаже</option>
-                        <option value="3">Лидеры продаж</option>
-                        <option value="4">Получатели наград</option>
+                        {% for list in lists %}
+                            <option value="{{ list._id }}">{{ list.title }}</option>
+                        {% endfor %}
                     </select>
                     <input type="submit" value="Добавить">
                 </form>
+                {% if book.featured_bestsellers != 1 %}
+                <form method="post" action="/admin/featured_bestsellers/add">
+                    <input type="hidden" name="book_id" value="{{ book._id }}">
+                    <input type="submit" value="Добавить в будущие бестселлеры">
+                </form>
+                    {% else %}
+                        <form method="post" action="/admin/featured_bestsellers/remove">
+                            <input type="hidden" name="book_id" value="{{ book._id }}">
+                            <input type="submit" value="Удалить из будущих бестселлеров">
+                        </form>
+                {% endif %}
                 <form method="post" action="/admin/books/{{ book._id }}/remove">
                     <input type="submit" value="Удалить">
                 </form>

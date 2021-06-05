@@ -2,10 +2,13 @@
 
 {% block main %}
     <h2>Пользователи</h2>
+    <form method="get" action="/admin/users/add">
+        <input type="submit" value="Добавить нового">
+    </form>
     {% for user in users %}
         <div class="wrap">
             <div class="fields_wrap">
-                <div class="field">Имя пользователя: <a href="/admin/users/{{ user.user_id }}" >{{ user.username }}</a></div>
+                <div class="field">Имя пользователя: <a href="/admin/users/{{ user._id }}" >{{ user.username }}</a></div>
                 <div class="field">Тип пользователя: {% if user.role == 1 %}
                     Администратор
                     {% elseif user.role == 2 %}

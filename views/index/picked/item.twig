@@ -4,12 +4,12 @@
         <div class="post_featured">
             <div class="post_thumb">
                 <a class="hover_icon hover_icon_link"
-                   href="/shop/{{ book_id }}"><img src="/img/{{img}}"></a>
+                   href="/shop/{{ _id }}"><img src="/img/{{img}}"></a>
             </div>
         </div>
         <div class="post_content isotope_item_content">
             <h5 class="post_title"><a
-                    href="/shop/{{ book_id }}">{{title}}</a></h5>
+                    href="/shop/{{ _id }}">{{title}}</a></h5>
             <div class="post_descr">
                 <div class="author_name">
                     {{firstname}} {{ lastname }}
@@ -19,23 +19,9 @@
                         font-size: 1.5em;
                     }
                 </style>
-                <div class="star-rating">
-                    {% if raiting is not null %}
-                        {% if raiting > 4 and raiting < 6%}
-                            <span>★★★★★</span>
-                        {% elseif raiting > 3 and raiting < 5%}
-                            <span>★★★★☆</span>
-                        {% elseif raiting > 2 and raiting < 4%}
-                            <span>★★★☆☆</span>
-                        {% elseif raiting > 1 and raiting < 3%}
-                            <span>★★☆☆☆</span>
-                        {% elseif raiting > 0 and raiting < 2%}
-                            <span>★☆☆☆☆</span>
-                        {% endif %}
-                    {% endif %}
-                </div>
+                {% include 'partials/raiting.twig' with {raiting:raiting}%}
                 <div class="reviews_count">
-                    {{ reviews_count }} Отзывов
+                    {{ reviews|length }} Отзывов
                 </div>
 
 

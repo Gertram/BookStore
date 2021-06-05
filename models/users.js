@@ -21,24 +21,22 @@ class Users{
 
         return res
     }
-    async create(email,password,username,role){
+    async create(email,password,username,role,phone){
         const users = await this.users();
 
-        let res = await users.insertOne({username:username,email:email,password:password,role:role});
+        let res = await users.insertOne({username:username,email:email,phone:phone,password:password,role:role});
 
         return res.ops[0];
     }
     async get(user){
         const users = await this.users();
 
-        let res = await users.findOne({_id:ObjectId(user)});
-
-        return res;
+        return users.findOne({_id:ObjectId(user)});
     }
-    async save(user,email,user_name,phone){
+    async save(user,email,user_name,phone,role){
         const users = await this.users();
 
-        let res = await users.findOneAndUpdate({_id:ObjectId(user)},{$set:{username:user_name,email:email,phone:phone}});
+        let res = await users.findOneAndUpdate({_id:ObjectId(user)},{$set:{username:user_name,email:email,phone:phone,role:role}});
         return res.ops;
     }
     async save_password(user,password){

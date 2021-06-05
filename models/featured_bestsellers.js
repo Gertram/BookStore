@@ -5,76 +5,54 @@ class FeaturedtSelllers {
     constructor(db){
         this.db = db;
     }
-    async bestsellers() {
-        return this.db.collection("featured_bestsellers");
+    books() {
+        return this.db.collection("books");
     }
 
     async getAll() {
-        let books = await (await this.bestsellers()).aggregate([
-            {$unwind: {path: "$info"}},
-            {
-                $lookup: {
-                    from: "books",
-                    localField: "info.$id",
-                    foreignField: "_id",
-                    as: "info"
-                }
-            },
-            {$unwind: {path: "$info"}},
-            {
-                $lookup: {
-                    from: "authors",
-                    localField: "info.authors.$id",
-                    foreignField: "_id",
-                    as: "info.authors"
-                }
-            },
-            {
-                $lookup: {
-                    from: "genres",
-                    localField: "info.genres.$id",
-                    foreignField: "_id",
-                    as: "info.genres"
-                }
-            },
-        ]).toArray();
-
-        books = books.map(item => item.info)
-
-        console.log(books);
-
-        return books;
+        return this.books().find({featured_bestsellers: 1}).toArray()
     }
 
     async getRandom() {
-        const book = await (await this.bestsellers()).aggregate([
+        const books = await this.books().aggregate([
+            {$match:{featured_bestsellers:1}},
             {$sample: {size: 1}},
-            {$unwind: {path: "$info"}},
             {
                 $lookup: {
-                    from: "books",
-                    localField: "info.$id",
+                    from: "authors",
+                    localField: "authors.$id",
                     foreignField: "_id",
-                    as: "book"
+                    as: "authors"
                 }
             },
+            {
+                $lookup: {
+                    from: "reviews",
+                    localField: "_id",
+                    foreignField: "book.id",
+                    as: "reviews"
+                }
+            }
         ]).toArray();
 
-        //return book[0].book[0];
+        if(books.length == 0){
+            return null;
+        }
+
+        books.map(item => {
+            item.raiting = item.reviews.reduce(((acc,cur) => acc + cur.raiting),null)
+            return item;
+        })
+
+        return books[0];
     }
 
     async add(book_id) {
-        return (await (await this.bestsellers()).insertOne({
-            info: {
-                $ref: "books",
-                $id: ObjectId(book_id),
-                $db: "BookStore"
-            }
-        })).ops[0];
+        return this.books().findOneAndUpdate({_id:ObjectId(book_id)},{$set:{featured_bestsellers:1}});
     }
 
     async remove(book_id) {
-        return (await this.bestsellers()).findOneAndDelete({_id: ObjectId(book_id)});
+        return (await this.books()).findOneAndUpdate({_id: ObjectId(book_id)},{$set:{featured_bestsellers:null}});
     }
 
 }

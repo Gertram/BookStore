@@ -64,7 +64,7 @@
                                                                                aria-atomic="true"></p>
                                             <ul></ul>
                                         </div>
-                                        <form id="contact_form" action="/contats/contact"
+                                        <form id="contact_form" action="/contacts/contact"
                                               method="post" class="wpcf7-form init" novalidate="novalidate">
                                             <div style="display: none;">
                                                 <input type="hidden" name="_wpcf7" value="1328">
@@ -76,28 +76,28 @@
                                                 <input type="hidden" name="_wpcf7_posted_data_hash" value="">
                                             </div>
                                             <p><span class="wpcf7-form-control-wrap your-name"><input form="contact_form"
-                                                            type="text" name="your-name" value="" size="40"
+                                                            type="text" name="name" value="" size="40"
                                                             class="wpcf7-form-control wpcf7-text wpcf7-validates-as-required"
                                                             aria-required="true" aria-invalid="false"
-                                                            placeholder="Имя*"></span></p>
+                                                            placeholder="Имя*" required></span></p>
                                             <p><span class="wpcf7-form-control-wrap your-email"><input form="contact_form"
-                                                            type="email" name="your-email" value="" size="40"
+                                                            type="email" name="email" value="" size="40"
                                                             class="wpcf7-form-control wpcf7-text wpcf7-email wpcf7-validates-as-required wpcf7-validates-as-email"
                                                             aria-required="true" aria-invalid="false"
-                                                            placeholder="E-mail*"></span></p>
+                                                            placeholder="E-mail*" required></span></p>
                                             <p><span class="wpcf7-form-control-wrap your-s"><input type="text" form="contact_form"
-                                                                                                   name="your-s"
+                                                                                                   name="question"
                                                                                                    value=""
                                                                                                    size="40"
                                                                                                    class="wpcf7-form-control wpcf7-text"
                                                                                                    aria-invalid="false"
-                                                                                                   placeholder="Вопрос"></span>
+                                                                                                   placeholder="Вопрос" required></span>
                                             </p>
                                             <p><span class="wpcf7-form-control-wrap your-message"><textarea form="contact_form"
-                                                            name="your-message" cols="40" rows="10"
+                                                            name="message" cols="40" rows="10"
                                                             class="wpcf7-form-control wpcf7-textarea wpcf7-validates-as-required"
                                                             aria-required="true" aria-invalid="false"
-                                                            placeholder="Текст*"></textarea></span></p>
+                                                            placeholder="Текст*" required></textarea></span></p>
                                             <p><input type="submit" value="Отправить вопрос"
                                                       class="wpcf7-form-control wpcf7-submit"><span
                                                         class="ajax-loader"></span></p>

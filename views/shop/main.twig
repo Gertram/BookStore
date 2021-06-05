@@ -1,24 +1,27 @@
 <div class="shop-mainbar list_products shop_mode_thumbs">
-    <div class="mode_buttons">
+    {#<div class="mode_buttons">
         <form action="http://booklovers.ancorathemes.com/shop" method="post">
             <input type="hidden" name="booklovers_shop_mode" value="thumbs">
             <a href="http://booklovers.ancorathemes.com/shop/#" class="woocommerce_thumbs icon-th list-icon" title="Show products as thumbs"></a>
             <a href="http://booklovers.ancorathemes.com/shop/#" class="woocommerce_list icon-th-list list-icon" title="Show products as list"></a>
         </form>
-    </div>
+    </div>#}
     <p class="woocommerce-result-count">
-        Showing all 12 results</p>
-    <form class="woocommerce-ordering" method="get">
-        <select name="orderby" class="orderby" aria-label="Shop order">
-            <option value="menu_order" selected="selected">Default sorting</option>
-            <option value="popularity">Sort by popularity</option>
-            <option value="rating">Sort by average rating</option>
-            <option value="date">Sort by latest</option>
-            <option value="price">Sort by price: low to high</option>
-            <option value="price-desc">Sort by price: high to low</option>
+        Showing all {{ books|length }} results</p>
+        <select form="search_form" name="sortby" class="orderby" aria-label="Shop order" required>
+            {% set sorting = [
+                {key:"menu_order",title:"Обычная сортировка"},
+                {key:"popularity",title:"Сортировать по популярности"},
+                {key:"rating",title:"Сортировать по рейтингу"},
+                {key:"date",title:"Сначала новые"},
+                {key:"price",title:"От дешевых к дорогим"},
+                {key:"price-desc",title:"От дорогих к дешевым"}] %}
+            {% for sort in sorting %}
+            <option value="{{ sort.key }}" {%  if sortby == sort.key %}selected{% endif %} >{{ sort.title }}</option>
+            {% endfor %}
         </select>
-        <input type="hidden" name="paged" value="1">
-        <input type="hidden" name="q" value="/shop/"></form>
+        <input form="search_form" type="hidden" name="paged" value="1">
+        <input form="search_form" type="submit" value="Сортировать">
     {% if books is empty %}
         <p>Ничего не найденр</p>
     {% else %}

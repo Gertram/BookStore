@@ -2,69 +2,131 @@ const mongo = require('../app/mongo');
 var ObjectId = require('mongodb').ObjectID;
 
 
-class Reviews{
-    constructor(db){
+class Reviews {
+    constructor(db) {
         this.db = db;
     }
-    async reviews(){
+
+    async reviews() {
         return this.db.collection("reviews");
     }
-    async getAll(){
-        return (await reviews()).find().toArray();
-        /*let res = await db.query('SELECT * FROM reviews INNER JOIN users on users.user_id = reviews.user_id');
-        return  res[0];*/
+
+    async getAll() {
+        return (await this.reviews()).find().toArray();
     }
-    async get(review_id){
-        return (await this.reviews()).findOne({_id:review_id});
-        l/*et res = await db.query('SELECT reviews.*,users.user_id,users.username,books.title FROM reviews INNER JOIN users on users.user_id = reviews.user_id inner JOIN books on reviews.book_id = books.book_id where review_id = ?',[review_id]);
-        return  res[0];*/
-    }
-    async approve(review_id,employee_id){
-        return (await this.reviews()).findOneAndUpdate({_id:review_id},{$set:{status:3,employee:{id:employee_id}}});
-        //await db.query('UPDATE reviews SET status = 3,employee_id = ? where review_id = ?',[employee_id,review_id]);
-    }
-    async reject(review_id,employee_id,cause){
-        return (await this.reviews()).findOneAndUpdate({_id:review_id},{$set:{status:2,employee:{id:employee_id}}});
-        //await db.query('UPDATE reviews SET status = 2,employee_id = ?,cause = ? where review_id = ?',[employee_id,review_id,cause]);
-    }
-    async getAllWithBook(){
-        return (await this.reviews()).aggregate([
-            {$unwind: {path: "$book"}},
+
+    async get(review_id) {
+        let res = await (await this.reviews()).aggregate([
+            {$match:{_id:ObjectId(review_id)}},
             {
                 $lookup: {
                     from: "books",
-                    localField: "book.$id",
-                    foreignField: "_id",
-                    as: "book"
-                }
-            }
-        ]).toArray();
-        /*let res = await db.query('SELECT reviews.*,users.user_id,users.username,books.title FROM reviews INNER JOIN users on users.user_id = reviews.user_id inner JOIN books on reviews.book_id = books.book_id');
-        return  res[0];*/
-    }
-    async getAllForBook(book_id){
-        return (await this.reviews()).aggregate([
-            {$unwind: {path: "$book"}},
-            {
-                $lookup: {
-                    from: "books",
-                    localField: "book.$id",
+                    localField: "book.id",
                     foreignField: "_id",
                     as: "book"
                 }
             },
-            {$match:{books:{_id:book_id}}}
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "user.id",
+                    foreignField: "_id",
+                    as: "user"
+                }
+            }
+
         ]).toArray();
-        /*let res = await db.query('SELECT reviews.*,users.user_id,users.username,books.title FROM reviews INNER JOIN users on users.user_id = reviews.user_id inner JOIN books on books.book_id = ? where reviews.book_id = ?',[book_id,book_id]);
-        return  res[0];*/
+
+        if(res.length == 0){
+            return null;
+        }
+
+        res = res.map(item => {
+            item.book = item.book[0];
+            item.user = item.user[0];
+            return item;
+        })
+
+        return res[0];
     }
-    async add(user_id,book_id,raiting,comment){
-        return (await this.reviews()).insertOne({raiting:1,text:comment,status:1,employee:{id:user_id},book:{id:book_id}});
-        //await db.query(`INSERT INTO reviews(user_id,book_id,raiting,text) values (${user_id},${book_id},${raiting},'${comment}')`);
+
+    async approve(review_id, employee_id) {
+        return (await this.reviews()).findOneAndUpdate({_id: ObjectId(review_id)}, {
+            $set: {
+                status: 2,
+                employee: {id: ObjectId(employee_id)}
+            }
+        });
     }
-    async remove(review_id){
-        return (await this.reviews()).findOneAndDelete({_id:review_id});
-        //await db.query('DELETE FROM reviews where book_id = ? and user_id',[book_id,user_id]);
+
+    async reject(review_id, employee_id, cause) {
+        return (await this.reviews()).findOneAndUpdate({_id: ObjectId(review_id)}, {
+            $set: {
+                status: 3,
+                employee: {id: ObjectId(employee_id)},
+                cause:cause
+            }
+        });
+    }
+
+    async getAllWithBook() {
+        let res = await (await this.reviews()).aggregate([
+
+            {
+                $lookup: {
+                    from: "books",
+                    localField: "book.id",
+                    foreignField: "_id",
+                    as: "book"
+                }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "user.id",
+                    foreignField: "_id",
+                    as: "user"
+                }
+            }
+
+        ]).toArray();
+
+        res = res.map(item => {
+            item.book = item.book[0];
+            item.user = item.user[0];
+            return item;
+        })
+
+        return res;
+    }
+
+    async getAllForBook(book_id) {
+        return (await this.reviews()).aggregate([
+            {
+                $lookup: {
+                    from: "books",
+                    localField: "book.id",
+                    foreignField: "_id",
+                    as: "book"
+                }
+            },
+            {$match: {books: {_id: book_id}}}
+        ]).toArray();
+    }
+
+    async add(user_id, book_id, raiting, comment) {
+        return (await this.reviews()).insertOne({
+            raiting: raiting,
+            text: comment,
+            status: 1,
+            employee: {id: null},
+            user: {id: ObjectId(user_id)},
+            book: {id: ObjectId(book_id)}
+        });
+    }
+
+    async remove(review_id) {
+        return (await this.reviews()).findOneAndDelete({_id: ObjectId(review_id)});
     }
 }
 

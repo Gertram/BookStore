@@ -3,17 +3,11 @@
         <div class="vc_column-inner">
             <div class="wpb_wrapper">
                 <div class="columns_wrap sc_columns columns_nofluid sc_columns_count_3 home1-block7 margin_top_large margin_bottom_huge" style="margin:auto auto;">
-                    <div class="column-1_2 sc_column_item sc_column_item_1 odd first span_2" style="padding-left:10em;">
+                    <div class="column-1_2 sc_column_item sc_column_item_1 odd first span_2">
                         <h6 class="sc_title sc_title_underline sc_align_left"
                             style="text-align:left;">Будущие бестселлеры</h6>
-                        <div class="sc_section column-5_11" style="display: inline-block;width:300px;">
-                            <div class="sc_section_inner">
-                                <figure class="sc_image  sc_image_shape_square"
-                                        style=" box-shadow: 0px 3px 10px 0px #adadab; -webkit-box-shadow: 0px 3px 10px 0px #adadab; ">
-                                    <img src="/img/{{ best.img }}"
-                                         alt=""></figure>
-                            </div>
-                        </div>
+                                    <img style="width:200px;float:left" src="/img/{{ best.img }}"
+                                         alt="">
                         <div class="sc_section column-5_11" style="display: inline-block;vertical-align: top;margin-left: 3em;">
                             <div class="sc_section_inner"><h4
                                     class="sc_title sc_title_regular margin_bottom_tiny"
@@ -29,6 +23,7 @@
                                         <p>Цена: <strong><span
                                                 style="color: #de3241; font-size: 1.471em;">{{ best.price // 100 }}.{{ best.price % 100 }}</span></strong>
                                         </p>
+                                        {% include 'partials/raiting.twig' with {raiting:best.raiting}%}
                                     </div>
                                 </div>
                                 <a href="/shop/{{ best._id }}"

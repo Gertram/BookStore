@@ -1,20 +1,65 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-    {% if order is not defined %}
-        Такого заказа нет
-    {% else %}
-        <p>{{ order.order_id }}</p>
-        <p>{{ order.order_date }}</p>
-        <p>{{ order.customer_id }}</p>
-        <p>{{ order.address }}</p>
-        {% for item in order.products %}
-            <div>
-                <h2>{{ item.title}}</h2>
-                <p>{{ item.price}}</p>
-                <p>{{ item.quantity}}</p>
-                <p>{{ item.img}}</p>
-            </div>
-        {% endfor %}
-    {% endif %}
+    <div class="content_wrap">
+        <div class="content">
+            <style>
+                p {
+                    margin: 1em;
+                    color: black;
+                }
+
+                .info {
+                    border: 1px solid #999999;
+                }
+
+                .products {
+                    padding: 1em;
+                    margin: 1em;
+                }
+
+                .product h2 {
+                    padding: 0.5em;
+                    background: #eeeeee;
+                }
+
+                .product p {
+                    margin: 0;
+                    padding: 0.5em;
+                }
+
+                .product p:nth-child(odd) {
+                    background: #cccccc;
+                }
+
+                .product p:nth-child(even) {
+                    background: #dddddd;
+                }
+            </style>
+            {% if order is not defined %}
+                Такого заказа нет
+            {% else %}
+                <div class="info">
+                    <p><b>Номер заказа:</b> <i>{{ order._id }}</i></p>
+                    <p><b>Дата заказа:</b> <i>{{ order.date }}</i></p>
+                    <p><b>Заказчик:</b> <i>{{ order.surname }} {{ order.name }} {{ order.middlename }}</i></p>
+                    <p><b>Телефон:</b> <i>{{ order.phone }}</i></p>
+                    <p><b>Адрес доставки:</b> <i>{{ order.address }}</i></p>
+                </div>
+                <div class="products">
+                    {% for item in order.products %}
+                        <div class="basket_item" style="margin:10px;display: flex;">
+                            <a class="left" href="/shop/{{ item.book._id }}">
+                                <img style="width: 100px;" src="/img/{{ item.book.img }}"/></a>
+                            <div class="right">
+                                <a class="item_field" href="/shop/{{ item.book._id }}">{{ item.book.title }}</a>
+                                <div class="item_field">{{ item.book.price // 100 }}.{{ item.book.price % 100 }}</div>
+                                <div class="item_field">Количество:{{ item.quantity }}</div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
 {% endblock %}

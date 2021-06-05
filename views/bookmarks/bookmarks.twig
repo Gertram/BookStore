@@ -1,0 +1,16 @@
+{% extends 'layout.twig' %}
+
+{% block body %}
+    <link rel="stylesheet" type="text/css" href="/css/basket.css"/>
+    <div class="content_wrap">
+        {% if mbookmarks is empty %}
+            <b>Закладок нет</b>
+        {% else %}
+            <ul>
+                {% for product in mbookmarks %}
+                    {% include './item.twig' with { book:product } %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -39,8 +39,10 @@ router.get('/', async function(req, res, next) {
   if(stags != null){
       filters.tags = Array.isArray(stags)?stags:[stags];
   }
-  
-  let books_list = await books(req).getAll(filters);
+
+  let books_list = await books(req).getAll(filters,req.query.sortby);
+
+  console.log(books_list);
 
   let genres_list = await genres(req).getAll();
 
@@ -48,42 +50,42 @@ router.get('/', async function(req, res, next) {
 
   let basket = getBasket(req,res);
 
-  render(req,res,"shop/shop", { title: 'Express',books:books_list,range:range,genres:genres_list,tags:tags_list,basket:await basket.products() });
+  return render(req,res,"shop/shop", { title: 'Express',books:books_list,range:range,genres:genres_list,tags:tags_list,basket:await basket.products(),sortby:req.query.sortby });
 });
 
 router.post('/:book_id/add_review',async function(req,res,next) {
-  let book = await books.get(req.params.book_id);
+  let book = await books(req).get(req.params.book_id);
   if(book.length === 0){
     res.status(404);
     return;
   }
-  await reviews.add(req.user.user_id,req.params.book_id,req.body.raiting,req.body.comment);
+  await reviews(req).add(req.user._id,req.params.book_id,parseInt(req.body.raiting),req.body.comment);
 
   res.redirect('back');
 });
 
 router.get('/:book_id/',async function(req,res,next) {
 
-  let book = await books.get(req.params.book_id);
+  let book = await books(req).get(req.params.book_id);
   if(book.length === 0){
     res.status(404);
     return;
   }
-  await books.addView(req.params.book_id);
+  await books(req).addView(req.params.book_id);
 
-  let books_list = await books.getAll();
+  let books_list = await books(req).getAll({},{},6);
 
-  let reviews_list = await reviews.getAllForBook(req.params.book_id), is_comment;
+  let reviews_list = book.reviews, is_comment;
 
   is_comment = false;
 
   reviews_list.forEach(item => {
-      if(req.user != null && item.user_id == req.user.user_id){
+      if(req.user != null && item.user._id == req.user.user_id){
           is_comment = true;
       }
   });
 
-  render(req,res,'shop/book/book',{books:books_list,book:book[0],reviews:reviews_list,is_comment:is_comment});
+  return render(req,res,'shop/book/book',{books:books_list,book:book,reviews:reviews_list,is_comment:is_comment});
 });
 
 module.exports = router;

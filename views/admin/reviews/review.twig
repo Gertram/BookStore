@@ -3,23 +3,32 @@
 {% block main %}
     <div>
         <div class="fields_wrap ">
-            <div class="field">Для: <a href="/admin/books/{{ book_id }}">{{ title }}</a></div>
-            <div class="field">Кем: <a href="/admin/users/{{ user_id }}">{{ username }}</a></div>
-            <div class="field">Рейтинг: {% if raiting is null %}<span>☆☆☆☆☆</span>{% else %}
-                    <span>{% for i in range(1, raiting) %}★{% endfor %}{% for i in range(1, 5 - raiting) %}☆{% endfor %}</span>{% endif %}
+            <div class="field">Для: <a href="/admin/books/{{ book._id }}">{{ book.title }}</a></div>
+            <div class="field">Кем: <a href="/admin/users/{{ user._id }}">{{ user.username }}</a></div>
+            <div class="field">Рейтинг: {% include 'partials/raiting.twig' with {raiting:raiting} %}
             </div>
             <div class="field">{{ text }}</div>
             {% if status == 1 %}
             <div class="field">
-                <form method="post" action="/admin/reviews/{{ review_id }}/approve"><input type="submit"
+                <form method="post" action="/admin/reviews/{{ _id }}/approve"><input type="submit"
                                                                                            value="Одобрить"></form>
             </div>
             <div class="field">
-                <form method="post" action="/admin/reviews/{{ review_id }}/reject">
-                    <input type="text" name="cause"/>
+                <form method="post" action="/admin/reviews/{{ _id }}/reject">
+                    <input type="text" name="cause" placeholder="Причина"/>
                     <input type="submit" value="Отклонить"></form>
             </div>
             {% endif %}
+            {% if status == 2 %}
+                <div class="field">Одобрен</div>
+            {% elseif status == 3 %}
+                <div class="field">Отклонен</div>
+                <div class="field">Причина: {{ cause }}</div>
+            {% endif %}
+            <div class="field">
+                <form method="post" action="/admin/reviews/{{ _id }}/remove">
+                    <input type="submit" value="Удалить"></form>
+            </div>
         </div>
     </div>
 {% endblock %}

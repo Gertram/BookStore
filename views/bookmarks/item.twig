@@ -1,0 +1,11 @@
+<li class="basket_item">
+    <a class="left" href="/shop/{{ book._id }}" ><img src="/img/{{ book.img }}" /></a>
+    <div class="right">
+        <a class="item_field"  href="/shop/{{ book._id }}">{{ book.title }}</a>
+        <div class="item_field" >{{ book.price // 100 }}.{{ book.price % 100 }}</div>
+        <form method="post" action="/bookmarks/remove">
+            <input type="hidden" name="product" value="{{book._id }}">
+            <input type="submit" value="удалить">
+        </form>
+    </div>
+</li>

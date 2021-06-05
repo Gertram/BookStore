@@ -15,15 +15,25 @@ router.use(async function(req,res,next) {
 
 router.get('/', async function (req, res, next) {
     const list = await featured_bestsellers(req).getAll();
-    render(req,res,'admin/featured_bestsellers/index', {
+    return render(req,res,'admin/featured_bestsellers/index', {
         books:list
     })
 });
 
 router.get('/add', async function (req, res, next) {
-
-    render(req,res,'admin/featured_bestsellers/add',{
-        books:await books(req).getAll()
+    let list = await featured_bestsellers(req).getAll();
+    let books_list = await books(req).getAll();
+    books_list = books_list.filter(item => {
+        for(let i = 0;i < list.length;i++){
+            let book = list[i];
+            if(book._id.toString() == item._id.toString()){
+                return false;
+            }
+        }
+        return true;
+    });
+    return render(req,res,'admin/featured_bestsellers/add',{
+        books:books_list
     });
 });
 

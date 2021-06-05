@@ -3,46 +3,67 @@ var ObjectId = require('mongodb').ObjectID;
 let books = require('./books')
 
 class UserBasket {
-    constructor(user,db) {
+    constructor(user, db) {
         this.user = user;
         this.db = db;
     }
 
-    async baskets() {
-        return this.db.collection("baskets");
+    users() {
+        return this.db.collection("users");
     }
 
     async products() {
-        return (await this.baskets()).aggregate([
-            {$match: {_id: this.user}},
-            {$unwind: {path: "$products"}},
+        let res =  (await (await this.users()).aggregate([
+            {$match: {_id: ObjectId(this.user)}},
             {
                 $lookup: {
                     from: "books",
-                    localField: "products.$id",
+                    localField: "basket.book",
                     foreignField: "_id",
-                    as: "book"
+                    as: "books"
                 }
-            }
-        ]).toArray();
+            },
+        ]).toArray())[0];
 
+        if(res.basket == null){
+            return [];
+        }
+
+        for(let i = 0;i < res.basket.length;i++){
+            res.basket[i].book = res.books[i];
+        }
+
+        return res.basket;
     }
 
     async add(product, quantity) {
-        var items = (await (await this.baskets()).findOne({_id: this.user})).products;
-        items.add(product);
-        return (await this.baskets()).findOneAndUpdate({_id: this.user}, {$set: {products: items}});
+        let user = await this.users().findOne({_id: ObjectId(this.user)}, {basket: 1});
+        let basket = user.basket;
+        if (basket == null) {
+            basket = []
+        }
+        const users = this.users()
+        for(let i = 0;i < basket.length;i++){
+            if (basket[i].book.toString() == product) {
+                basket[i].quantity += parseInt(quantity);
+                return users.findOneAndUpdate({_id: ObjectId(this.user)}, {$set: {basket: basket}});
+            }
+        }
+        return this.users().findOneAndUpdate({_id: ObjectId(this.user)}, {
+            $push: {
+                basket: {
+                    book:ObjectId(product), quantity: parseInt(quantity)
+                }
+            }
+        });
     }
 
     async remove(product) {
-        var items = (await (await this.baskets()).findOne({_id: this.user}).products).filter(item => {
-            return item.id != product;
-        });
-        return (await this.baskets()).findOneAndUpdate({_id: this.user}, {$set: {products: items}});
+        return this.users().findOneAndUpdate({_id: ObjectId(this.user)}, {$pull: {basket: {book: ObjectId(product)}}});
     }
 
     async clear() {
-        return (await this.baskets()).findOneAndDelete({_id: this.user})
+        return this.users().findOneAndUpdate({_id: ObjectId(this.user)}, {$set: {basket: []}});
     }
 }
 
@@ -57,9 +78,10 @@ class CookieBasket {
         if (products == null) {
             return [];
         }
-        let books_list = await books.getFilter(products.map(val => val.product));
+        let books_list = await books(this.req).getFilter(products.map(val => ObjectId(val.product)));
         return books_list.map(book => {
-            book.quantity = products.filter(item => item.product == book.book_id)[0].quantity;
+            book = {book:book};
+            book.quantity = products.filter(item => item.product == book.book._id)[0].quantity;
             return book;
         });
     }
@@ -93,7 +115,7 @@ function getBasket(req, res) {
     if (req.cookies.user == null) {
         return new CookieBasket(req, res)
     }
-    return new UserBasket(req.cookies.user,req.db);
+    return new UserBasket(req.cookies.user, req.db);
 }
 
 module.exports = getBasket;

@@ -1,14 +1,14 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-    <div class="page_content_wrap page_paddings_no">
+    <main class="page_content_wrap page_paddings_no">
         <div class="content_wrap">
             <div class="content">
                 <article
                         class="itemscope post_item post_item_single post_featured_default post_format_standard post-53 page
                     type-page status-publish hentry">
                     <section class="post_content" itemprop="articleBody">
-                        {% include './discover/discover_next_book.twig' with lists %}
+                        {% include './discover/discover_next_book.twig' with {lists:lists} %}
                         {% include './stay_in_touch.twig' %}
                         {% include 'partials/row.twig' %}
                         {% include './choose/choose_your_book.twig' with {genres:genres}%}
@@ -30,5 +30,5 @@
                 <section class="related_wrap related_wrap_empty"></section>
             </div>
         </div>
-    </div>
+    </main>
 {% endblock %}

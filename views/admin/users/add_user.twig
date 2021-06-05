@@ -1,0 +1,30 @@
+{% extends '../admin_layout.twig' %}
+
+{% block main %}
+    <h2>Пользователь</h2>
+    <div class="wrap">
+        <div class="fields_wrap">
+            <form method="post" action="/admin/users/add">
+                <label class="field">Имя пользователя:</label>
+                <input class="field_wrap" type="text" name="username" required>
+                <label class="field">Телефон:</label>
+                <input class="field_wrap" type="tel" name="phone" required>
+                <label class="field">Электронная почта:</label>
+                <input class="field_wrap" type="email" name="email" required>
+                <label class="field">Должность</label>
+                <select class="field_wrap" name="role" required>
+                    {% set rols = [{key:1,title:"Администратор"},
+                        {key:3,title:"Менеджер"},
+                        {key:4,title:"Сотрудник отдела доставки"},
+                        {key:5,title:"Клиент"}] %}
+                    {% for role in rols %}
+                        <option value="{{ role.key }}">{{ role.title }}</option>
+                    {% endfor %}
+                </select>
+                <label class="field">Пароль</label>
+                <input class="field_wrap" type="password" name="password">
+                <input class="field_wrap" type="submit" value="Добавить">
+            </form>
+        </div>
+    </div>
+{% endblock %}

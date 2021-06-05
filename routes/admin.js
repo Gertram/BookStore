@@ -40,7 +40,13 @@ router.use('/deliveries', require('./admin/deliveries'));
 
 router.use('/reviews', require('./admin/reviews'));
 
+router.use('/orders', require('./admin/orders'));
+
 router.use('/users', require('./admin/users'));
+
+router.use('/contacts', require('./admin/contacts'));
+
+router.use('/emails', require('./admin/emails'));
 
 router.use('/featured_bestsellers', require('./admin/featured_bestsellers'));
 

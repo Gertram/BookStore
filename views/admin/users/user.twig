@@ -4,18 +4,44 @@
     <h2>Пользователь</h2>
     <div class="wrap">
         <div class="fields_wrap">
-            <form method="post" action="/admin/users/{{ user_id }}/redact">
+            <form method="post" action="/admin/users/{{ _id }}/redact">
                 <label class="field">Имя пользователя:</label>
                 <input class="field_wrap" type="text" name="username" value="{{ username }}" required>
                 <label class="field">Телефон:</label>
                 <input class="field_wrap" type="tel" name="phone" value="{{ phone }}" required>
                 <label class="field">Электронная почта:</label>
                 <input class="field_wrap" type="email" name="email" value="{{ email }}" required>
+                <label class="field">Должность</label>
+                {% if (_id|truncate(100,true)) != (huser._id|truncate(100,true)) %}
+                    <select class="field_wrap" name="role" required>
+                        {% set rols = [{key:1,title:"Администратор"},
+                            {key:3,title:"Менеджер"},
+                            {key:4,title:"Сотрудник отдела доставки"},
+                            {key:5,title:"Клиент"}] %}
+                        {% for rol in rols %}
+                            <option value="{{ rol.key }}"
+                                    {% if rol.key == role %}selected{% endif %}>{{ rol.title }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <label class="field">{% if role == 1 %}
+                            Администратор
+                        {% elseif role == 2 %}
+
+                        {% elseif role == 3 %}
+                            Менеджер
+                        {% elseif role == 4 %}
+                            Сотрудник отдела доставки
+                        {% elseif role == 5 %}
+                            Клиент
+                        {% endif %}</label>
+
+                {% endif %}
                 <label class="field">Пароль</label>
                 <input class="field_wrap" type="password" name="password">
-                <label type="field"><input type="submit" value="Изменить"></label>
+                <input class="field_wrap" type="submit" value="Изменить">
             </form>
-            <form method="post" action="/admin/users/{{ user_id }}/remove">
+            <form class="field_wrap" method="post" action="/admin/users/{{ _id }}/remove">
                 <input type="submit" value="Удалить">
             </form>
         </div>

@@ -2,31 +2,34 @@
 
 {% block body %}
     <link rel="stylesheet" type="text/css" href="/css/book.css">
-    <div class="content-wrap">
-        <div class="content">
+    <div class="content-wrap" style="text-align: center">
+        <div class="content" style="width: 1600px;display: inline-block; margin:0 auto;text-align: left">
             <article class="post_item post_item_single post_item_product">
-                <nav class="book-nav">
+                {#<nav class="book-nav">
                     <a href="http://booklovers.ancorathemes.com/">Home</a>&nbsp;/&nbsp;<a
                             href="http://booklovers.ancorathemes.com/shop/">Shop</a>&nbsp;/&nbsp;<a
                             href="http://booklovers.ancorathemes.com/product-category/cookbooks/">Cookbooks</a>&nbsp;/&nbsp;It’s
                     a really strange story
-                </nav>
+                </nav>#}
                 <div class="main-wrap">
                     <div class="top-wrap">
                         <div class="image-wrap">
-                            <a href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#"
+                            {#<a href="http://booklovers.ancorathemes.com/shop/its-a-really-strange-story/#"
                                class="icon-wrap"><img src="/images/search.svg">
-                            </a>
+                            </a>#}
                             <a href="" class="book-image">
                                 <img src="/img/{{ book.img }}">
                             </a>
                         </div>
                         <div class="info">
+                            {% include 'partials/raiting.twig' with {raiting:book.raiting} %}
                             <h1 class="product-title entry-title">{{ book.title }}</h1>
-                            <p class="price">{{ book.price // 100 }}.{{ book.price % 100 }}</p>
+                            <p class="price">Цена: {{ book.price // 100 }}.{{ book.price % 100 }}</p>
+                            <p class="quantity">Количество: {{ book.quantity  }}</p>
                             <div class="genres">
+                                Жанры:
                                 {% for genre in book.genres %}
-                                    <a href="/shop?genres={{ genre.genre_id }}">{{genre.title}}</a>
+                                    <a href="/shop?genres={{ genre.genre_id }}">{{ genre.title }}</a>
                                 {% endfor %}
                             </div>
 
@@ -35,31 +38,42 @@
                                   method="post">
                                 <label class="screen-reader-text" for="quantity_606dcd6830d18">It’s a really
                                     strange story quantity</label>
-                                <input for="add_product_form" type="text" name="product" value="{{ book.book_id }}"
+                                <input for="add_product_form" type="text" name="product" value="{{ book._id }}"
                                        hidden>
                                 <input for="add_product_form" type="number" class="input-text qty text"
                                        step="1" min="1" max="" name="quantity" value="1" title="Qty" size="4"
                                        placeholder="" inputmode="numeric">
                                 <button for="add_product_form" type="submit" name="add-to-cart" value="251"
-                                        class="single_add_to_cart_button button alt">Add to cart
+                                        class="single_add_to_cart_button button alt">Добавить
                                 </button>
                             </form>
                             <div class="product_meta">
-                                <p class="posted_in">Categories:
-                                    <a class="tag"
-                                       href="http://booklovers.ancorathemes.com/product-category/best-sellers/">Best
-                                        sellers</a>,
-                                    <a class="tag"
-                                       href="http://booklovers.ancorathemes.com/product-category/cookbooks/">Cookbooks</a>,
-                                    <a class="tag"
-                                       href="http://booklovers.ancorathemes.com/product-category/new-releases/"
-                                       rel="tag">New releases</a></p>
-                                <p class="tagged_as">Tag:
-                                    <a class="tag"
-                                       href="http://booklovers.ancorathemes.com/product-tag/childrens-books/"
-                                       rel="tag">Children's Books</a></p>
-                                <p class="product_id">Product ID: <span>251</span></p>
+                                <p class="posted_in">Категории:
+                                    {% for list in book.lists %}
+                                        <a class="tag"
+                                           href="">{{ list.title }}</a>
+                                    {% endfor %}
+                                </p>
+                                <p class="tagged_as">Теги:
+                                    {% for tag in book.tags %}
+                                        <a class="tag"
+                                           href="/shop?tags={{ tag._id }}"
+                                           rel="tag">{{ tag.title }}</a>
+                                    {% endfor %}
+                                </p>
+                                <p class="product_id">ID Книги: <span>{{ book._id }}</span></p>
                             </div>
+                            {% if book._id|truncate(50, true) in bookmarks  %}
+                                <form class="card" action="/bookmarks/remove" method="post">
+                                    <input type="hidden" name="book_id" value="{{ book._id }}">
+                                    <input type="submit" value="Удалить из закладок">
+                                </form>
+                            {% else %}
+                            <form class="card" action="/bookmarks/add" method="post">
+                                <input type="hidden" name="book_id" value="{{ book._id }}">
+                                <input type="submit" value="Добавить в закладки">
+                            </form>
+                            {% endif %}
                         </div>
                     </div>
                     <div>
@@ -87,17 +101,17 @@
                             <ul class="tab-wrap">
                                 <li class="description_tab alt-tab active" id="tab-title-description" role="tab"
                                     aria-controls="tab-description">
-                                    Description
+                                    Описание
                                 </li>
                                 <li class="reviews_tab alt-tab" id="tab-title-reviews" role="tab"
                                     aria-controls="tab-reviews">
-                                    Reviews ({{ reviews|length }})
+                                    Отзывы ({{ reviews|length }})
                                 </li>
                             </ul>
                             <div class="description-panel"
                                  id="tab-description" role="tabpanel" aria-labelledby="tab-title-description"
                                  style="display: block;">
-                                <h2>Description</h2>
+                                <h2>Описание</h2>
                                 <p>{{ book.description }}</p>
                             </div>
                             <div class="review-panel"
@@ -106,25 +120,15 @@
                                 <div id="reviews" class="woocommerce-Reviews">
                                     <div id="comments">
                                         <h2 class="woocommerce-Reviews-title">
-                                            Reviews </h2>
+                                            Отзывы </h2>
                                         {% if reviews is empty %}
-                                            <p class="woocommerce-noreviews">There are no reviews yet.</p>
+                                            <p class="woocommerce-noreviews">Пока нет отзывов.</p>
                                         {% else %}
                                             {% for review in reviews %}
                                                 <div class="comment">
-                                                    <div class="comment_title"><b>{{ review.username }}</b><div class="star-rating" role="img">
-                                                            {% if review.raiting > 4 and review.raiting < 6%}
-                                                                <span>★★★★★</span>
-                                                            {% elseif review.raiting > 3 and review.raiting < 5%}
-                                                                <span>★★★★☆</span>
-                                                            {% elseif review.raiting > 2 and review.raiting < 4%}
-                                                                <span>★★★☆☆</span>
-                                                            {% elseif review.raiting > 1 and review.raiting < 3%}
-                                                                <span>★★☆☆☆</span>
-                                                            {% elseif review.raiting > 0 and review.raiting < 2%}
-                                                                <span>★☆☆☆☆</span>
-                                                            {% endif %}
-                                                        </div></div>
+                                                    <div class="comment_title"><b>{{ review.user.username }}</b>
+                                                        {% include 'partials/raiting.twig' with {raiting:review.raiting} %}
+                                                    </div>
                                                     <p class="comment_body">{{ review.text }}</p>
                                                 </div>
                                                 <hr>
@@ -137,9 +141,11 @@
                                                 {% if is_comment %}
 
                                                 {% elseif huser is defined %}
-                                                    <form id="review_form" action="/shop/{{ book.book_id }}/add_review" method="post">
+                                                    <form id="review_form" action="/shop/{{ book._id }}/add_review"
+                                                          method="post">
                                                         <label for="rating">Your rating</label>
-                                                        <select style="background: white" name="raiting" id="rating" required>
+                                                        <select style="background: white" name="raiting" id="rating"
+                                                                required>
                                                             <option value="">Rate…</option>
                                                             <option value="5">Perfect</option>
                                                             <option value="4">Good</option>
@@ -148,7 +154,8 @@
                                                             <option value="1">Very poor</option>
                                                         </select>
                                                         <label style="display: block" for="comment">Your review</label>
-                                                        <textarea style="display: block; background: white;width:100%;"  id="comment"
+                                                        <textarea style="display: block; background: white;width:100%;"
+                                                                  id="comment"
                                                                   name="comment" required></textarea>
                                                         <input type="submit"/>
                                                     </form>
@@ -164,7 +171,7 @@
                         </div>
                     </div>
                     <section class="related-products-wrap">
-                        <h2>Related products</h2>
+                        <h2>Похожие книги</h2>
                         <ul class="related-products">
                             {% for book in books %}
                                 {% include './item.twig' with book %}

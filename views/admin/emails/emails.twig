@@ -1,0 +1,12 @@
+{% extends '../admin_layout.twig' %}
+
+{% block main %}
+    <h2>Подписки</h2>
+    <table>
+    {% for email in emails %}
+        <tr><td>{{ email.email }}</td><td><form method="post" action="/admin/emails/{{ email.email }}/remove"><input type="submit" value="Отменить"></form></td></tr>
+        {% else %}
+        <div>Подписок нет</div>
+    {% endfor %}
+    </table>
+{% endblock %}

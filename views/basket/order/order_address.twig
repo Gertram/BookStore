@@ -1,9 +1,17 @@
 {% extends 'layout.twig' %}
 
 {% block body %}
-    <form method="post" action="/basket/buy">
-        <input type="hidden" name="step" value="address">
-        <input type="text" name="address" placeholder="Адрес:">
-        <input type="submit" value="Оплата">
-    </form>
+    <div class="content_wrap">
+        <div class="wrap">
+            <form method="post" action="/basket/buy">
+                <input type="hidden" name="step" value="address">
+                <input type="text" name="surname" placeholder="Фамиля:" required><br>
+                <input type="text" name="name" placeholder="Имя:" required><br>
+                <input type="text" name="middlename" placeholder="Отчество:" required><br>
+                <input type="tel" name="phone" placeholder="Телефон: 9051234567" pattern="[0-9]{10}" required><br>
+                <input type="text" name="address" placeholder="Адрес:" required><br>
+                <input type="submit" value="Оплата">
+            </form>
+        </div>
+    </div>
 {% endblock %}

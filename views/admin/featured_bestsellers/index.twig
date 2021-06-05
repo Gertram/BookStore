@@ -12,7 +12,7 @@
                     <button class="item-remove-icon" form="remove_{{ book._id }}"></button>
                     <div class="list-item">
                         <img src="/img/{{ book.img }}">
-                        <a class="sc_field center" href="/books/{{ book._id }}">{{ book.title }}</a>
+                        <a class="sc_field center" href="/admin/books/{{ book._id }}">{{ book.title }}</a>
                         <div class="sc_field center">{{ book.firstname }} {{ book.lastname }}</div>
                         <div class="sc_field center">{{ book.price // 100 }}.{{ book.price % 100 }}</div>
                     </div>

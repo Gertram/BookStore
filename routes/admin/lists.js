@@ -14,20 +14,14 @@ router.use(async function(req,res,next) {
 });
 
 router.get('/', async function (req, res, next) {
-    let new_releases = await lists.Lists(req).getNewReleases().getAll();
-    let coming_soon = await lists.Lists(req).getComingSoon().getAll();
-    let best_sellers = await lists.Lists(req).getBestSellers().getAll();
-    let award_winner = await lists.Lists(req).getAwardWinners().getAll();
+    let mlists = await lists.Lists(req).getAll();
 
-    render(req,res,'admin/lists', {
-        new_releases: new_releases,
-        coming_soon: coming_soon,
-        best_sellers: best_sellers,
-        award_winner: award_winner
+   return render(req,res,'admin/lists', {
+        lists:mlists
     })
 });
 
-router.get('/:list_id/add', async function (req, res, next) {
+/*router.get('/:list_id/add', async function (req, res, next) {
     let list_id = req.params.list_id;
     let books_list = await books(req).getAll();
 
@@ -36,8 +30,8 @@ router.get('/:list_id/add', async function (req, res, next) {
     releases = releases.map(val => val['_id'].toString());
 
     books_list = books_list.filter(val => !releases.includes(val['_id'].toString()));
-    render(req,res,'admin/list_add.twig', {list_id: list_id, books: books_list});
-});
+    return render(req,res,'admin/list_add.twig', {list_id: list_id, books: books_list});
+});*/
 
 router.post('/:list_id/remove', async function (req, res, next) {
     let list = lists.List(req.params.list_id,req);
@@ -67,7 +61,7 @@ router.post('/add', async function (req, res, next) {
 
     await list.add(book_id);
 
-    res.redirect('/admin/lists');
+    res.redirect('back');
 });
 
 module.exports = router;

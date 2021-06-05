@@ -1,19 +1,19 @@
 <li class="list-item" style="width:200px">
-    <a href="/shop/{{ book_id }}"
+    <a href="/shop/{{ _id }}"
        class="woocommerce-LoopProduct-link woocommerce-loop-product__link"> </a>
     <div class="post_item_wrap"><a
-                href="/shop/{{ book_id }}"
+                href="/shop/{{ _id }}"
                 class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
         </a>
         <div class="post_featured"><a
-                    href="/books/{{ book_id }}"
+                    href="/books/{{ _id }}"
                     class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
             </a>
             <div class="post_thumb"><a
-                        href="/shop/{{ book_id }}"
+                        href="/shop/{{ _id }}"
                         class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
                 </a><a class="hover_icon hover_icon_link"
-                       href="/shop/{{ book_id }}">
+                       href="/shop/{{ _id }}">
                     <img
                          src="/img/{{ img }}"
                          class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail"> </a>
@@ -21,15 +21,14 @@
         </div>
         <div class="post_content">
             <h2 class="woocommerce-loop-product__title"><a
-                        href="/shop/{{ book_id }}">A
-                    banquet of mouse</a></h2>
+                        href="/shop/{{ _id }}">{{ title }}</a></h2>
             <span class="price"><ins><span
                             class="woocommerce-Price-amount amount"><bdi><span
-                                    class="woocommerce-Price-currencySymbol"></span>9.99</bdi></span></ins></span>
+                                    class="woocommerce-Price-currencySymbol"></span>{{ price // 100 }}.{{ price % 100 }}</bdi></span></ins></span>
             <form method="post" action="/basket/add">
-                <input type="hidden" name="product" value="{{ book_id }}">
+                <input type="hidden" name="product" value="{{ _id }}">
                 <input type="hidden" name="quantity" value="1">
-                <input type="submit" value="Add to cart" >
+                <input type="submit" value="Добавить в корзину" >
             </form></div>
     </div>
 </li>

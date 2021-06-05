@@ -8,9 +8,12 @@
     {% else %}
     <ul>
     {% for product in basket %}
-        {% include './item.twig' with product%}
+        {% include './item.twig' with product %}
     {% endfor %}
     </ul>
+        <form method="post" action="/basket/clear">
+            <input type="submit" value="Очистить корзину">
+        </form>
         <form method="post" action="/basket/buy">
             <input type="submit" value="Оформить заказ"/>
         </form>

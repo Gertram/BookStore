@@ -5,74 +5,58 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Booklovers – Your Favorite Bookshelf!</title>
     <style>
-        .shop-header-ref-wrap{
+        .shop-header-ref-wrap {
             text-align: center;
         }
 
-        .shop-header{
+        .shop-header {
             background-size: cover;
             background: url("/images/bg1.jpg") center;
             display: flex;
             justify-content: center;
             align-items: center;
             background-size: cover;
-            margin:20px 0;
-            min-height: calc(100vw /4);
+            margin: 20px 0;
+            min-height: calc(100vw / 4);
         }
 
-        .shop-header > .content-wrap{
-            width:100%;
+        .shop-header > .content-wrap {
+            width: 100%;
         }
 
-        .shop-header-text, .shop-header-title, .shop-header-ref{
-            color:white;
+        .shop-header-text, .shop-header-title, .shop-header-ref {
+            color: white;
             text-align: center;
         }
 
-        .shop-header-ref{
+        .shop-header-ref {
             display: inline-block;
             padding: 0.5em 1.2em;
-            border:2px solid;
+            border: 2px solid;
             text-transform: uppercase;
             font-weight: 700;
             margin-top: 1em;
         }
 
-        .shop-header-title{
-            margin:1em;
+        .shop-header-title {
+            margin: 1em;
             font-size: 1.5em;
         }
 
-        .shop-header-text{
+        .shop-header-text {
             margin: 1em;
             font-size: 1.1em;
         }
     </style>
-
     <meta name="robots" content="noindex,nofollow">
-
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="format-detection" content="telephone=no">
-
     {% include 'partials/links.twig' %}
-    <meta name="generator" content="Powered by WPBakery Page Builder - drag and drop page builder for WordPress.">
-    <meta name="generator"
-          content="Powered by Slider Revolution 6.3.9 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface.">
 </head>
 
-<body class="home page-template-default page page-id-53 theme-booklovers woocommerce-js tribe-js booklovers_body body_style_wide body_filled theme_skin_less article_style_stretch layout_single-standard template_single-standard scheme_original top_panel_show top_panel_above sidebar_hide sidebar_outer_hide wpb-js-composer js-comp-ver-6.5.0 vc_responsive added_to_cart_inited top_panel_fixed">
-<a id="toc_home" class="sc_anchor" title="Home"
-   data-description="&lt;i&gt;Return to Home&lt;/i&gt; - &lt;br&gt;navigate to home page of the site"
-   data-icon="icon-home" data-url="http://booklovers.ancorathemes.com/" data-separator="yes"></a><a id="toc_top"
-                                                                                                    class="sc_anchor"
-                                                                                                    ></a>
-<div class="body_wrap">
-    <div class="page_wrap">
-        {% include 'partials/header.twig' %}
-        {% block body %}{% endblock %}
-        {% include 'partials/footer.twig' %}
-    </div>
-</div>
+<body>
+{% include 'partials/header.twig' %}
+{% block body %}{% endblock %}
+{% include 'partials/footer.twig' %}
 <a href="http://booklovers.ancorathemes.com/#" class="scroll_to_top icon-up show" title="Scroll to top"></a>
 <div class="custom_html_section">
 </div>
