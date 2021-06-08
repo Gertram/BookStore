@@ -1,7 +1,6 @@
-var express = require('express');
-var router = express.Router();
-const users = require('../..//models/users');
-const render = require('../../app/render');
+const express = require('express');
+const router = express.Router();
+const usersController = require('../../controllers/Admin/UsersController');
 
 
 router.use(async function(req,res,next) {
@@ -13,58 +12,16 @@ router.use(async function(req,res,next) {
     next();
 });
 
-router.get('/',async function(req,res,next){
-    let users_list = await users(req).getAll();
-    return render(req,res,'admin/users/users',{users: users_list})
-});
+router.get('/',usersController.index);
 
-router.post('/:user_id/redact',async function(req,res,next){
-    let user = await users(req).get(req.params.user_id);
-    if(user.length == 0){
-        res.status(404);
-        return res.send();
-    }
+router.post('/:user_id/redact',usersController.redact);
 
-    await users(req).save(req.params.user_id,req.body.email,req.body.username,req.body.phone,req.body.role);
+router.post('/:user_id/remove',usersController.remove);
 
-    const password = req.body.password;
+router.get('/add',usersController.getAdd);
 
-    if(password.length != 0){
-        await users(req).save_password(req.params.user_id,password);
-    }
+router.post('/add',usersController.add);
 
-   res.redirect('back');
-});
-
-router.post('/:user_id/remove',async function(req,res,next){
-    let user = await users(req).get(req.params.user_id);
-    if(user.length == 0){
-        res.status(404);
-        return res.send();
-    }
-
-    await users(req).remove(req.params.user_id);
-
-    res.redirect('/admin/users')
-});
-
-router.get('/add',async function(req,res,next){
-    return render(req,res,'admin/users/add_user');
-});
-router.post('/add',async function(req,res,next){
-    let user = await users(req).create(req.body.email,req.body.password,req.body.username,req.body.role,req.body.phone);
-
-    res.redirect('/admin/users/' + user._id);
-});
-
-router.get('/:user_id',async function(req,res,next){
-    let user = await users(req).get(req.params.user_id);
-    if(user == null){
-        res.status(404);
-        return res.send();
-    }
-
-    return render(req,res,'admin/users/user',user)
-});
+router.get('/:user_id',);
 
 module.exports = router;

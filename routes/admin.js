@@ -1,12 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var lists = require('../models/lists');
-const books = require('../models/books');
-const genres = require('../models/genres');
-const authors = require('../models/authors');
-const users = require('../models/users');
-
-const render = require('../app/render');
+const express = require('express');
+const router = express.Router();
+const adminController = require('../controllers/Admin/AdminController');
 
 router.use(async function (req,res,next) {
     if(req.user == null){
@@ -20,11 +14,9 @@ router.use(async function (req,res,next) {
 });
 
 /* GET home page. */
-router.get('/', async function (req, res, next) {
-    render(req,res,"admin/admin");
-});
+router.get('/', adminController.index);
 
-router.use('/lists', require('./admin/lists'))
+router.use('/lists', require('./admin/lists'));
 
 router.use('/books', require('./admin/books'));
 

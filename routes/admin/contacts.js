@@ -1,7 +1,6 @@
-var express = require('express');
-var router = express.Router();
-const render = require('../../app/render');
-const contacts = require('../../models/contacts');
+const express = require('express');
+const router = express.Router();
+const contactsController = require('../../controllers/Admin/ContactsController');
 
 router.use(async function(req,res,next) {
     //Пользователь не администратор и не менеджер по продажам
@@ -12,13 +11,8 @@ router.use(async function(req,res,next) {
     next();
 });
 
-/* GET home page. */
-router.get('/', async function(req, res, next) {
-    return render(req,res,"admin/contacts/contacts", { requests:await contacts(req).getAll() });
-});
-/* GET home page. */
-router.post('/:request/remove', async function(req, res, next) {
-    await contacts(req).remove(req.params.request);
-    res.redirect('back');
-});
+router.get('/', contactsController.index);
+
+router.post('/:request/remove', contactsController.remove);
+
 module.exports = router;

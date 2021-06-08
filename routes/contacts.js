@@ -1,16 +1,9 @@
-var express = require('express');
-var router = express.Router();
-const render = require('../app/render');
-const contacts = require('../models/contacts');
+const express = require('express');
+const router = express.Router();
+const contactsController = require('../controllers/ContactsController');
 
-/* GET home page. */
-router.get('/', async function(req, res, next) {
-    return render(req,res,"contacts/contacts", { nav: 'contacts' });
-});
+router.get('/', contactsController.index);
 
-router.post('/contact', async function(req, res, next) {
-    await contacts(req).add(req.body.name,req.body.email,req.body.question,req.body.message);
-    return render(req,res,'contacts/answer');
-});
+router.post('/contact', contactsController.contact);
 
 module.exports = router;

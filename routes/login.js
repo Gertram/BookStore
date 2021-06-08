@@ -1,38 +1,11 @@
-var express = require('express');
-var router = express.Router();
-const users = require('../models/users')
-const render = require('../app/render');
+const express = require('express');
+const router = express.Router();
+const loginController = require('../controllers/LoginController');
 
-/* GET home page. */
-router.get('/', async function(req, res, next) {
-    if(req.cookies.user == null) {
-        render(req,res,"login/login", {title: 'Login'});
-        return;
-    }
-    render(req,res,'login/already_login');
-});
+router.get('/', loginController.index);
 
-router.get('/logout',async function(req,res,next) {
-   if(req.cookies.user == null){
-       res.redirect('back');
-       return;
-   }
+router.get('/logout',loginController.logout);
 
-   res.cookie('user',null,{maxAge: 0});
-   res.redirect('back');
-});
-
-/* GET home page. */
-router.post('/', async function(req, res, next) {
-    let user = await users(req).login(req.body.login,req.body.password);
-
-    if(user == null) {
-        res.redirect('back');
-        return;
-    }
-
-    res.cookie('user',user._id, {maxAge: 90000000, httpOnly: true, secure: false, overwrite: false})
-    res.redirect('back');
-});
+router.post('/', loginController.login);
 
 module.exports = router;

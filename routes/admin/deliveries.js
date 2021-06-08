@@ -1,8 +1,6 @@
-var express = require('express');
-var router = express.Router();
-const deliveries = require('../..//models/deliveries');
-const books = require('../..//models/books');
-const render = require('../../app/render');
+const express = require('express');
+const router = express.Router();
+const deliveriesController = require('../../controllers/Admin/DeliveriesController');
 
 router.use(async function(req,res,next) {
     //Пользователь не администратор и не менеджер по продажам
@@ -14,49 +12,14 @@ router.use(async function(req,res,next) {
 });
 
 
-router.post('/remove',async function(req,res,next) {
-    await deliveries(req).remove(req.body.delivery);
-    res.redirect('back');
-});
+router.post('/remove',deliveriesController.remove);
 
-router.get('/',async function(req,res,next){
-    let deliveries_list = await deliveries(req).getAll();
+router.get('/',deliveriesController.index);
 
-    console.log(deliveries_list);
+router.post('/:delivery_id/close',deliveriesController.close);
 
-    render(req,res,'admin/deliveries/delivers',{deliveries: deliveries_list})
-});
+router.post('/:delivery_id/add',deliveriesController.add);
 
-router.post('/:delivery_id/close',async function(req,res,next) {
-    let delivery = await deliveries(req).get(req.params.delivery_id);
-    if(delivery == null){
-        res.status(404);
-        return res.send();
-    }
-
-    await deliveries(req).close(delivery._id);
-    res.redirect('back');
-});
-
-router.post('/:delivery_id/add',async function(req,res,next) {
-    let delivery = await deliveries(req).get(req.params.delivery_id);
-    if(delivery == null){
-        res.status(404);
-        return res.send();
-    }
-
-    await deliveries(req).add(delivery._id,req.body.product,req.body.count,req.body.cover);
-    res.redirect('back');
-});
-
-router.get('/:delivery_id',async function(req,res,next){
-    let delivery = await deliveries(req).get(req.params.delivery_id);
-    if(delivery == null){
-        res.status(404);
-        return res.send();
-    }
-
-    render(req,res,'admin/deliveries/delivery',{delivery:delivery,books:await books(req).getAll()})
-});
+router.get('/:delivery_id',deliveriesController.delivery);
 
 module.exports = router;

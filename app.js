@@ -10,9 +10,7 @@ const indexRouter = require('./routes/index');
 const myRouter = require('./routes/my');
 const shopRouter = require('./routes/shop');
 const contactsRouter = require('./routes/contacts');
-const linksRouter = require('./routes/links');
 const aboutRouter = require('./routes/about');
-const servicesRouter = require('./routes/services');
 const adminRouter = require('./routes/admin');
 const loginRouter = require('./routes/login');
 const registrationRouter = require('./routes/registration');
@@ -73,8 +71,6 @@ module.exports = async function() {
     app.use('/my', myRouter);
     app.use('/shop', shopRouter);
     app.use('/contacts', contactsRouter);
-    app.use('/links', linksRouter);
-    app.use('/services', servicesRouter);
     app.use('/about', aboutRouter);
     app.use('/login', loginRouter);
     app.use('/registration', registrationRouter);

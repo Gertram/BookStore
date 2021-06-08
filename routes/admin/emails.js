@@ -1,7 +1,6 @@
-var express = require('express');
-var router = express.Router();
-const render = require('../../app/render');
-const emails = require('../../models/contacts');
+const express = require('express');
+const router = express.Router();
+const emailsController = require('../../controllers/Admin/EmailsController');
 
 router.use(async function(req,res,next) {
     //Пользователь не администратор и не менеджер по продажам
@@ -12,14 +11,8 @@ router.use(async function(req,res,next) {
     next();
 });
 
-/* GET home page. */
-router.get('/', async function(req, res, next) {
-    return render(req,res,"admin/emails/emails", { requests:await emails(req).getAll() });
-});
-/* GET home page. */
-router.post('/:email/remove', async function(req, res, next) {
-    await emails(req).remove(req.params.email);
-    res.redirect('back');
-});
+router.get('/', emailsController.index);
+
+router.post('/:email/remove', emailsController.remove);
 
 module.exports = router;

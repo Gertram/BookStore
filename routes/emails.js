@@ -1,11 +1,7 @@
-var express = require('express');
-var router = express.Router();
-const render = require('../app/render');
-const emails = require('../models/emails');
+const express = require('express');
+const router = express.Router();
+const emailsController = require('../controllers/EmailsController');
 
-router.post('/add', async function(req, res, next) {
-    await emails(req).add(req.body.email);
-    return render(req,res,'contacts/answer');
-});
+router.post('/add', emailsController.add);
 
 module.exports = router;

@@ -1,9 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const providers = require('../..//models/providers');
-
-const deliveries = require('../..//models/deliveries');
-const render = require('../../app/render');
+const providersController = require('../../controllers/Admin/ProvidersController');
 
 router.use(async function(req,res,next) {
     //Пользователь не администратор и не менеджер по продажам
@@ -14,43 +11,14 @@ router.use(async function(req,res,next) {
     next();
 });
 
-router.post('/add',async function(req,res,next) {
-    await providers(req).add(req.body.name,req.body.phone);
-    res.redirect('back');
-});
+router.post('/add',providersController.add);
 
-router.post('/remove',async function(req,res,next) {
-    await providers(req).remove(req.body.provider);
-    res.redirect('back');
-});
+router.post('/remove',providersController.remove);
 
-router.get('/',async function(req,res,next){
-    let providers_list = await providers(req).getAll();
-    render(req,res,'admin/providers/providers',{providers: providers_list})
-});
+router.get('/',providersController.index);
 
-router.get('/:provider_id',async function(req,res,next){
-    console.log(req.params);
-    let provider = await providers(req).get(req.params.provider_id);
-    if(provider == null){
-        res.status(404);
-        return res.send();
-    }
-    render(req,res,'admin/providers/provider',provider)
-});
+router.get('/:provider_id',providersController.provider);
 
-router.post('/:provider_id/add',async function(req,res,next) {
-    let provider = await providers(req).get(req.params.provider_id);
-    if(provider == null){
-        res.status(404);
-        return res.send();
-    }
-
-    console.log(req.user._id);
-
-    let delivery = await deliveries(req).open(provider._id,req.user._id);
-
-    res.redirect('/admin/deliveries/' + delivery._id);
-});
+router.post('/:provider_id/add',providersController.newDelivery);
 
 module.exports = router;
