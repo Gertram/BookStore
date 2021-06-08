@@ -42,15 +42,13 @@ router.get('/', async function(req, res, next) {
 
   let books_list = await books(req).getAll(filters,req.query.sortby);
 
-  console.log(books_list);
-
   let genres_list = await genres(req).getAll();
 
   let tags_list = await tags(req).getAll();
 
   let basket = getBasket(req,res);
 
-  return render(req,res,"shop/shop", { title: 'Express',books:books_list,range:range,genres:genres_list,tags:tags_list,basket:await basket.products(),sortby:req.query.sortby });
+  return render(req,res,"shop/shop", { nav: 'shop',books:books_list,range:range,genres:genres_list,tags:tags_list,basket:await basket.products(),sortby:req.query.sortby,sgenres:sgenres,stags:stags });
 });
 
 router.post('/:book_id/add_review',async function(req,res,next) {
@@ -85,7 +83,7 @@ router.get('/:book_id/',async function(req,res,next) {
       }
   });
 
-  return render(req,res,'shop/book/book',{books:books_list,book:book,reviews:reviews_list,is_comment:is_comment});
+  return render(req,res,'shop/book/book',{nav:"shop", books:books_list,book:book,reviews:reviews_list,is_comment:is_comment});
 });
 
 module.exports = router;

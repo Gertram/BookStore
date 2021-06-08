@@ -9,18 +9,17 @@
                 <form action="/registration"
                       method="post" name="login_form" id="registration_form" class="popup_form login-form">
                     <div class="popup_form_field login_field iconed_field icon-user">
-                        <input for="registration_form" type="email" name="email" value=""
-                               placeholder="Email"></div>
+                        <input for="registration_form" type="email" name="email"
+                               placeholder="Email" maxlength="100" required></div>
                     <div class="popup_form_field password_field iconed_field icon-lock">
-                        <input for="registration_form" type="password" name="password" value=""
-                               placeholder="Password"></div>
+                        <input for="registration_form" type="password" name="password"
+                               placeholder="Password" minlength="8" maxlength="40" required></div>
                     <div class="popup_form_field username_field">
-                        <input for="registration_form" type="text" name="username" value=""
-                               placeholder="Nikname">
+                        <input for="registration_form" type="text" name="username" pattern="^[a-zA-Z]+$"
+                               placeholder="Nikname" minlength="5" maxlength="40"  required>
                     </div>
-
-                    <div class="popup_form_field submit-field"><button for="registration_form" type="submit"
-                                                                       class="submit-button">Registration</button>
+                    <div class="popup_form_field submit-field">
+                        <button for="registration_form" type="submit"class="submit-button">Registration</button>
                     </div>
                 </form>
 

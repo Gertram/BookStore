@@ -5,7 +5,7 @@ const contacts = require('../models/contacts');
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
-    return render(req,res,"contacts/contacts", { title: 'Contact' });
+    return render(req,res,"contacts/contacts", { nav: 'contacts' });
 });
 
 router.post('/contact', async function(req, res, next) {

@@ -4,7 +4,7 @@
     <div class="content_wrap">
         <div class="content">
             <form method="get" action="/search/query">
-                <input type="search" name="query" placeholder="Запрос:">
+                <input type="search" name="query" placeholder="Запрос:" required>
                 <input type="submit" value="Найти">
             </form>
             {% for res in results %}

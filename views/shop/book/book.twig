@@ -29,7 +29,7 @@
                             <div class="genres">
                                 Жанры:
                                 {% for genre in book.genres %}
-                                    <a href="/shop?genres={{ genre.genre_id }}">{{ genre.title }}</a>
+                                    <a href="/shop?genres={{ genre._id }}">{{ genre.title }}</a>
                                 {% endfor %}
                             </div>
 

@@ -1,0 +1,11 @@
+header .top_panel_top {
+    background-color: #eeeeee;
+    color: #797979;
+}
+
+.top_panel_middle {
+    padding-top:1em;
+    background-color: #ffffff;
+    background-repeat: repeat;
+    background-position: center top;
+}

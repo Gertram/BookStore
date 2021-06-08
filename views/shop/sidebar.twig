@@ -26,6 +26,7 @@
             <form method="get" id="search_form">
                 <input type="text" style="width:40%;margin:0.5em 3.33%" id="min_price" name="min_price" pattern="(\d+)|(\d+.\d{1,2})" value="{{ min_price // 100 }}.{{ min_price % 100 }}" placeholder="Min_pirce">
                 <input type="text" style="width:40%;margin:0.5em 3.33%" id="max_price" name="max_price" pattern="(\d+)|(\d+.\d{1,2})" value="{{ max_price // 100 }}.{{ max_price % 100 }}" placeholder="Max_price">
+{#                <input type="range" min="{{ min_price // 100 }}.{{ min_price % 100 }}" max="{{ max_price // 100 }}.{{ max_price % 100 }}" >#}
                 <button type="submit" class="button">Фильтр</button>
             </form>
         </aside>
@@ -34,7 +35,7 @@
                     class="widget_title">Жанры</h5>
             <select style="height:200px" name="genres" form="search_form" multiple class="product-categories">
                 {% for genre in genres %}
-                    <option class="cat-item cat-item-37" value="{{ genre.genre_id }}">{{ genre.title }}</option>
+                    <option class="cat-item cat-item-37" value="{{ genre._id }}" {% if genre._id|truncate(50,true) in sgenres %}selected{% endif %}>{{ genre.title }}</option>
                 {% endfor %}
             </select>
         </aside>
@@ -43,7 +44,7 @@
                     class="widget_title">Теги:</h5>
             <select style="height:200px" name="tags" form="search_form" multiple class="product-categories">
                 {% for tag in tags %}
-                    <option class="cat-item cat-item-37" value="{{ tag.tag_id }}">{{ tag.title }}</option>
+                    <option class="cat-item cat-item-37" value="{{ tag._id }}"{% if tag._id|truncate(50,true) in stag %}selected{% endif %}>{{ tag.title }}</option>
                 {% endfor %}
             </select>
             <a href="/shop"><button>Очистить</button></a>

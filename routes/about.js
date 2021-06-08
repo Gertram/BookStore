@@ -4,7 +4,7 @@ const render = require('../app/render');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    render(req,res,"about/about", { title: 'About' });
+    render(req,res,"about/about", { nav: 'about' });
 });
 
 module.exports = router;

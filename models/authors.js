@@ -6,7 +6,7 @@ class Authors{
     constructor(db){
         this.db = db;
     }
-   async authors(){
+       async authors(){
         return this.db.collection("authors");
     }
    async getAll(){

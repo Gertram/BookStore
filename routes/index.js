@@ -9,17 +9,15 @@ const render = require('../app/render');
 /* GET home page. */
 router.get('/', async function (req, res, next) {
 
-    let mlists = await lists.Lists(req).getAll()
+    let mlists = await lists.Lists(req).getAll();
     let genres_list = await genres(req).getMostNumerous(4);
     let picked = await books(req).getMostPopular(4);
     let mostPopular = await authors(req).getMostPopular(4);
     let featured_bestsellers_list = await featured_bestsellers(req).getRandom();
     let new_list = await books(req).getNew(4);
 
-    console.log(featured_bestsellers_list);
-
     return render(req, res, "index/index", {
-        title: 'BookStore',
+        nav: 'index',
         lists: mlists,
         genres: genres_list,
         picked: picked,

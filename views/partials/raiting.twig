@@ -1,15 +1,13 @@
 <div class="star-rating" role="img" aria-label="Rated 4 out of 5">
-    {% if raiting is not null %}
-        {% if raiting > 4 and raiting < 6%}
-            <span>★★★★★</span>
-        {% elseif raiting > 3 and raiting < 5%}
-            <span>★★★★☆</span>
-        {% elseif raiting > 2 and raiting < 4%}
-            <span>★★★☆☆</span>
-        {% elseif raiting > 1 and raiting < 3%}
-            <span>★★☆☆☆</span>
-        {% elseif raiting > 0 and raiting < 2%}
-            <span>★☆☆☆☆</span>
-        {% endif %}
+    {% if raiting > 4 %}
+        <span>★★★★★</span>
+    {% elseif raiting > 3 %}
+        <span>★★★★☆</span>
+    {% elseif raiting > 2 %}
+        <span>★★★☆☆</span>
+    {% elseif raiting > 1 %}
+        <span>★★☆☆☆</span>
+    {% elseif raiting > 0 %}
+        <span>★☆☆☆☆</span>
     {% endif %}
 </div>

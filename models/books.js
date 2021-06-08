@@ -22,13 +22,97 @@ class Books {
             wheres.push({"price": {"$lte": filters.max_price}});
         }
         if (filters.genres != null) {
-            wheres.push({"genres": {"$all": filters.genres}});
+            wheres.push({"genres.$id": {$all:filters.genres.map(item => ObjectId(item))}});
         }
         if (filters.tags != null) {
-            wheres.push({"tags": {"$all": filters.tags}});
+
+            wheres.push({"tags.$id": {$in:filters.tags.map(item => ObjectId(item))}});
         }
 
-        let query = wheres.length == 0 ? (await this.books()).find() : (await this.books()).find({$and: wheres});
+        let query = wheres.length != 0 ?(await this.books()).aggregate([
+            {$match:{$and:wheres}},
+            {
+                $lookup: {
+                    from: "genres",
+                    localField: "genres.$id",
+                    foreignField: "_id",
+                    as: "genres"
+                }
+            },
+            {
+                $lookup: {
+                    from: "tags",
+                    localField: "tags.$id",
+                    foreignField: "_id",
+                    as: "tags"
+                }
+            },
+            {
+                $lookup: {
+                    from: "authors",
+                    localField: "authors.$id",
+                    foreignField: "_id",
+                    as: "authors"
+                }
+            },
+            {
+                $lookup: {
+                    from: "reviews",
+                    localField: "_id",
+                    foreignField: "book.id",
+                    as: "reviews"
+                }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "reviews.user.id",
+                    foreignField: "_id",
+                    as: "users"
+                }
+            }
+        ]):(await this.books()).aggregate([
+            {
+                $lookup: {
+                    from: "genres",
+                    localField: "genres.$id",
+                    foreignField: "_id",
+                    as: "genres"
+                }
+            },
+            {
+                $lookup: {
+                    from: "tags",
+                    localField: "tags.$id",
+                    foreignField: "_id",
+                    as: "tags"
+                }
+            },
+            {
+                $lookup: {
+                    from: "authors",
+                    localField: "authors.$id",
+                    foreignField: "_id",
+                    as: "authors"
+                }
+            },
+            {
+                $lookup: {
+                    from: "reviews",
+                    localField: "_id",
+                    foreignField: "book.id",
+                    as: "reviews"
+                }
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "reviews.user.id",
+                    foreignField: "_id",
+                    as: "users"
+                }
+            }
+        ])
 
         let sort = {_id:1}
 
@@ -47,6 +131,7 @@ class Books {
         else if (sortby == "price-desc") {
             sort = {price: -1}
         }
+
         return query.sort(sort).limit(limit).toArray();
     }
 
@@ -101,7 +186,6 @@ class Books {
             }
             return item;
         })
-        console.log(res);
         return res;
     }
 

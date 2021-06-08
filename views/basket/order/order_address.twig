@@ -5,11 +5,17 @@
         <div class="wrap">
             <form method="post" action="/basket/buy">
                 <input type="hidden" name="step" value="address">
-                <input type="text" name="surname" placeholder="Фамиля:" required><br>
-                <input type="text" name="name" placeholder="Имя:" required><br>
-                <input type="text" name="middlename" placeholder="Отчество:" required><br>
-                <input type="tel" name="phone" placeholder="Телефон: 9051234567" pattern="[0-9]{10}" required><br>
-                <input type="text" name="address" placeholder="Адрес:" required><br>
+                <label>Фамилия: <input type="text" name="surname" placeholder="Фамиля:" pattern="^[А-Яа-яЁё]+$"
+                                       minlength="3" maxlength="40" title="Только русские буквы без пробелов" required></label><br>
+                <label>Имя: <input type="text" name="name" placeholder="Имя:" pattern="^[А-Яа-яЁё]+$" minlength="3"
+                                   maxlength="40" title="Только русские буквы без пробелов" required></label><br>
+                <label>Отчетсво: <input type="text" name="middlename" placeholder="Отчество:" pattern="^[А-Яа-яЁё]+$"
+                                        minlength="3" maxlength="40" title="Только русские буквы без пробелов" required></label><br>
+                <label>Телефон: <input type="tel" name="phone" placeholder="+7 (900) 123-45-67"
+                                       pattern="^((8|\+7)[\- ]?)?((\(\d{3}\))|(\d{3}))[\- ]?\d{3}[\- ]?\d{2}[\- ]?\d{2}$" required></label><br>
+                <label>Адрес: <br><textarea type="text" name="address" placeholder="Адрес:" minlength="10"
+                                            maxlength="200"
+                                            required></textarea></label><br>
                 <input type="submit" value="Оплата">
             </form>
         </div>

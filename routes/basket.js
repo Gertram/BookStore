@@ -48,6 +48,7 @@ router.post('/buy',async function (req,res,next) {
 
 /* GET home page. */
 router.post('/add', async function (req, res, next) {
+    console.log(req);
     let product = req.body.product;
     let quantity = req.body.quantity;
 

@@ -10,10 +10,18 @@
                 <input type="hidden" name="name" value="{{ name }}">
                 <input type="hidden" name="middlename" value="{{ middlename }}">
                 <input type="hidden" name="phone" value="{{ phone }}">
-                <input type="text" name="card_number" placeholder="номер карты" pattern="[0-9]{16}" required><br>
-                <input type="text" name="card_validity" placeholder="Срок действия" pattern="[0-9]{2}.[0-9]{2}" required><br>
-                <input type="text" name="card_owner" placeholder="Владелец" requiredll><br>
-                <input type="text" name="card_code" placeholder="CVV" pattern="[0-9]{3}" required><br>
+                <label>Номер карты: <input type="text" name="card_number" placeholder="Номер карты:"
+                                           pattern="^[1-9]{4}[\- ]?[0-9]{4}[\- ]?[0-9]{4}[\- ]?[0-9]{4}[\- ]"
+                                           title="1234-1234-1234-1234"
+                                           required></label><br>
+                <label>Срок действия: <input type="text" name="card_validity" placeholder="Срок действия"
+                                             pattern="[0-9]{2}.[0-9]{2}" title="12.12"
+                                             required></label><br>
+                <label>Владелец: <input type="text" name="card_owner" minlength="5" maxlength="30"
+                                        pattern="^[A-Z]+[ ][A-Z]+$" title="ИМЯ ФАМИЛИЯ английскими буквами"
+                                        placeholder="Владелец" required></label><br>
+                <label>CVV: <input type="text" name="card_code" placeholder="CVV" pattern="[0-9]{3}"
+                                   required></label><br>
                 <input type="submit" value="Оплатить">
             </form>
         </div>
