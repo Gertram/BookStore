@@ -1,7 +1,7 @@
 const render = require('../../app/render');
 const emails = require('../../models/contacts');
 
-class EmailsController{
+class AdminEmailsController{
     static async index(req, res, next) {
         return render(req,res,"admin/emails/emails", { requests:await emails(req).getAll() });
     }
@@ -11,4 +11,4 @@ class EmailsController{
     }
 }
 
-module.exports = EmailsController;
+module.exports = AdminEmailsController;

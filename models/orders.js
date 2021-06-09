@@ -13,7 +13,6 @@ class Orders {
 
     async getAll(filters, sorting) {
         let filter = new Array();
-        console.log(filters);
         if (filters.mindate != "") {
             filter.push({date:{$gte:new Date(filters.mindate+ "T00:00:00.000Z")}})
         }else if (filters.maxdate != "") {
@@ -23,7 +22,6 @@ class Orders {
         } else if (filters.status != "") {
             filter.push({status: filters.status})
         }
-        console.log(filter);
 
         let query = null;
         if (filter.length == 0) {

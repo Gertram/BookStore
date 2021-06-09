@@ -22,6 +22,6 @@ router.get('/add',usersController.getAdd);
 
 router.post('/add',usersController.add);
 
-router.get('/:user_id',);
+router.get('/:user_id',usersController.user);
 
 module.exports = router;

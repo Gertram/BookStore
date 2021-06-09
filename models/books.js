@@ -249,7 +249,6 @@ class Books {
             }
             return item;
         })
-        console.log(res);
 
         return res[0];
     }

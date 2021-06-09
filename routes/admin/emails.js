@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const emailsController = require('../../controllers/Admin/EmailsController');
+const emailsController = require('../../controllers/Admin/AdminEmailsController');
 
 router.use(async function(req,res,next) {
     //Пользователь не администратор и не менеджер по продажам

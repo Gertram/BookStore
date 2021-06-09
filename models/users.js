@@ -30,8 +30,12 @@ class Users{
     }
     async get(user){
         const users = await this.users();
-
         return users.findOne({_id:ObjectId(user)});
+    }
+    async remove(user){
+        const users = await this.users();
+
+        return users.findOneAndDelete({_id:ObjectId(user)});
     }
     async save(user,email,user_name,phone,role){
         const users = await this.users();

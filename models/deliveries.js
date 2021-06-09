@@ -46,7 +46,7 @@ class Deliveries {
         return delivery;
     }
 
-    async add(delivery_id, product_id, count, cover_type) {
+    async add(delivery_id, product_id, count) {
         let products = await (await this.deliveries()).findOne({_id: ObjectId(delivery_id)}).products;
         if (products == null) {
             products = [];

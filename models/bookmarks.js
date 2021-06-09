@@ -79,7 +79,7 @@ class CookieBookMarks {
         });
     }
 
-    async add(product, quantity) {
+    async add(product) {
         let bookmarks = this.req.cookies.bookmarks;
         if (bookmarks == null) {
             bookmarks = [];
@@ -91,16 +91,12 @@ class CookieBookMarks {
     }
 
     async remove(product) {
-        let basket = this.req.cookies.bookmarks;
+        let bookmarks = this.req.cookies.bookmarks;
         bookmarks = bookmarks.filter(item => {
             return item.product != product;
         });
 
         this.res.cookie('bookmarks', bookmarks, {maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
-    }
-
-    async clear() {
-        this.res.cookie('bookmarks', null, {maxAge: 0});
     }
 }
 

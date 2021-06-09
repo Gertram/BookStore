@@ -1,7 +1,7 @@
 const orders = require('../..//models/orders');
 const render = require('../../app/render');
 
-class OrdersController{
+class AdminOrdersController{
     static async index(req,res,next){
         const sortby = req.query.sortby;
         const mindate = req.query.mindate;
@@ -28,4 +28,4 @@ class OrdersController{
     }
 }
 
-module.exports = OrdersController;
+module.exports = AdminOrdersController;

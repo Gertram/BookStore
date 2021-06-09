@@ -34,7 +34,6 @@ class Authors{
    async remove(author_id){
         return (await this.authors()).findOneAndDelete({_id:author_id});
     }
-
 }
 
 module.exports = function(req){

@@ -1,4 +1,4 @@
-const render = require('../app/render');
+const render = require('../../app/render');
 
 class AdminController{
     static async index(req, res, next) {

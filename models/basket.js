@@ -45,14 +45,14 @@ class UserBasket {
         const users = this.users()
         for(let i = 0;i < basket.length;i++){
             if (basket[i].book.toString() == product) {
-                basket[i].quantity += parseInt(quantity);
+                basket[i].quantity += quantity;
                 return users.findOneAndUpdate({_id: ObjectId(this.user)}, {$set: {basket: basket}});
             }
         }
         return this.users().findOneAndUpdate({_id: ObjectId(this.user)}, {
             $push: {
                 basket: {
-                    book:ObjectId(product), quantity: parseInt(quantity)
+                    book:ObjectId(product), quantity: quantity
                 }
             }
         });
@@ -90,6 +90,14 @@ class CookieBasket {
         let basket = this.req.cookies.basket;
         if (basket == null) {
             basket = [];
+        }
+
+        for(let i = 0;i < basket.length;i++){
+
+            if(basket[i].product == product){
+                basket[i].quantity += quantity;
+                return this.res.cookie('basket', basket, {maxAge: 90000000, httpOnly: true, secure: false, overwrite: true});
+            }
         }
 
         basket.push({product: product, quantity: quantity});

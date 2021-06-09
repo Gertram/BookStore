@@ -4,7 +4,7 @@
         {% if huser is not defined %}
             <a href="/login">Login</a>
         {% else %}
-            <a href="/users/{{ huser.user_id }}">{{ huser.username }}</a>
+            <a href="/admin/users/{{ huser._id }}">{{ huser.username }}</a>
             <a href="/login/logout">Logout</a>
         {% endif %}
     </div>

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const contactsController = require('../../controllers/Admin/ContactsController');
+const contactsController = require('../../controllers/Admin/AdminContactsController');
 
 router.use(async function(req,res,next) {
     //Пользователь не администратор и не менеджер по продажам

@@ -1,7 +1,7 @@
 const render = require('../../app/render');
 const contacts = require('../../models/contacts');
 
-class ContactsController{
+class AdminContactsController{
     static async index(req, res, next) {
         return render(req,res,"admin/contacts/contacts", { requests:await contacts(req).getAll() });
     }
@@ -11,4 +11,4 @@ class ContactsController{
     }
 }
 
-module.exports = ContactsController;
+module.exports = AdminContactsController;

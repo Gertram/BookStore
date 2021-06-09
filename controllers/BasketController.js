@@ -8,8 +8,6 @@ class BasketController{
     static async index(req, res, next) {
         let products = await getBasket(req,res).products();
 
-        console.log(products);
-
         return render(req,res,"basket/basket", {title: 'Basket', basket: products});
     }
     static async buy(req,res,next) {
@@ -44,7 +42,7 @@ class BasketController{
     }
     static async add(req, res, next) {
         let product = req.body.product;
-        let quantity = req.body.quantity;
+        let quantity = parseInt(req.body.quantity);
 
         await getBasket(req,res).add(product,quantity);
 
