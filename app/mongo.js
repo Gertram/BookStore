@@ -9,6 +9,4 @@ const dbName = 'BookStore';
 
 module.exports = {
     mongoClient:new MongoClient(url, { useUnifiedTopology: true })
-    /*const connect = await mongoClient.connect();
-    return connect.db(dbName);*/
 };

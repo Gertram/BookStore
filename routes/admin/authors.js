@@ -17,5 +17,4 @@ router.post('/:author_id/redact',authorsController.redact);
 
 router.get('/',authorsController.index);
 
-
 module.exports = router;

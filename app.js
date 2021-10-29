@@ -67,7 +67,7 @@ module.exports = async function() {
     });
 
     app.use('/', indexRouter);
-    app.use('/admin', adminRouter)
+    app.use('/admin', adminRouter);
     app.use('/my', myRouter);
     app.use('/shop', shopRouter);
     app.use('/contacts', contactsRouter);
@@ -95,4 +95,4 @@ module.exports = async function() {
         res.render('404/404');
     });
     return app;
-}
+};
